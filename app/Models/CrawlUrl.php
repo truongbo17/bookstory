@@ -15,13 +15,17 @@ class CrawlUrl extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'crawl_urls';
+    public $timestamps = true;
     // protected $primaryKey = 'id';
     // public $timestamps = false;
-    protected $guarded = ['id'];
+    protected $table = 'crawl_urls';
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
+    protected $guarded = ['id'];
+    protected $casts = [
+        'should_get_info' => 'array'
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +38,10 @@ class CrawlUrl extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function url()
+    {
+        return $this->belongsTo('App\Models\Url', 'url_id', 'id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
