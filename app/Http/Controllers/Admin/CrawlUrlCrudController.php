@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CrawlUrlRequest;
+use App\Crawler\Enum\CrawlStatus;
+use App\Crawler\Enum\DataStatus;
 use App\Models\CrawlUrl;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -32,6 +32,13 @@ class CrawlUrlCrudController extends CrudController
         CRUD::enableDetailsRow();
     }
 
+    public function showDetailsRow($id)
+    {
+        $data = $this->crud->getEntry($id);
+        dump($data);
+        return view('crud::details_row', compact('data'));
+    }
+
     /**
      * Define what happens when the List operation is loaded.
      *
@@ -40,17 +47,50 @@ class CrawlUrlCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('id');
-        CRUD::addColumn(['label' => 'Site', 'name' => 'url_id']);
-        CRUD::column('url');
-        CRUD::column('status');
-        CRUD::column('data_status');
-        CRUD::column('created_at');
+        $this->crud->addColumns([
+            [
+                'name' => 'id',
+                'type' => 'text'
+            ],
+            [
+                'label' => 'Site',
+                'name' => 'url_id',
+                'type' => 'url_id'
+            ],
+            [
+                'name' => 'url',
+                'type' => 'url_reducer',
+            ],
+            [
+                'name' => 'status',
+                'type' => 'select_from_array',
+                'options' => array_flip(CrawlStatus::asArray()),
+            ],
+            [
+                'name' => 'data_status',
+                'type' => 'select_from_array',
+                'options' => array_flip(DataStatus::asArray()),
+            ],
+            [
+                'name' => 'created_at',
+                'type' => 'datetime',
+            ],
+        ]);
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
-         */
+        $this->crud->addFilter([
+            'type' => 'dropdown',
+            'name' => 'status',
+            'label' => 'Filter Status'
+        ], array_flip(CrawlStatus::asArray()), function ($value) {
+            $this->crud->addClause('where', 'status', $value);
+        });
+
+        $this->crud->addFilter([
+            'type' => 'dropdown',
+            'name' => 'data_status',
+            'label' => 'Filter Data Status'
+        ], array_flip(DataStatus::asArray()), function ($value) {
+            $this->crud->addClause('where', 'data_status', $value);
+        });
     }
 }

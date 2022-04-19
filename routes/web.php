@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('fix',function (){
-   \App\Models\CrawlUrl::truncate();
+   \App\Models\Document::truncate();
 });

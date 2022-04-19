@@ -1,6 +1,13 @@
 <?php
 
 return [
+    'driver_browser' => env('DRIVER_BROWSER', 'guzzle'),
+    'should_get_data' => [
+        'title',
+        'download_link',
+        'content',
+    ],
+    'document_disk' => env('DOCUMENT_DISK', 'data'),
     'browsers' => [
         'puppeteer' => [],
         'chrome' => [],

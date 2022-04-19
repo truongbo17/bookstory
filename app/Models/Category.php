@@ -34,7 +34,10 @@ class Category extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class, 'document_category', 'category_id', 'document_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

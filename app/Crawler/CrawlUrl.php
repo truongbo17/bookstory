@@ -6,8 +6,9 @@ use App\Crawler\Enum\CrawlStatus;
 use App\Crawler\Enum\DataStatus;
 use App\Crawler\Site\SiteInterface;
 use App\Crawler\Site\SiteManager;
-use Psr\Http\Message\UriInterface;
+use App\Crawler\StoreData\StoreData;
 use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Message\UriInterface;
 
 class CrawlUrl
 {
@@ -61,6 +62,18 @@ class CrawlUrl
     {
         $this->status = $status;
         return $this;
+    }
+
+    public function setData(array $data)
+    {
+        $check_data = StoreData::create();
+        $check = $check_data->saveData($data);
+
+        if ($check) {
+            $this->data_status = DataStatus::HAS_DATA;
+        } else {
+            $this->data_status = DataStatus::NO_DATA;
+        }
     }
 
     public function getDataStatus()

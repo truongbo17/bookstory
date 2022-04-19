@@ -34,7 +34,20 @@ class Document extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function keywords()
+    {
+        return $this->belongsToMany(Keyword::class, 'document_keyword', 'document_id', 'keyword_id');
+    }
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'document_category', 'document_id', 'category_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'document_user', 'document_id', 'user_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

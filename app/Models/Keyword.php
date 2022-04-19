@@ -34,7 +34,10 @@ class Keyword extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class, 'document_keyword', 'keyword_id', 'document_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

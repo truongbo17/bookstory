@@ -47,11 +47,18 @@ class UrlCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('id');
-        CRUD::column('site');
-        CRUD::column('driver_browser');
-
         $this->crud->addColumns([
+            [
+                'name' => 'id',
+            ],
+            [
+                'name' => 'site',
+                'type' => 'url_reducer'
+            ],
+            [
+                'name' => 'driver_browser',
+                'default' => 'default (guzzle)'
+            ],
             [
                 'name' => 'status',
                 'type' => 'select_from_array',
@@ -59,11 +66,7 @@ class UrlCrudController extends CrudController
             ],
         ]);
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
-         */
+        $this->crud->addButtonFromView('line', 'moderate', 'change_status_url', 'beginning');
     }
 
     /**
@@ -100,5 +103,21 @@ class UrlCrudController extends CrudController
          * - CRUD::field('price')->type('number');
          * - CRUD::addField(['name' => 'price', 'type' => 'number']));
          */
+    }
+
+    public function updateStatus($id)
+    {
+        $url = Url::findOrFail($id);
+        if ($url->status == UrlStatus::RUNNING) {
+            $status = UrlStatus::INIT;
+        } else {
+            $status = UrlStatus::RUNNING;
+        }
+
+        $url->update([
+            'status' => $status,
+        ]);
+
+        return true;
     }
 }

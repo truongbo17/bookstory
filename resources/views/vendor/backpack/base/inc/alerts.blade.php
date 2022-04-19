@@ -37,7 +37,7 @@
                     alert['type'] = type;
                     alert['text'] = text;
                     new Noty(alert).show()
-            });
+                });
             }
 
             // in the end, remove backpack alerts from localStorage

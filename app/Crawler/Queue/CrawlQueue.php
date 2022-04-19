@@ -98,6 +98,8 @@ class CrawlQueue implements QueueInterface
             return false;
         }
         $data = $crawlUrl->toArray();
+        $data['created_at'] = \Carbon\Carbon::now();
+        $data['updated_at'] = \Carbon\Carbon::now();
 
         $inserted = CrawlUrl::insertGetId($data);
 

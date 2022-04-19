@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\DocumentRequest;
-use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+use App\Http\Requests\UserRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class DocumentCrudController
+ * Class UserCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class DocumentCrudController extends CrudController
+class UserCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -27,9 +26,9 @@ class DocumentCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Document::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/document');
-        CRUD::setEntityNameStrings('document', 'documents');
+        CRUD::setModel(\App\Models\User::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/user');
+        CRUD::setEntityNameStrings('user', 'users');
     }
 
     /**
@@ -40,12 +39,14 @@ class DocumentCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('id');
-        CRUD::column('title');
-        CRUD::column('download');
-        CRUD::column('view');
-        CRUD::column('status');
-        CRUD::column('created_at');
+        CRUD::column('name');
+        CRUD::column('email');
+
+        /**
+         * Columns can be defined using the fluent syntax or array syntax:
+         * - CRUD::column('price')->type('number');
+         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
+         */
     }
 
     /**
@@ -56,22 +57,11 @@ class DocumentCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(DocumentRequest::class);
+        CRUD::setValidation(UserRequest::class);
 
-        CRUD::field('binding');
-        CRUD::field('code');
-        CRUD::field('content_file');
-        CRUD::field('content_hash');
-        CRUD::field('created_at');
-        CRUD::field('download');
-        CRUD::field('download_link');
-        CRUD::field('id');
-        CRUD::field('page');
-        CRUD::field('slug');
-        CRUD::field('status');
-        CRUD::field('title');
-        CRUD::field('updated_at');
-        CRUD::field('view');
+        CRUD::field('name');
+        CRUD::field('email');
+        CRUD::field('password');
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:

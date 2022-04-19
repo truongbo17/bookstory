@@ -2,24 +2,23 @@
 
 namespace App\Crawler;
 
-use App\Crawler\Queue\QueueInterface;
 use App\Crawler\Browsers\BrowserManager;
+use App\Crawler\Enum\CrawlStatus;
+use App\Crawler\Enum\UrlStatus;
+use App\Crawler\Queue\QueueInterface;
 use App\Crawler\Site\SiteInterface;
 use App\Crawler\Site\SiteManager;
-use App\Models\Url;
-use App\Crawler\Enum\UrlStatus;
-use App\Crawler\CrawlUrl;
-use GuzzleHttp\Psr7\Uri;
-use Vuh\CliEcho\CliEcho;
-use GuzzleHttp\Exception\GuzzleException;
-use App\Crawler\Enum\CrawlStatus;
-use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use App\Libs\PhpUri;
+use App\Models\Url;
+use Carbon\Carbon;
 use Exception;
+use GuzzleHttp\Psr7\Uri;
+use Symfony\Component\DomCrawler\Crawler as DomCrawler;
+use Vuh\CliEcho\CliEcho;
 
 class Crawler
 {
-    public function __construct(protected QueueInterface $queue, public bool $reset = false)
+    public function __construct(protected QueueInterface $queue, public bool $reset = false, protected bool $config_root_url = false)
     {
     }
 
@@ -28,18 +27,19 @@ class Crawler
         $sites = Url::where('status', UrlStatus::INIT)->get()->toArray();
 
         foreach ($sites as $key => $site) {
+            $this->config_root_url = $site['config_root_url'];
+
             $site = new SiteManager($site);
             $this->init($site); //init site
-
             while ($this->queue->hasPendingUrls($site)) {
                 $crawl_url = $this->queue->firstPendingUrl($site);
                 if (empty($crawl_url)) continue;
 
                 //GET HTML
                 try {
-                    CliEcho::infonl("Goto: [$crawl_url->url]");
-                    $html = BrowserManager::get($site->table_url['driver_browser'])->getHtml($crawl_url->url);
-                } catch (GuzzleException $exception) {
+                    CliEcho::infonl("Goto: [$crawl_url->url] - Time : " . Carbon::now()->toDateTimeString());
+                    $html = BrowserManager::get($site->table_url['driver_browser'] ?: 'guzzle')->getHtml($crawl_url->url);
+                } catch (Exception $exception) {
                     CliEcho::errornl($exception->getMessage());
                     if (in_array($exception->getCode(), config('crawl.should_retry_status_codes'))) {
                         $crawl_url->setStatus(CrawlStatus::INIT);
@@ -48,7 +48,6 @@ class Crawler
                     }
                     continue;
                 }
-
                 //CRAWL
                 try {
                     //Using Sysfony/Crawler
@@ -59,12 +58,11 @@ class Crawler
                     if ($site->shouldGetData($crawl_url->url)) {
                         try {
                             $data = $site->getInfoFromCrawler($dom_crawler, $crawl_url->url); //get data
-
-                            dump($data);
+dd($data);
                             /*
                              * save data
                              * */
-
+                            $crawl_url->setData($data);
                         } catch (Exception $e) {
                             $crawl_url->setStatusErrorData(); //error data
                         }
@@ -104,14 +102,13 @@ class Crawler
     {
         $urls_selector = $dom_crawler->filter('a');
         $urls = [];
-        $checkMethod = method_exists($site, 'configUrlCrawl') ?? false; //check method 1 lan
 
         foreach ($urls_selector as $item) {
             $item = $item->getAttribute('href');
 
             $item = preg_replace("/(#\w+)$/", '', $item); //delete fragment #tag
 
-            if ($checkMethod) {
+            if ($this->config_root_url) {
                 $item = $site->configUrlCrawl($item, $crawlUrl);
             } else {
                 $item = PhpUri::parse($site)->join($item); //return full url include domain
