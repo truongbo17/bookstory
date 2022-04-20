@@ -17,8 +17,10 @@ Route::get('/', function () {
     return view('home.index');
 });
 
-Route::get('fix',function (){
+Route::get('fix', function () {
     \App\Models\CrawlUrl::truncate();
     \App\Models\Document::truncate();
     \DB::table('document_user')->truncate();
 });
+
+Route::get('test', [\App\Http\Controllers\TestController::class, 'test']);

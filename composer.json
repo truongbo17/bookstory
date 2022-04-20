@@ -18,8 +18,20 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "symfony/dom-crawler": "^6.0",
-        "vuh/cli-echo": "^0.2.1"
+        "vuh/cli-echo": "^0.2.1",
+        "nesk/puphpeteer": "dev-master",
+        "nesk/rialto": "dev-dev as 1.2"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/eusonlito/puphpeteer"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/eusonlito/rialto"
+        }
+    ],
     "require-dev": {
         "backpack/generators": "^3.1",
         "fakerphp/faker": "^1.9.1",

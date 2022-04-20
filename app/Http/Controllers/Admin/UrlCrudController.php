@@ -80,6 +80,50 @@ class UrlCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
+    public function setupShowOperation()
+    {
+        $this->crud->addColumns([
+            [
+                'name' => 'id'
+            ],
+            [
+                'name' => 'site',
+                'type' => 'url_reducer'
+            ],
+            [
+                'name' => 'url_start',
+                'type' => 'url_reducer'
+            ],
+            [
+                'name' => 'driver_browser',
+                'default' => 'default (guzzle)'
+            ],
+            [
+                'name' => 'config_root_url',
+                'type' => 'boolean'
+            ],
+            [
+                'name' => 'should_crawl',
+                'type' => 'textarea'
+            ],
+            [
+                'name' => 'should_get_data',
+                'type' => 'textarea'
+            ],
+            [
+                'name' => 'should_get_info',
+                'type' => 'json'
+            ],
+            [
+                'name' => 'status',
+                'type' => 'select_from_array',
+                'options' => array_flip(UrlStatus::asArray()),
+            ],
+            ['name' => 'created_at'],
+            ['name' => 'updated_at']
+        ]);
+    }
+
     /**
      * Define what happens when the Create operation is loaded.
      *

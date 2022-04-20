@@ -35,9 +35,9 @@ class StoreData implements StoreDataInterface
     {
         $data = $this->formatData($data);
 
-        $title = $data['title'];
+        $title = $data['title'] ?? "title";
         $slug = Str::slug($title);
-        $download_link = $data['download_link'];
+        $download_link = $data['download_link'] ?? "download link";
         $content = $data['content'] ?? $title;
 
         $page = $data['page'] ?? null;
