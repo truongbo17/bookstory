@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Crawler\Enum\Status;
 use App\Http\Requests\DocumentRequest;
-use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
@@ -40,12 +40,35 @@ class DocumentCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('id');
-        CRUD::column('title');
-        CRUD::column('download');
-        CRUD::column('view');
-        CRUD::column('status');
-        CRUD::column('created_at');
+        $this->crud->addColumns([
+            [
+                'name' => 'id',
+                'type' => 'text'
+            ],
+            [
+                'name' => 'title',
+                'type' => 'text'
+            ],
+            [
+                'name' => 'download',
+                'type' => 'number'
+            ],
+            [
+                'name' => 'view',
+                'type' => 'number'
+            ],
+            [
+                'name' => 'status',
+                'type' => 'select_from_array',
+                'options' => array_flip(Status::asArray()),
+            ],
+            [
+                'name' => 'created_at',
+                'type' => 'datetime'
+            ]
+        ]);
+
+
     }
 
     /**

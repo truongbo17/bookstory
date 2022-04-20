@@ -33,10 +33,11 @@ class StoreData implements StoreDataInterface
 
     public function store(array $data)
     {
-        dd($data);
+        $data = $this->formatData($data);
+
         $title = $data['title'];
         $slug = Str::slug($title);
-        $download_link = $data['download_link'] ?? "download";
+        $download_link = $data['download_link'];
         $content = $data['content'] ?? $title;
 
         $page = $data['page'] ?? null;
@@ -45,7 +46,7 @@ class StoreData implements StoreDataInterface
 
         $keywords = $data['keywords'] ?? [];
         $categories = $data['categories'] ?? [];
-        $users = $data['users'] ?? [];
+        $users = $data['authors'] ?? [];
 
         //Check duplicate
         if (Document::where("content_hash", "=", md5($content))->count() > 0) {
@@ -76,41 +77,38 @@ class StoreData implements StoreDataInterface
     * Format data
      *
      * title : string
-     * author : array
+     * authors : array
      * abstract : string
      * description : string
      * download_link : string
-     * referer_links : string
      * keywords : array
     */
-//    public function formatData(object $data): object
-//    {
-//        $data->title = (string)$data->title;
-//        $data->referer_links = (string)$data->referer_links;
-//
-//        if (!is_string($data->abstract)) $data->abstract = "";
-//        if (!is_string($data->description)) $data->description = "";
-//        if (!is_string($data->download_link)) $data->download_link = "";
-//
-//        $data->author = $this->cleanArray($data->author);
-//        $data->keywords = $this->cleanArray($data->keywords);
-//
-//        return $data;
-//    }
+    public function formatData(array $data): array
+    {
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $data[$key] = $this->cleanArray($value);
+            }
+            if ($key == 'content') {
+                $data['content'] = preg_replace('/^Introduction/', '', $data['content']);
+            }
+        }
+        return $data;
+    }
 
-//    public function cleanArray($value): array
-//    {
-//        if ((is_string($value) && mb_strlen($value) > 0) || is_object($value)) {
-//            $value = (array)$value;
-//        } elseif ($value == "") {
-//            $value = [];
-//        }
-//        $value = array_filter($value);
-//        $value = preg_replace('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', '', $value);
-//        $value = array_map('trim', $value);
-//
-//        return $value;
-//    }
+    public function cleanArray($value): array
+    {
+        if ((is_string($value) && mb_strlen($value) > 0) || is_object($value)) {
+            $value = (array)$value;
+        } elseif ($value == "") {
+            $value = [];
+        }
+        $value = array_filter($value);
+        $value = preg_replace('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', '', $value);
+        $value = array_map('trim', $value);
+
+        return $value;
+    }
 
     public function getArrayValue($array, $keys)
     {

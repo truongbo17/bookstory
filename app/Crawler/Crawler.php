@@ -13,6 +13,7 @@ use App\Models\Url;
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Psr7\Uri;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use Vuh\CliEcho\CliEcho;
 
@@ -28,9 +29,9 @@ class Crawler
 
         foreach ($sites as $key => $site) {
             $this->config_root_url = $site['config_root_url'];
-
             $site = new SiteManager($site);
             $this->init($site); //init site
+
             while ($this->queue->hasPendingUrls($site)) {
                 $crawl_url = $this->queue->firstPendingUrl($site);
                 if (empty($crawl_url)) continue;
@@ -48,6 +49,7 @@ class Crawler
                     }
                     continue;
                 }
+
                 //CRAWL
                 try {
                     //Using Sysfony/Crawler
@@ -58,15 +60,16 @@ class Crawler
                     if ($site->shouldGetData($crawl_url->url)) {
                         try {
                             $data = $site->getInfoFromCrawler($dom_crawler, $crawl_url->url); //get data
-dd($data);
                             /*
                              * save data
                              * */
                             $crawl_url->setData($data);
                         } catch (Exception $e) {
+                            Log::error($e);
                             $crawl_url->setStatusErrorData(); //error data
                         }
                     }
+
                     $crawl_url->setStatus(CrawlStatus::DONE); //set status for instance
                     $this->queue->changeProcessStatus($crawl_url, $crawl_url->getStatus()); //set status in database
 

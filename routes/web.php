@@ -18,5 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('fix',function (){
-   \App\Models\Document::truncate();
+    \App\Models\CrawlUrl::truncate();
+    \App\Models\Document::truncate();
+    \DB::table('document_user')->truncate();
 });

@@ -34,6 +34,7 @@ class SiteManager implements SiteInterface
 
     public function getInfoFromCrawler(DomCrawler $dom_crawler, string $url = '')
     {
+        $dom = $dom_crawler;
         $infos = json_decode($this->table_url['should_get_info']);
 
         $array = [];
@@ -42,33 +43,40 @@ class SiteManager implements SiteInterface
             $info = explode("|", $info);
 
             $arrayFilter = explode(" ", $info[1]);
+
             foreach ($arrayFilter as $filter) {
                 if (preg_match('/^[0-9 +-]*$/', $filter)) {
-                    $dom_crawler = $dom_crawler->eq($filter);
+                    $dom = $dom->eq($filter);
                 } else {
-                    $dom_crawler = $dom_crawler->filter($filter);
+                    $dom = $dom->filter($filter);
                 }
             }
 
-            if ($dom_crawler->count()) {
-                switch ($info[0]) {
-                    case 'array':
-                        $array[$key] = $dom_crawler->each(function (DomCrawler $node, $i) {
-                            return $node->text();
-                        });
-                        break;
+            switch ($info[0]) {
+                case 'array':
+                    $array[$key] = $dom->each(function (DomCrawler $node, $i) {
+                        return $node->text();
+                    });
+                    $dom = $dom_crawler;
+                    break;
 
-                    case 'text':
-                        $array[$key] = $dom_crawler->text();
-                        break;
+                case 'text':
+                    if ($dom->count()) {
+                        $array[$key] = $dom->text();
+                    }
+                    $dom = $dom_crawler;
+                    break;
 
-                    case 'href':
-                        $download_link = $dom_crawler->attr('href');
-                        $array[$key] = PhpUri::parse($this->rootUrl())->join($download_link);
-                        break;
-                }
+                case 'href':
+                    $download_link = $dom->attr('href');
+                    $array[$key] = PhpUri::parse($this->rootUrl())->join($download_link);
+                    $dom = $dom_crawler;
+                    break;
             }
+
+
         }
+
         return $array;
     }
 

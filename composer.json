@@ -11,6 +11,7 @@
         "php": "^8.0",
         "backpack/crud": "^5.0",
         "backpack/logmanager": "^4.0",
+        "backpack/permissionmanager": "^6.0",
         "bensampo/laravel-enum": "^5.3",
         "guzzlehttp/guzzle": "^7.4",
         "laravel/framework": "^9.2",

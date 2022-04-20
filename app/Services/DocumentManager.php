@@ -38,10 +38,21 @@ class DocumentManager
         $users_id = [];
 
         foreach ($users as $user) {
+            $domain_mail = "@gmail.com";
+            $password = \Hash::make('12345678');
+            $email = strtolower(preg_replace('/\s/', '_', $user)) . $domain_mail;
 
-            $users_id[] = User::create([
-                'name' => $user,
-            ])->id;
+            $check_email = User::where('email', $email)->first();
+
+            if ($check_email) {
+                $users_id[] = $check_email->id;
+            } else {
+                $users_id[] = User::create([
+                    'name' => $user,
+                    'email' => $email,
+                    'password' => $password,
+                ])->id;
+            }
         }
 
         foreach ($users_id as $user_id) {
