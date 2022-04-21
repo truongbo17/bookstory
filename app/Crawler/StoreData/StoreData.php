@@ -43,6 +43,7 @@ class StoreData implements StoreDataInterface
         $page = $data['page'] ?? null;
         $binding = $data['binding'] ?? "PDF";
         $code = $data['code'] ?? null;
+        $image = $data['image'] ?? null;
 
         $keywords = $data['keywords'] ?? [];
         $categories = $data['categories'] ?? [];
@@ -63,6 +64,7 @@ class StoreData implements StoreDataInterface
             "page" => $page,
             "binding" => $binding,
             "code" => $code,
+            "image" => $image,
         ]);
 
         DocumentManager::updateContentFile($document, $content);

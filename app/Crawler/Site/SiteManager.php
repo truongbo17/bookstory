@@ -44,12 +44,17 @@ class SiteManager implements SiteInterface
 
             $arrayFilter = explode(" ", $info[1]);
 
-            foreach ($arrayFilter as $filter) {
-                if (preg_match('/^[0-9 +-]*$/', $filter)) {
-                    $dom = $dom->eq($filter);
-                } else {
-                    $dom = $dom->filter($filter);
+            if (!isset($info[2])) {
+                foreach ($arrayFilter as $filter) {
+                    if (preg_match('/^[0-9 +-]*$/', $filter)) {
+                        $dom = $dom->eq($filter);
+                    } else {
+                        $dom = $dom->filter($filter);
+                    }
                 }
+            } else if ($info[2] == 'A') {
+                //filter all (A : all)
+                $dom = $dom->filter($info[1]);
             }
 
             switch ($info[0]) {
@@ -82,16 +87,26 @@ class SiteManager implements SiteInterface
 
     public function configUrlCrawl(string $url, CrawlUrl $crawlUrl)
     {
-        if ($url == './') {
-            return false;
-        }
+        if ($this->rootUrl() == 'https://www.scirp.org') {
+            if (preg_match("/^journalarticles\.aspx\?journalid=/", $url) || preg_match("/^paperinformation\.aspx\?paperid=/", $url) || preg_match("/^papercitationdetails\.aspx/", $url)) {
+                $array = explode('/', $crawlUrl->url);
+                array_pop($array);
+                $url = implode('/', $array) . '/' . $url;
+            } else {
+                $url = PhpUri::parse(self::rootUrl())->join($url);
+            }
+        } else {
+            if ($url == './') {
+                return false;
+            }
 
-        if (substr($url, 0, 1) == '/') {
-            $url = $this->rootUrl() . $url;
-        } else if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
-            $array = explode('/', $crawlUrl->url);
-            array_pop($array);
-            $url = implode('/', $array) . '/' . $url;
+            if (substr($url, 0, 1) == '/') {
+                $url = $this->rootUrl() . $url;
+            } else if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
+                $array = explode('/', $crawlUrl->url);
+                array_pop($array);
+                $url = implode('/', $array) . '/' . $url;
+            }
         }
 
         return $url;

@@ -13,6 +13,9 @@ use Illuminate\Support\Str;
 
 class DocumentManager
 {
+    private static array $not_users = [
+        'XML', 'HTML', 'PDF'
+    ];
 
     public static function updateCategories(Document $document, array $categories)
     {
@@ -38,6 +41,7 @@ class DocumentManager
         $users_id = [];
 
         foreach ($users as $user) {
+            if (in_array($user, self::$not_users)) continue;
             $domain_mail = "@gmail.com";
             $password = \Hash::make('12345678');
             $email = strtolower(preg_replace('/\s/', '_', $user)) . $domain_mail;

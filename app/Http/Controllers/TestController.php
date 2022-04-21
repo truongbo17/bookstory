@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Nesk\Puphpeteer\Puppeteer;
 use Nesk\Rialto\Data\JsFunction;
-use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 class TestController extends Controller
 {
