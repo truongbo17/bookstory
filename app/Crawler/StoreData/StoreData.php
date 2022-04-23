@@ -2,6 +2,7 @@
 
 namespace App\Crawler\StoreData;
 
+use App\Crawler\HandlePdf\PdfToImage;
 use App\Models\Document;
 use App\Services\DocumentManager;
 use Illuminate\Support\Str;
@@ -36,12 +37,14 @@ class StoreData implements StoreDataInterface
         $data = $this->formatData($data);
 
         $title = $data['title'] ?? "title";
-        $slug = Str::slug($title);
-        $download_link = $data['download_link'] ?? "download link";
+        //Check slug
+        $slug = $this->createSlug($title);
+
+        $download_link = $data['download_link'] ?? "";
         $content = $data['content'] ?? $title;
 
         $page = $data['page'] ?? null;
-        $binding = $data['binding'] ?? "PDF";
+        $binding = $data['binding'] ?? "PDF,DOCX,XLSX,XML";
         $code = $data['code'] ?? null;
         $image = $data['image'] ?? null;
 
@@ -55,6 +58,15 @@ class StoreData implements StoreDataInterface
             return false;
         }
 
+        //Save temporary pdf file and make image (OR check download link)
+        $pdf_to_image = new PdfToImage();
+        try {
+            $pdf_to_image->savePdf($download_link);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error($e);
+            return false;
+        }
+
         $document = Document::create([
             "title" => $title,
             "slug" => $slug,
@@ -65,7 +77,14 @@ class StoreData implements StoreDataInterface
             "binding" => $binding,
             "code" => $code,
             "image" => $image,
+            'is_crawl' => 1,
         ]);
+
+        $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
+        //Update image
+        if (is_null($image)) $document->image = $pdf_to_image['image'];
+        if (is_null($page)) $document->page = $pdf_to_image['page'];
+        $document->save();
 
         DocumentManager::updateContentFile($document, $content);
         DocumentManager::updateKeywords($document, $keywords);
@@ -73,6 +92,17 @@ class StoreData implements StoreDataInterface
         DocumentManager::updateUser($document, $users);
 
         return true;
+    }
+
+    public function createSlug(string $title): string
+    {
+        $slug = Str::slug($title);
+        $check_slug = Document::where('slug', $slug)->exists();
+        if ($check_slug) {
+            $slug = $slug . '-' . time() . mt_rand();
+        }
+
+        return $slug;
     }
 
     /*

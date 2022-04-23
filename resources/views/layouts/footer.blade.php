@@ -2,7 +2,7 @@
     <footer id="footer" class="relative z-50 dark:bg-gray-900">
         <div class="py-6 flex flex-col justify-center items-center">
             <a class="focus:outline-none" tabindex="0" role="link" aria-label="home link"
-               href="javascript:void(0)">
+               href="{{route('home.index')}}">
                 <img class="dark:hidden" src="{{ asset('images/logo/logo.png') }}" alt="tuk logo">
                 <img class="dark:block hidden" src="{{ asset('images/logo/logo.png') }}" alt="tuk logo">
             </a>
@@ -39,6 +39,7 @@
     </footer>
 </div>
 
+<script src="https://unpkg.com/flowbite@1.4.2/dist/flowbite.js"></script>
 <script>
     // Get the button
     let mybutton = document.getElementById('btn-back-to-top');

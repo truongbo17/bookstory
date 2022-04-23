@@ -63,7 +63,7 @@
 
                     <!-- Logo -->
                     <div class="ml-4 flex lg:ml-0">
-                        <a href="#">
+                        <a href="{{route('home.index')}}">
                             <span class="sr-only">Workflow</span>
                             <img class="h-8 w-auto" src="{{ asset('images/logo/logo-header.png') }}" alt="">
                         </a>
@@ -97,10 +97,10 @@
                                 News
                             </a>
 
-                            <a href="#"
+                            <a href="{{route('privacy.index')}}"
                                class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Privacy</a>
 
-                            <a href="#"
+                            <a href="{{route('contact.create')}}"
                                class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Contact</a>
                         </div>
                     </div>

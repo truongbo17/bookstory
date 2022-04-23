@@ -44,5 +44,8 @@
     </ul>
 </li>
 
+<li class='nav-item'><a class='nav-link' href='{{ backpack_url('contact') }}'><i class='nav-icon la la-plane'></i>
+        Contacts</a></li>
+
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('log') }}'><i class='nav-icon la la-terminal'></i>
         Logs</a></li>

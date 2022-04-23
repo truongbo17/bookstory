@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Libs\DiskPathTools;
 
 use App\Libs\FilenameSanitizer;
@@ -6,7 +7,8 @@ use Illuminate\Support\Arr;
 use InvalidArgumentException;
 use Storage;
 
-class DiskPathInfo {
+class DiskPathInfo
+{
 
     public const INFO_SEPARATE = ':';
     public const ARRAY_SEPARATE = ',';
@@ -33,18 +35,18 @@ class DiskPathInfo {
             throw new InvalidArgumentException("Can't parse '$string' to " . DiskPathInfo::class);
         }
         $options = [];
-        if($file_name) {
+        if ($file_name) {
             $name_length = config('filesystems.name_length');
             $options['name'] = FilenameSanitizer::make_safe_file_name($file_name, $name_length);
 
         }
-        $infos = explode( self::INFO_SEPARATE, $string);
+        $infos = explode(self::INFO_SEPARATE, $string);
 
-        $disks = explode( self::ARRAY_SEPARATE, array_shift($infos) );
-        $path  = array_shift( $infos );
-        $size  = intval(array_shift( $infos ));
+        $disks = explode(self::ARRAY_SEPARATE, array_shift($infos));
+        $path = array_shift($infos);
+        $size = intval(array_shift($infos));
 
-        return new DiskPathInfo( $disks, $path, $size, $options);
+        return new DiskPathInfo($disks, $path, $size, $options);
     }
 
     /**
@@ -54,7 +56,7 @@ class DiskPathInfo {
      * @param int $size
      * @param array $other_info
      */
-    public function __construct(array|string $disks, string $path, int $size = 0, array $other_info = [] )
+    public function __construct(array|string $disks, string $path, int $size = 0, array $other_info = [])
     {
         if (!$disks) throw new InvalidArgumentException('No disk');
 
@@ -63,8 +65,8 @@ class DiskPathInfo {
         }
 
         $this->disks = $disks;
-        $this->path  = $path;
-        $this->size  = $size;
+        $this->path = $path;
+        $this->size = $size;
 
         $this->info($other_info);
     }
@@ -95,7 +97,8 @@ class DiskPathInfo {
     /**
      * @return string
      */
-    public function url() {
+    public function url()
+    {
         return Storage::disk($this->bestDisk())->url($this->path());
     }
 
@@ -105,8 +108,9 @@ class DiskPathInfo {
      *
      * @return string
      */
-    public function tempUrl(\DateTimeInterface $expiration = null, array $options = []) {
-        if(!$expiration) {
+    public function tempUrl(\DateTimeInterface $expiration = null, array $options = [])
+    {
+        if (!$expiration) {
             $expiration = now()->addMinutes(10);
         }
         return Storage::disk($this->bestDisk())
@@ -175,7 +179,8 @@ class DiskPathInfo {
      * @param ...$disks
      * @return void
      */
-    public function setDisks(...$disks) {
+    public function setDisks(...$disks)
+    {
         if (is_array($disks[0])) {
             $this->disks = $disks[0];
         } else {
@@ -211,14 +216,26 @@ class DiskPathInfo {
      *
      * @return resource|string|null
      */
-    public function read(bool $steam = false) {
+    public function read(bool $steam = false)
+    {
         return $this->file($steam);
     }
 
     /**
+     * View image
+     * @param bool $steam
+     *
+     * @return resource|string|null
+     */
+    public function view()
+    {
+        return Storage::disk($this->bestDisk())->path($this->path);
+    }
+
+    /**
      * Write the contents of a file.
-     * @param  string|resource  $contents
-     * @param  mixed  $options
+     * @param string|resource $contents
+     * @param mixed $options
      * @return bool
      */
     public function put($contents, $options = [])

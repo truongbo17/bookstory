@@ -13,17 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home.index');
-});
+Route::get('/',[\App\Http\Controllers\Home\HomeController::class,'index'])->name('home.index');
 
 Route::get('fix', function () {
     \App\Models\CrawlUrl::truncate();
     \App\Models\Document::truncate();
     \App\Models\User::truncate();
     \App\Models\Keyword::truncate();
+    \App\Models\Category::truncate();
+
     \DB::table('document_user')->truncate();
     \DB::table('document_keyword')->truncate();
+    \DB::table('document_category')->truncate();
 
     \App\Models\User::create([
         'name' => 'Nguyen Quang Truong',
@@ -33,4 +34,8 @@ Route::get('fix', function () {
     ]);
 });
 
+//TEST
 Route::get('test', [\App\Http\Controllers\TestController::class, 'test']);
+Route::get('pdftoimage', [\App\Http\Controllers\TestController::class, 'pdftoimage']);
+Route::get('downloadpdf', [\App\Http\Controllers\TestController::class, 'downloadpdf']);
+Route::get('viewpdf', [\App\Http\Controllers\TestController::class, 'viewpdf']);

@@ -24,4 +24,5 @@ Route::group([
     Route::crud('news', 'NewsCrudController');
     Route::crud('user', 'UserCrudController');
     Route::post('url/{id}/update_status_url', 'UrlCrudController@updateStatus');
+    Route::crud('contact', 'ContactCrudController');
 }); // this should be the absolute last line of this file

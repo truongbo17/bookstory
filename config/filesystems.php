@@ -43,6 +43,20 @@ return [
             'visibility' => 'public',
         ],
 
+        'document' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/document'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
+        'document_image' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/document_image'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -77,7 +91,8 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+//        public_path('storage') => storage_path('app/public'),
+        public_path('document_image') => storage_path('app/public/document_image'),
     ],
 
 ];

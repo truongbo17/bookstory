@@ -15,11 +15,11 @@
                                       d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                             </svg>
                         </div>
-                        <p class="ml-16 text-sm font-medium text-gray-500 truncate">Total Subscribers</p>
+                        <p class="ml-16 text-sm font-medium text-gray-500 truncate">Total User</p>
                     </dt>
                     <dd class="ml-16 pb-6 flex items-baseline sm:pb-7">
                         <p class="text-2xl font-semibold text-gray-900">
-                            71,897
+                            {{$count_user}}
                         </p>
                         <p class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
                             <!-- Heroicon name: solid/arrow-sm-up -->
@@ -37,8 +37,7 @@
                         </p>
                         <div class="absolute bottom-0 inset-x-0 bg-gray-50 px-4 py-4 sm:px-6">
                             <div class="text-sm">
-                                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> View all<span
-                                        class="sr-only"> Total Subscribers stats</span></a>
+                                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> View all</a>
                             </div>
                         </div>
                     </dd>
@@ -55,11 +54,11 @@
                                       d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76"/>
                             </svg>
                         </div>
-                        <p class="ml-16 text-sm font-medium text-gray-500 truncate">Avg. Open Rate</p>
+                        <p class="ml-16 text-sm font-medium text-gray-500 truncate">Total Document</p>
                     </dt>
                     <dd class="ml-16 pb-6 flex items-baseline sm:pb-7">
                         <p class="text-2xl font-semibold text-gray-900">
-                            58.16%
+                            {{$count_document}}
                         </p>
                         <p class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
                             <!-- Heroicon name: solid/arrow-sm-up -->
@@ -77,8 +76,7 @@
                         </p>
                         <div class="absolute bottom-0 inset-x-0 bg-gray-50 px-4 py-4 sm:px-6">
                             <div class="text-sm">
-                                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> View all<span
-                                        class="sr-only"> Avg. Open Rate stats</span></a>
+                                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> View all</a>
                             </div>
                         </div>
                     </dd>
@@ -95,11 +93,11 @@
                                       d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
                             </svg>
                         </div>
-                        <p class="ml-16 text-sm font-medium text-gray-500 truncate">Avg. Click Rate</p>
+                        <p class="ml-16 text-sm font-medium text-gray-500 truncate">Total Click</p>
                     </dt>
                     <dd class="ml-16 pb-6 flex items-baseline sm:pb-7">
                         <p class="text-2xl font-semibold text-gray-900">
-                            24.57%
+                            39428320
                         </p>
                         <p class="ml-2 flex items-baseline text-sm font-semibold text-red-600">
                             <!-- Heroicon name: solid/arrow-sm-down -->
@@ -117,8 +115,7 @@
                         </p>
                         <div class="absolute bottom-0 inset-x-0 bg-gray-50 px-4 py-4 sm:px-6">
                             <div class="text-sm">
-                                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> View all<span
-                                        class="sr-only"> Avg. Click Rate stats</span></a>
+                                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500"> View all</a>
                             </div>
                         </div>
                     </dd>
