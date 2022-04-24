@@ -72,25 +72,11 @@
                     <!-- Flyout menus -->
                     <div class="hidden lg:ml-8 lg:block lg:self-stretch">
                         <div class="h-full flex space-x-8">
-                            <div class="flex">
-                                <div class="relative flex">
-                                    <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                                    <button type="button"
-                                            class="border-transparent text-gray-700 hover:text-gray-800 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px"
-                                            aria-expanded="false">Documents
-                                    </button>
-                                </div>
-                            </div>
+                            <a href="{{route('document.list_index')}}"
+                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Documents</a>
 
-                            <div class="flex">
-                                <div class="relative flex">
-                                    <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
-                                    <button type="button"
-                                            class="border-transparent text-gray-700 hover:text-gray-800 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px"
-                                            aria-expanded="false">Author
-                                    </button>
-                                </div>
-                            </div>
+                            <a href="{{route('author.list_index')}}"
+                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Authors</a>
 
                             <a href="#"
                                class="flex items-center rounded-full text-pink-700 text-sm font-medium hover:text-red-800">
@@ -206,7 +192,7 @@
                             </div>
                         </div>
 
-                        <!-- Cart -->
+                        <!-- Avatar -->
                         <div class="ml-4 flow-root lg:ml-6">
                             <a href="#" class="group flex items-center">
                                 <img class="inline object-cover w-12 h-12 mr-2 rounded-full"

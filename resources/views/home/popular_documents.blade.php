@@ -13,7 +13,7 @@
                     </div>
                     <div class="mt-4 flex justify-between">
                         <div>
-                            <h3 class="text-sm text-gray-700">
+                            <h3 class="text-sm text-gray-900">
                                 <a href="{{route('document.show_detail', $document->slug)}}">
                                     <span aria-hidden="true" class="absolute inset-0"></span>
                                     {{Str::of($document->title)->limit(100)}}

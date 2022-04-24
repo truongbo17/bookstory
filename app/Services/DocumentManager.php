@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 class DocumentManager
 {
     private static array $not_users = [
-        'XML', 'HTML', 'PDF'
+        'XML', 'HTML', 'PDF', 'Citations'
     ];
 
     public static function updateCategories(Document $document, array $categories)
@@ -41,7 +41,16 @@ class DocumentManager
         $users_id = [];
 
         foreach ($users as $user) {
+            //Not user
             if (in_array($user, self::$not_users)) continue;
+
+            //User rác toàn là số thì bỏ đi
+            $check_number = 0;
+            for ($i = 0; $i < mb_strlen($user, 'UTF-8'); $i++) {
+                if (is_numeric($user[$i])) ++$check_number;
+            }
+            if ($check_number > 8) continue;
+
             $domain_mail = "@gmail.com";
 
             $unwanted_array = array('Š' => 'S', 'š' => 's', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A', 'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E',

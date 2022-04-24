@@ -44,7 +44,7 @@ class StoreData implements StoreDataInterface
         $content = $data['content'] ?? $title;
 
         $page = $data['page'] ?? null;
-        $binding = $data['binding'] ?? "PDF,DOCX,XLSX,XML";
+        $binding = $data['binding'] ?? "PDF";
         $code = $data['code'] ?? null;
         $image = $data['image'] ?? null;
 
