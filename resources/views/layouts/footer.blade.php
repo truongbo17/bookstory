@@ -1,4 +1,4 @@
-<div class="pt-4">
+<div class="bg-gray-50 pt-4">
     <footer id="footer" class="relative z-50 dark:bg-gray-900">
         <div class="py-6 flex flex-col justify-center items-center">
             <a class="focus:outline-none" tabindex="0" role="link" aria-label="home link"

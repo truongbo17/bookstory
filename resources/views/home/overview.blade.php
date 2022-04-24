@@ -1,5 +1,5 @@
 {{--Stats--}}
-<div class="bg-white">
+<div class="bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 mb-12 sm:px-6 lg:px-8">
         <div>
             <h2 class="lg:text-center text-base text-indigo-600 font-semibold tracking-wide uppercase">Overview</h2>
@@ -125,7 +125,7 @@
     </div>
 </div>
 {{--Overview--}}
-<div class="bg-white">
+<div class="bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="lg:text-center">
             <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">Everything

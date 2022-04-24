@@ -3,7 +3,7 @@
 
 @include('layouts.head')
 
-<body>
+<body class="bg-gray-50">
 
 {{-- Message news --}}
 @yield('message')

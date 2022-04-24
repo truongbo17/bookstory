@@ -14,7 +14,7 @@
 @endsection
 
 @section('main')
-    <div class="bg-gray-100">
+    <div class="bg-gray-50">
         <div class="mx-auto py-16 px-4 sm:py-12 sm:px-6 lg:max-w-7xl lg:px-8">
             <!-- Product -->
             <div class="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">

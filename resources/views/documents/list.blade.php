@@ -14,7 +14,7 @@
 @endsection
 
 @section('main')
-    <div class="bg-white">
+    <div class="bg-gray-50">
         <div class="max-w-2xl mx-auto pt-16 pb-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Found {{$count_documents}} documents in
                 total</h2>
@@ -382,7 +382,7 @@
             <div>
                 <select id="per_page" name="per_page"
                         class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:border-gray-700 rounded-md font-medium text-sm px-4 py-2 text-center items-center">
-                    <option disabled>Books per page : </option>
+                    <option disabled>Books per page :</option>
                     <option value="8" selected>8 Documents</option>
                     <option value="16">16 Documents</option>
                     <option value="32">32 Documents</option>
