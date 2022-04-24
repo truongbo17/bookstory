@@ -15,7 +15,7 @@
 
 @section('main')
     <div class="bg-white">
-        <div class="max-w-2xl mx-auto pt-16 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div class="max-w-2xl mx-auto pt-16 pb-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Found {{$count_authors}} authors in
                 total</h2>
 

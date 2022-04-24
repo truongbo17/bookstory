@@ -14,8 +14,8 @@
 @endsection
 
 @section('main')
-    <section class="bg-gray-50 overflow-hidden md:py-10">
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="bg-white">
+        <div class="max-w-7xl mx-auto pb-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <svg
                 class="absolute top-full right-full transform translate-x-1/3 -translate-y-1/4 lg:translate-x-1/2 xl:-translate-y-1/2"
                 width="404" height="404" fill="none" viewBox="0 0 404 404" role="img" aria-labelledby="svg-workcation">
