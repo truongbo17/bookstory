@@ -3,8 +3,8 @@
         <div class="py-6 flex flex-col justify-center items-center">
             <a class="focus:outline-none" tabindex="0" role="link" aria-label="home link"
                href="{{route('home.index')}}">
-                <img class="dark:hidden" src="{{ asset('images/logo/logo.png') }}" alt="tuk logo">
-                <img class="dark:block hidden" src="{{ asset('images/logo/logo.png') }}" alt="tuk logo">
+                <img class="dark:hidden" src="{{ asset('images/logo/logo_bookstory.png') }}" alt="tuk logo">
+                <img class="dark:block hidden" src="{{ asset('images/logo/logo_bookstory.png') }}" alt="tuk logo">
             </a>
             <div class="flex -space-x-1 overflow-hidden">
                 <a href="">

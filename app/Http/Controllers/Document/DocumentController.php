@@ -24,6 +24,8 @@ class DocumentController extends Controller
             ->with('users')
             ->first();
 
+        if (!$document) abort(404);
+
         $document->view = $document->view + 1;
         $document->save();
 
