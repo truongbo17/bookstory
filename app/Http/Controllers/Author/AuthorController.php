@@ -21,6 +21,8 @@ class AuthorController extends Controller
 
     public function showDetail($author_id)
     {
+        $author = User::findOrFail($author_id);
 
+        return view('authors.detail', compact('author'));
     }
 }
