@@ -52,7 +52,7 @@ class PdfToImage
 
         return [
             'image' => config('crawl.public_link_document_image') . '/' . $path,
-            'page' => $pdf->getNumberOfPages() ?? 0,
+            'count_page' => $pdf->getNumberOfPages() ?? 0,
         ];
     }
 }

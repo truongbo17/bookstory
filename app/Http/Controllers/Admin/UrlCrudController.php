@@ -115,6 +115,10 @@ class UrlCrudController extends CrudController
                 'type' => 'json'
             ],
             [
+                'name' => 'skip_url',
+                'type' => 'textarea'
+            ],
+            [
                 'name' => 'status',
                 'type' => 'select_from_array',
                 'options' => array_flip(UrlStatus::asArray()),
@@ -140,6 +144,7 @@ class UrlCrudController extends CrudController
         CRUD::field('should_get_data');
         CRUD::field('should_get_info');
         CRUD::field('config_root_url');
+        CRUD::field('skip_url');
         CRUD::field('driver_browser');
 
         /**

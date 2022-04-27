@@ -42,39 +42,31 @@ class SiteManager implements SiteInterface
         foreach ($infos as $key => $info) {
             $info = explode("|", $info);
 
-            $arrayFilter = explode(" ", $info[1]);
+            $type_of_data = $info[0];
+            $filter = $info[1];
 
-            if (!isset($info[2])) {
-                foreach ($arrayFilter as $filter) {
-                    if (preg_match('/^[0-9 +-]*$/', $filter)) {
-                        $dom = $dom->eq($filter);
-                    } else {
-                        $dom = $dom->filter($filter);
-                    }
-                }
-            } else if ($info[2] == 'A') {
-                //filter all (A : all)
-                $dom = $dom->filter($info[1]);
-            }
-
-            switch ($info[0]) {
+            switch ($type_of_data) {
                 case 'array':
-                    $array[$key] = $dom->each(function (DomCrawler $node, $i) {
+                    $array[$key] = $dom->filter($filter)->each(function (DomCrawler $node, $i) {
                         return $node->text();
                     });
                     $dom = $dom_crawler;
                     break;
 
                 case 'text':
-                    if ($dom->count()) {
-                        $array[$key] = $dom->text();
-                    }
+                    $array[$key] = $dom->filter($filter)->text();
                     $dom = $dom_crawler;
                     break;
 
                 case 'href':
-                    $download_link = $dom->attr('href');
+                    $download_link = $dom->filter($filter)->attr('href');
                     $array[$key] = PhpUri::parse($this->rootUrl())->join($download_link);
+                    $dom = $dom_crawler;
+                    break;
+
+                case 'img':
+                    $image_link = $dom->filter($filter)->attr('src');
+                    $array[$key] = PhpUri::parse($this->rootUrl())->join($image_link);
                     $dom = $dom_crawler;
                     break;
             }
@@ -110,6 +102,17 @@ class SiteManager implements SiteInterface
         }
 
         return $url;
+    }
+
+    public function skipUrl(string $url): bool
+    {
+        $list_parent_skip_url = explode("|", $this->table_url['skip_url']);
+
+        foreach ($list_parent_skip_url as $skip_url) {
+            if (preg_match($skip_url, $url)) return true;
+        }
+
+        return false;
     }
 
     public function __toString(): string

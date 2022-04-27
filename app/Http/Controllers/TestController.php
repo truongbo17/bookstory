@@ -7,6 +7,7 @@ use Nesk\Puphpeteer\Puppeteer;
 use Nesk\Rialto\Data\JsFunction;
 use Spatie\PdfToImage\Pdf;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 class TestController extends Controller
 {
@@ -16,20 +17,26 @@ class TestController extends Controller
 
         $browser = $puppeteer->launch();
         $page = $browser->newPage();
-        $page->goto('https://5pdf.org/book/3939');
+        $page->goto('https://nhasachmienphi.com/bach-khoa-ve-vitamin.html');
 
-        $divs = $page->querySelectorAll('div');
+        $html = '';
+
+        $divs = $page->querySelectorAll('html');
 
         foreach ($divs as $div) {
-            $text = $div->evaluate(JsFunction::createWithParameters(['node'])
-                ->body('return node.innerText;'));
-
-            dump($text);
+            $html = $div->evaluate(JsFunction::createWithParameters(['node'])
+                ->body('return node.innerHTML;'));
         }
 
-        dump($divs);
-
         $browser->close();
+
+
+        $title = 'body > div:nth-child(3) > div > div.col-xs-12.col-sm-8.col-md-8.col-lg-8 > div.content_page.pd-20 > div.row > div.col-xs-12.col-sm-4.col-md-4.col-lg-4 > img';
+
+         $dom_crawler = new DomCrawler($html);
+        $linkCrawler = $dom_crawler->filter($title)->attr('src');
+
+        dump($linkCrawler);
     }
 
     public function pdftoimage()

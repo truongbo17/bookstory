@@ -118,6 +118,8 @@ class Crawler
                 $item = PhpUri::parse($site)->join($item); //return full url include domain
             }
 
+            if (!is_null($site->table_url['skip_url']) && $site->skipUrl($item)) continue;
+
             $urls[] = $item;
         }
 

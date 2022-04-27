@@ -5,11 +5,16 @@ namespace App\Crawler\StoreData;
 use App\Crawler\HandlePdf\PdfToImage;
 use App\Models\Document;
 use App\Services\DocumentManager;
+use Exception;
 use Illuminate\Support\Str;
 use Log;
+use App\Traits\SaveImageFromUrl;
+use Vuh\CliEcho\CliEcho;
 
 class StoreData implements StoreDataInterface
 {
+    use SaveImageFromUrl;
+
     private static $instance;
 
     public static function create()
@@ -58,15 +63,6 @@ class StoreData implements StoreDataInterface
             return false;
         }
 
-        //Save temporary pdf file and make image (OR check download link)
-        $pdf_to_image = new PdfToImage();
-        try {
-            $pdf_to_image->savePdf($download_link);
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error($e);
-            return false;
-        }
-
         $document = Document::create([
             "title" => $title,
             "slug" => $slug,
@@ -80,16 +76,23 @@ class StoreData implements StoreDataInterface
             'is_crawl' => 1,
         ]);
 
-        $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
-        //Update image
-        if (is_null($image)) $document->image = $pdf_to_image['image'];
-        if (is_null($page)) $document->page = $pdf_to_image['page'];
-        $document->save();
-
         DocumentManager::updateContentFile($document, $content);
         DocumentManager::updateKeywords($document, $keywords);
         DocumentManager::updateCategories($document, $categories);
         DocumentManager::updateUser($document, $users);
+
+        //Update image and count page
+        $pdf_to_image = new PdfToImage();
+        try {
+            $pdf_to_image->savePdf($download_link);
+        } catch (Exception $e) {
+            \Illuminate\Support\Facades\Log::error($e);
+            return false;
+        }
+        $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
+        $document->image = $pdf_to_image['image'];
+        if (is_null($page)) $document->page = $pdf_to_image['count_page'];
+        $document->save();
 
         return true;
     }
@@ -130,11 +133,22 @@ class StoreData implements StoreDataInterface
 
     public function cleanArray($value): array
     {
+        //Array
         if ((is_string($value) && mb_strlen($value) > 0) || is_object($value)) {
             $value = (array)$value;
         } elseif ($value == "") {
             $value = [];
         }
+
+        //Replace ký tự thừa
+        $parent_replace_array = [
+            "Tác giả"
+        ];
+        foreach ($value as $key => $value_array) {
+            $value[$key] = str_replace($parent_replace_array, "", $value_array);
+        }
+
+        //Clean array
         $value = array_filter($value);
         $value = preg_replace('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', '', $value);
         $value = array_map('trim', $value);
