@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->id();
 
             $table->unsignedBigInteger("url_id")
-                ->index()
+                ->nullable()
                 ->foreignId('url_id')
                 ->references('id')
                 ->on('urls');

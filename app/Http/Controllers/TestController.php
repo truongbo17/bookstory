@@ -17,7 +17,7 @@ class TestController extends Controller
 
         $browser = $puppeteer->launch();
         $page = $browser->newPage();
-        $page->goto('https://nhasachmienphi.com/bach-khoa-ve-vitamin.html');
+        $page->goto('https://pesthubt.com/quiz/22385/kinh-te-hoc-dai-cuong-epu.html');
 
         $html = '';
 
@@ -29,14 +29,53 @@ class TestController extends Controller
         }
 
         $browser->close();
+//dd($html);
 
+//        $title = 'body > div:nth-child(3) > div > div.col-xs-12.col-sm-8.col-md-8.col-lg-8 > div.content_page.pd-20 > div.row > div.col-xs-12.col-sm-4.col-md-4.col-lg-4 > img';
 
-        $title = 'body > div:nth-child(3) > div > div.col-xs-12.col-sm-8.col-md-8.col-lg-8 > div.content_page.pd-20 > div.row > div.col-xs-12.col-sm-4.col-md-4.col-lg-4 > img';
+        $dom_crawler = new DomCrawler($html);
+        $linkCrawler = $dom_crawler->filter('section.content.container-fluid.custom-content script')->text();
 
-         $dom_crawler = new DomCrawler($html);
-        $linkCrawler = $dom_crawler->filter($title)->attr('src');
+        $string = preg_replace('/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\];\':\"\\|,.<>\/?\s]*/','',$linkCrawler);
 
-        dump($linkCrawler);
+        $string = preg_replace('/(\s)console\.log[a-zA-Z0-9!@#$%^&*()_+\-=\[\];\':\"\\|,.<>\/?\s]*/','',$string);
+
+        $object_data = json_decode($string);
+
+        $user_name = $object_data->quiz->user->fullname;
+        $category_name = $object_data->quiz->category->category;
+
+        $object_data->quiz->user_name = $user_name;
+        $object_data->quiz->category_name = $category_name;
+
+        $unset_key_object = [
+            'category_id',
+            'user_id',
+            'total_question',
+            'created_at',
+            'viewed',
+            'quiz_slug',
+            'status',
+            'download',
+            'updated_at',
+            'total_time',
+            'total_grade',
+            'liked_count',
+            'is_liked',
+            'is_favorited',
+            'answer_shuffle',
+            'qs_shuffle',
+            'mode',
+            'user',
+            'category',
+            'check_quiz',
+        ];
+
+        foreach ($unset_key_object as $key){
+            unset($object_data->quiz->$key);
+        }
+
+        dd($object_data);
     }
 
     public function pdftoimage()
