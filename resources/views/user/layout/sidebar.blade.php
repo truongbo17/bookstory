@@ -47,7 +47,7 @@
                         Activity
                     </a>
 
-                    <a href="#"
+                    <a href="{{route('user.document.list')}}"
                        class="text-white hover:bg-indigo-600 hover:bg-opacity-75 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/inbox -->
                         <svg class="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"

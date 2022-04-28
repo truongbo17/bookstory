@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Crawler\Enum\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UserAddDocumentRequest;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
@@ -67,5 +68,21 @@ class UserController extends Controller
         $this->logout($request);
 
         return response()->json(['message' => 'Deactive success'], 200);
+    }
+
+    public function listDocument(){
+        $user = User::findorFail(auth()->user()->id)->with('documents')->get();
+
+        return view('user.document.list',compact('user'));
+    }
+
+    public function addDocument()
+    {
+        return view('user.document.add');
+    }
+
+    public function storeDocument(UserAddDocumentRequest $request)
+    {
+        dd($request->all());
     }
 }

@@ -10,3 +10,10 @@ Route::prefix('user')->middleware(['auth', 'auth.active'])->group(function () {
     Route::post('update', [UserController::class, 'update'])->name('user.update');
     Route::post('deactive', [UserController::class, 'deactive'])->name('user.deactive');
 });
+
+
+Route::prefix('user')->middleware(['auth', 'auth.active'])->group(function () {
+    Route::get('document', [UserController::class, 'listDocument'])->name('user.document.list');
+    Route::get('document/add', [UserController::class, 'addDocument'])->name('user.document.add');
+    Route::post('document/store', [UserController::class, 'storeDocument'])->name('user.document.store');
+});

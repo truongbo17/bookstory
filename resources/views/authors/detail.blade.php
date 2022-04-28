@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Author '.$author->name)
+@section('title', 'Author '.$author[0]->name)
 
 @push('css')
 @endpush
@@ -23,28 +23,28 @@
                 <div class="flex items-center space-x-5">
                     <div class="flex-shrink-0">
                         <div class="relative">
-                            @if($author->status == \App\Crawler\Enum\UserStatus::ACTIVE)
+                            @if($author[0]->status == \App\Crawler\Enum\UserStatus::ACTIVE)
                                 <img class="h-16 w-16 rounded-full"
-                                     src="{{asset($author->image ?? 'images/avatar/default.jpg')}}"
+                                     src="{{asset($author[0]->image ?? 'images/avatar/default.jpg')}}"
                                      alt="">
                             @else
                                 <img class="h-16 w-16 rounded-full"
-                                     src="{{asset($author->image ?? 'images/avatar/banned.png')}}"
+                                     src="{{asset($author[0]->image ?? 'images/avatar/banned.png')}}"
                                      alt="">
                             @endif
                             <span class="absolute inset-0 shadow-inner rounded-full" aria-hidden="true"></span>
                         </div>
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-900">{{$author->name}}</h1>
+                        <h1 class="text-2xl font-bold text-gray-900">{{$author[0]->name}}</h1>
                         <p class="text-sm font-medium text-gray-500">Joined for <a href="#" class="text-gray-900">BookStory</a>
                             on
                             <time
-                                datetime="2020-08-25">{{\Carbon\Carbon::parse($author->created_at)->format('d M Y')}}</time>
+                                datetime="2020-08-25">{{\Carbon\Carbon::parse($author[0]->created_at)->format('d M Y')}}</time>
                         </p>
                     </div>
                 </div>
-                @if($author->status == \App\Crawler\Enum\UserStatus::ACTIVE)
+                @if($author[0]->status == \App\Crawler\Enum\UserStatus::ACTIVE)
                     <div
                         class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
                         <button type="button"
@@ -86,13 +86,13 @@
                             </div>
                             <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
                                 <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                                    @if($author->status == \App\Crawler\Enum\UserStatus::ACTIVE)
+                                    @if($author[0]->status == \App\Crawler\Enum\UserStatus::ACTIVE)
                                         <div class="sm:col-span-1">
                                             <dt class="text-sm font-medium text-gray-500">
                                                 Role
                                             </dt>
                                             <dd class="mt-1 text-sm text-gray-900">
-                                                {{$author->is_admin ? 'Admin' : 'Role'}}
+                                                {{$author[0]->is_admin ? 'Admin' : 'Author'}}
                                             </dd>
                                         </div>
                                         <div class="sm:col-span-1">
@@ -100,7 +100,7 @@
                                                 Email address
                                             </dt>
                                             <dd class="mt-1 text-sm text-gray-900">
-                                                {{\Illuminate\Support\Str::mask($author->email, '*', 3, 5)}}
+                                                {{\Illuminate\Support\Str::mask($author[0]->email, '*', 2, 8)}}
                                             </dd>
                                         </div>
                                         <div class="sm:col-span-1">
@@ -108,7 +108,7 @@
                                                 Total Document
                                             </dt>
                                             <dd class="mt-1 text-sm text-gray-900">
-                                                {{count($author->documents)}}
+                                                {{count($author[0]->documents)}}
                                             </dd>
                                         </div>
                                     @endif
@@ -117,7 +117,7 @@
                                             Status
                                         </dt>
                                         <dd class="mt-1 text-sm text-gray-900">
-                                            {{array_search($author->status,\App\Crawler\Enum\UserStatus::asArray())}}
+                                            {{array_search($author[0]->status,\App\Crawler\Enum\UserStatus::asArray())}}
                                         </dd>
                                     </div>
                                     <div class="sm:col-span-2">
@@ -146,158 +146,59 @@
 
                 <section aria-labelledby="timeline-title" class="lg:col-start-3 lg:col-span-1">
                     <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
-                        <h2 id="timeline-title" class="text-lg font-medium text-gray-900">Documents</h2>
+                        <h2 id="timeline-title" class="text-lg font-medium text-gray-900">Documents
+                            ({{count($author[0]->documents)}})</h2>
 
                         <!-- Activity Feed -->
                         <div class="mt-6 flow-root">
-                            <ul role="list" class="-mb-8">
-                                <li>
-                                    <div class="relative pb-8">
-                                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
-                                              aria-hidden="true"></span>
-                                        <div class="relative flex space-x-3">
-                                            <div>
-                      <span class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center ring-8 ring-white">
-                        <!-- Heroicon name: solid/user -->
-                        <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                             fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                clip-rule="evenodd"/>
-                        </svg>
-                      </span>
-                                            </div>
-                                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                                                <div>
-                                                    <p class="text-sm text-gray-500">Applied to <a href="#"
-                                                                                                   class="font-medium text-gray-900">Front
-                                                            End Developer</a></p>
-                                                </div>
-                                                <div class="text-right text-sm whitespace-nowrap text-gray-500">
-                                                    <time datetime="2020-09-20">Sep 20</time>
-                                                </div>
-                                            </div>
+                            <div class="mt-1 grid grid-cols-1">
+                                @foreach($author[0]->documents as $document)
+                                    <div
+                                        class="relative rounded-lg border border-gray-300 mx-2 my-2 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-pink-500">
+                                        <div class="flex-shrink-0">
+                                            <img class="h-30 w-20 border border-gray-50"
+                                                 src="{{asset($document->image ?? 'images/avatar/default.png')}}"
+                                                 alt="{{$document->title}}">
                                         </div>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="relative pb-8">
-                                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
-                                              aria-hidden="true"></span>
-                                        <div class="relative flex space-x-3">
-                                            <div>
-                      <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
-                        <!-- Heroicon name: solid/thumb-up -->
-                        <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                             fill="currentColor" aria-hidden="true">
-                          <path
-                              d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
-                        </svg>
-                      </span>
-                                            </div>
-                                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                                                <div>
-                                                    <p class="text-sm text-gray-500">Advanced to phone screening by <a
-                                                            href="#" class="font-medium text-gray-900">Bethany Blake</a>
+                                        <div class="flex-1 min-w-0">
+                                            <a href="{{route('document.show_detail',$document->slug)}}"
+                                               class="focus:outline-none">
+                                                <span class="absolute inset-0" aria-hidden="true"></span>
+                                                <p class="text-sm font-medium text-gray-900">
+                                                    {{$document->title}}
+                                                </p>
+                                                <p class="text-sm text-gray-500 truncate">
+                                                    {{array_search($document->status,\App\Crawler\Enum\Status::asArray())}}
+                                                </p>
+                                                <div class="flex flex-row">
+                                                    <p class="text-sm text-gray-500 mt-2">{{$document->view}}
                                                     </p>
-                                                </div>
-                                                <div class="text-right text-sm whitespace-nowrap text-gray-500">
-                                                    <time datetime="2020-09-22">Sep 22</time>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                                    <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none"
+                                                         stroke="currentColor" viewBox="0 0 24 24"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                                    </svg>
 
-                                <li>
-                                    <div class="relative pb-8">
-                                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
-                                              aria-hidden="true"></span>
-                                        <div class="relative flex space-x-3">
-                                            <div>
-                      <span
-                          class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
-                        <!-- Heroicon name: solid/check -->
-                        <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                             fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd"
-                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                clip-rule="evenodd"/>
-                        </svg>
-                      </span>
-                                            </div>
-                                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                                                <div>
-                                                    <p class="text-sm text-gray-500">Completed phone screening with <a
-                                                            href="#" class="font-medium text-gray-900">Martha
-                                                            Gardner</a></p>
-                                                </div>
-                                                <div class="text-right text-sm whitespace-nowrap text-gray-500">
-                                                    <time datetime="2020-09-28">Sep 28</time>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="relative pb-8">
-                                        <span class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
-                                              aria-hidden="true"></span>
-                                        <div class="relative flex space-x-3">
-                                            <div>
-                      <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
-                        <!-- Heroicon name: solid/thumb-up -->
-                        <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                             fill="currentColor" aria-hidden="true">
-                          <path
-                              d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z"/>
-                        </svg>
-                      </span>
-                                            </div>
-                                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                                                <div>
-                                                    <p class="text-sm text-gray-500">Advanced to interview by <a
-                                                            href="#" class="font-medium text-gray-900">Bethany Blake</a>
+                                                    <p class="text-sm ml-5 text-gray-500 mt-2">{{$document->download}}
                                                     </p>
+                                                    <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none"
+                                                         stroke="currentColor" viewBox="0 0 24 24"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              stroke-width="2"
+                                                              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                                                    </svg>
                                                 </div>
-                                                <div class="text-right text-sm whitespace-nowrap text-gray-500">
-                                                    <time datetime="2020-09-30">Sep 30</time>
-                                                </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
-                                </li>
-
-                                <li>
-                                    <div class="relative pb-8">
-                                        <div class="relative flex space-x-3">
-                                            <div>
-                      <span
-                          class="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center ring-8 ring-white">
-                        <!-- Heroicon name: solid/check -->
-                        <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                             fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd"
-                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                clip-rule="evenodd"/>
-                        </svg>
-                      </span>
-                                            </div>
-                                            <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
-                                                <div>
-                                                    <p class="text-sm text-gray-500">Completed interview with <a
-                                                            href="#" class="font-medium text-gray-900">Katherine
-                                                            Snyder</a></p>
-                                                </div>
-                                                <div class="text-right text-sm whitespace-nowrap text-gray-500">
-                                                    <time datetime="2020-10-04">Oct 4</time>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                                @endforeach
+                            </div>
                         </div>
                         <div class="mt-6 flex flex-col justify-stretch">
                             <div class="grid grid-cols-2 gat-4">

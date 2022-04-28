@@ -2,6 +2,7 @@
 
 namespace App\Crawler\StoreData;
 
+use App\Crawler\Enum\Status;
 use App\Crawler\HandlePdf\PdfToImage;
 use App\Models\Document;
 use App\Services\DocumentManager;
@@ -74,6 +75,7 @@ class StoreData implements StoreDataInterface
             "code" => $code,
             "image" => $image,
             'is_crawl' => 1,
+            'status' => Status::PENDING,
         ]);
 
         DocumentManager::updateContentFile($document, $content);
@@ -82,17 +84,19 @@ class StoreData implements StoreDataInterface
         DocumentManager::updateUser($document, $users);
 
         //Update image and count page
-        $pdf_to_image = new PdfToImage();
-        try {
-            $pdf_to_image->savePdf($download_link);
-        } catch (Exception $e) {
-            \Illuminate\Support\Facades\Log::error($e);
-            return false;
+        if (is_null($image)) {
+            $pdf_to_image = new PdfToImage();
+            try {
+                $pdf_to_image->savePdf($download_link);
+            } catch (Exception $e) {
+                \Illuminate\Support\Facades\Log::error($e);
+                return false;
+            }
+            $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
+            $document->image = $pdf_to_image['image'];
+            if (is_null($page)) $document->page = $pdf_to_image['count_page'];
+            $document->save();
         }
-        $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
-        $document->image = $pdf_to_image['image'];
-        if (is_null($page)) $document->page = $pdf_to_image['count_page'];
-        $document->save();
 
         return true;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Document;
 
+use App\Crawler\Enum\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class DocumentController extends Controller
     public function showDetail($document_slug)
     {
         $document = Document::where('slug', $document_slug)
-            ->where('status', 1)
+            ->where('status', Status::ACTIVE)
             ->with('keywords')
             ->with('users')
             ->first();
@@ -57,7 +58,7 @@ class DocumentController extends Controller
 
     public function list()
     {
-        $documents = Document::where('status', 1)->paginate(8);
+        $documents = Document::where('status', Status::ACTIVE)->paginate(8);
         $count_documents = Document::count();
 
         return view('documents.list', compact('documents','count_documents'));

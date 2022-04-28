@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Author;
 
+use App\Crawler\Enum\Status;
 use App\Crawler\Enum\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -21,7 +22,9 @@ class AuthorController extends Controller
 
     public function showDetail($author_id)
     {
-        $author = User::findOrFail($author_id);
+        $author = User::findOrFail($author_id)->with(array('documents' => function($query) {
+            $query->where('status', '=', Status::ACTIVE);
+        }))->get();
 
         return view('authors.detail', compact('author'));
     }

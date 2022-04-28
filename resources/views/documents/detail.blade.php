@@ -21,7 +21,7 @@
                 <!-- Product image -->
                 <div class="lg:row-end-1 lg:col-span-3">
                     <div class="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
-                        <img src="{{asset($document->image)}}"
+                        <img src="{{asset($document->image ?? 'images/avatar/default.png')}}"
                              alt="{{$document->title}}"
                              class="object-center object-cover">
                     </div>
@@ -99,7 +99,8 @@
                                 </p>
                                 <p class="text-sm ml-10 text-gray-500 mt-2">{{$document->view}}
                                 </p>
-                                <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none" stroke="currentColor"
+                                     viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -109,7 +110,8 @@
 
                                 <p class="text-sm ml-5 text-gray-500 mt-2">{{$document->download}}
                                 </p>
-                                <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none" stroke="currentColor"
+                                     viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
@@ -119,7 +121,8 @@
                             <div class="pt-4">
                                 <span class="text-sm">Authors : </span>
                                 @foreach($document->users as $author)
-                                    <a href="#" class="text-indigo-600">{{$author->name}}</a> ,
+                                    <a href="{{route('author.show_detail',$author->id)}}"
+                                       class="text-indigo-600">{{$author->name}}</a> ,
                                 @endforeach
                             </div>
 

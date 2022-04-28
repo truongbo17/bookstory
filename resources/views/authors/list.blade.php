@@ -330,36 +330,66 @@
                 </section>
             </div>
 
-            <div class="mt-10 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            <ul role="list" class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 @foreach($authors as $author)
-                    <div class="group relative">
-                        <div
-                            class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                            <img src="{{asset($author->image ?? 'images/avatar/default.png')}}"
-                                 alt="{{$author->title}}"
-                                 class="w-full h-full object-center object-cover lg:w-full lg:h-full">
-                        </div>
-                        <div class="mt-4 flex justify-between">
-                            <div>
-                                <h3 class="text-sm text-gray-900">
-                                    <a href="{{route('author.show_detail', $author->id)}}">
-                                        <span aria-hidden="true" class="absolute inset-0"></span>
-                                        {{Str::of($author->name)->limit(100)}}
+                    <li class="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-gray-200">
+                        <a href="{{route('author.show_detail', $author->id)}}">
+                            <div class="flex-1 flex flex-col p-8">
+                                <img class="w-32 h-32 flex-shrink-0 mx-auto rounded-full"
+                                     src="{{asset($author->image ?? 'images/avatar/default.jpg')}}"
+                                     alt="{{$author->name}}">
+                                <h3 class="mt-6 text-gray-900 text-sm font-medium">{{Str::of($author->name)->limit(100)}}</h3>
+                                <dl class="mt-1 flex-grow flex flex-col justify-between">
+                                    <dt class="sr-only">Title</dt>
+                                    <dd class="text-gray-500 text-sm">{{$author->documents_count}} Documents</dd>
+                                    <dt class="sr-only">Role</dt>
+                                    <dd class="mt-3">
+                                        <span
+                                            class="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">{{$author->is_admin ? 'Admin' : 'Author'}}</span>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </a>
+                        <div>
+                            <div class="-mt-px flex divide-x divide-gray-200">
+                                <div class="w-0 flex-1 flex">
+                                    <a href="#"
+                                       class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500">
+                                        <!-- Heroicon name: solid/mail -->
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                                        </svg>
+                                        <span class="ml-3">Chat</span>
                                     </a>
-                                </h3>
-                                <p class="mt-1 text-sm text-gray-500">{{$author->documents_count}} Documents</p>
+                                </div>
+                                <div class="-ml-px w-0 flex-1 flex">
+                                    <a href="#"
+                                       class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500">
+                                        <!-- Heroicon name: solid/phone -->
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
+                                             viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                                        </svg>
+                                        <span class="ml-3">Follow</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </li>
                 @endforeach
-            </div>
+            </ul>
+
             <div class="pt-10 pb-4">
                 {{ $authors->links() }}
             </div>
             <div>
                 <select id="per_page" name="per_page"
                         class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:border-gray-700 rounded-md font-medium text-sm px-4 py-2 text-center items-center">
-                    <option disabled>Author per page : </option>
+                    <option disabled>Author per page :</option>
                     <option value="8" selected>8 Authors</option>
                     <option value="16">16 Authors</option>
                     <option value="32">32 Authors</option>
