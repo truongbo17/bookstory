@@ -52,4 +52,6 @@ Route::get('downloadpdf', [TestController::class, 'downloadpdf']);
 Route::get('viewpdf', [TestController::class, 'viewpdf']);
 
 //Crawl data from Pesthubt
-Route::get('pest', [PestHubtController::class, 'pesthubt']);
+Route::get('pest', function(){
+    return view('pdf.pest');
+});

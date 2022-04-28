@@ -5,12 +5,14 @@ namespace App\Console\Commands;
 use App\Crawler\Browsers\BrowserManager;
 use App\Crawler\Enum\CrawlStatus;
 use App\Crawler\Enum\DataStatus;
+use App\Crawler\StoreData\StoreData;
 use App\Libs\PhpUri;
 use App\Models\CrawlUrl;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use GuzzleHttp\Psr7\Uri;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use PDO;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use Vuh\CliEcho\CliEcho;
@@ -37,7 +39,7 @@ class PestHubtCommand extends Command
         'root_url' => 'https://pesthubt.com',
         'start_url' => 'https://pesthubt.com',
         'should_crawl_url' => '/^https:\/\/pesthubt\.com/',
-        'should_get_data' => '/^https:\/\/pesthubt\.com\/\w*\/\w*\/(\w*-\w*)*\.html/',
+        'should_get_data' => '/^https:\/\/pesthubt\.com\/\w*\/\w*\/(.*).html/',
         'should_get_info' => 'section.content.container-fluid.custom-content script',
         'skip_url' => [
             '/^https:\/\/pesthubt\.com\/danh-sach-yeu-thich.html/',
@@ -100,11 +102,18 @@ class PestHubtCommand extends Command
 
                         $author[] = $data['user']['fullname'];
                         $category[] = $data['category']['category'];
+                        $content = $data['note'];
 
                         $data['author'] = $author;
                         $data['category'] = $category;
+                        $data['content'] = $content;
+                        if (is_null($content)) {
+                            $data['content'] = $data['title'];
+                        }
 
                         $unset_key_object = [
+                            'id',
+                            'note',
                             'category_id',
                             'user_id',
                             'total_question',
@@ -126,19 +135,38 @@ class PestHubtCommand extends Command
                             'category',
                             'check_quiz',
                         ];
-
                         foreach ($unset_key_object as $key) {
                             unset($data[$key]);
                         }
 
-                        dd($data);
+                        $data = [
+                            'title' => $data['title'],
+                            'quizs' => $data['quiz_content'],
+                        ];
+
+//                        dd($data['quizs']);
+
+                        try {
+                            $pdf = PDF::loadView('pdf.pest', $data);
+                            Storage::put('public/pdf/invoice.pdf', $pdf->output());
+                        } catch (Exception $exception) {
+                            dd($exception);
+                        }
+
+//                        $check_data = StoreData::create();
+//                        $check = $check_data->saveData($data);
+//
+//                        if ($check) {
+//                            CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::HAS_DATA]);
+//                        } else {
+//                            CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::NO_DATA]);
+//                        }
                     } catch (Exception $e) {
                         Log::error($e);
                         CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::GET_DATA_ERROR]);
                     }
                 }
 
-                CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::HAS_DATA]);
                 CrawlUrl::find($crawl_url['id'])->update(['status' => CrawlStatus::DONE]);
                 CrawlUrl::find($crawl_url['id'])->update(['visited' => 1]);
 
@@ -150,7 +178,7 @@ class PestHubtCommand extends Command
                     if (!$this->exists($url)) {
                         CrawlUrl::create([
                             'url' => $url,
-                            'url_hash' => $this->hashUrl($this->site['root_url']),
+                            'url_hash' => $this->hashUrl($url),
                             'created_at' => Carbon::now(),
                             'updated_at' => Carbon::now(),
                         ]);
@@ -210,7 +238,7 @@ class PestHubtCommand extends Command
 
     public function exists(string $url): bool
     {
-        return DB::table('crawl_urls')->where('url_hash', $this->hashUrl($url))->exists();
+        return CrawlUrl::where('url_hash', $this->hashUrl($url))->exists();
     }
 
     public function hashUrl(string $url, string $algo = 'sha256'): string
