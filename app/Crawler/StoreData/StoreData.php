@@ -49,7 +49,7 @@ class StoreData implements StoreDataInterface
         $download_link = $data['download_link'] ?? "";
         $content = $data['content'] ?? $title;
 
-        $page = $data['page'] ?? null;
+        $count_page = $data['count_page'] ?? null;
         $binding = $data['binding'] ?? "PDF";
         $code = $data['code'] ?? null;
         $image = $data['image'] ?? null;
@@ -70,7 +70,7 @@ class StoreData implements StoreDataInterface
             "download_link" => $download_link,
             "content_file" => "",
             "content_hash" => md5($content),
-            "page" => $page,
+            "count_page" => $count_page,
             "binding" => $binding,
             "code" => $code,
             "image" => $image,
@@ -94,7 +94,7 @@ class StoreData implements StoreDataInterface
             }
             $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
             $document->image = $pdf_to_image['image'];
-            if (is_null($page)) $document->page = $pdf_to_image['count_page'];
+            if (is_null($count_page)) $document->count_page = $pdf_to_image['count_page'];
             $document->save();
         }
 

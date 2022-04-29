@@ -5,11 +5,13 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use eloquentFilter\QueryFilter\ModelFilters\Filterable;
+use App\ModelFilters\DocumentsFilter;
 
 class Document extends Model
 {
     use CrudTrait;
     use Filterable;
+    use DocumentsFilter;
 
     /*
     |--------------------------------------------------------------------------

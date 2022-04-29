@@ -174,7 +174,7 @@
                     </div>
 
                     <div class="border-t border-gray-200 mt-5 pt-5">
-                        <h3 class="text-sm font-medium text-gray-900">Page : {{$document->page}}</h3>
+                        <h3 class="text-sm font-medium text-gray-900">Page : {{$document->count_page}}</h3>
                         <h3 class="text-sm font-medium text-gray-900">Code : {{$document->code}}</h3>
                         <h3 class="text-sm font-medium text-gray-900">Binding : {{$document->binding}}</h3>
                     </div>

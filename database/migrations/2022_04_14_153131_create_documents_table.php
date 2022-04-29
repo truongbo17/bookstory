@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("download_link");
             $table->string("content_file"); //description
             $table->string("content_hash"); //description hash
-            $table->integer('page')->nullable(); //page of document
+            $table->integer('count_page')->nullable(); //page of document
             $table->string('binding')->nullable(); //PDF,DOCX
             $table->integer('code')->nullable(); //code of document
 

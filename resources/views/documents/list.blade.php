@@ -409,9 +409,9 @@
 
         document.getElementById('per_page').onchange = function () {
             let url = '{!! url()->full() !!}';
-            const regex = /\?perpage=\d*/;
+            const regex = /(\?|%3F)perpage=\d*/;
             const regex1 = /&perpage=\d*/;
-            const regex2 = /\?\w*=/;
+            const regex2 = /(\?|%3F)\w*/;
 
             if (url.match(regex)) {
                 url = url.replace(regex, "?perpage=" + this.value);

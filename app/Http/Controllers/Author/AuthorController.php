@@ -22,9 +22,9 @@ class AuthorController extends Controller
 
     public function showDetail($author_id)
     {
-        $author = User::findOrFail($author_id)->with(array('documents' => function($query) {
-            $query->where('status', '=', Status::ACTIVE);
-        }))->get();
+        $author = User::where('id',$author_id)->with(['documents' => function ($query) {
+            $query->where('status', Status::ACTIVE);
+        }])->get();
 
         return view('authors.detail', compact('author'));
     }
