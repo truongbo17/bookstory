@@ -18,9 +18,6 @@
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('document') }}'><i
                     class='nav-icon la la-book'></i>
                 Documents</a></li>
-        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('category') }}'><i
-                    class='nav-icon la la-th-large'></i>
-                Categories</a></li>
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('keyword') }}'><i
                     class='nav-icon la la-tag'></i>
                 Keywords</a></li>

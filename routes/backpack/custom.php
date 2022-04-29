@@ -19,7 +19,6 @@ Route::group([
     Route::crud('crawl-url', 'CrawlUrlCrudController');
     Route::crud('url', 'UrlCrudController');
     Route::crud('document', 'DocumentCrudController');
-    Route::crud('category', 'CategoryCrudController');
     Route::crud('keyword', 'KeywordCrudController');
     Route::crud('news', 'NewsCrudController');
     Route::crud('user', 'UserCrudController');

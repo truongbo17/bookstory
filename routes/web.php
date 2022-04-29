@@ -50,6 +50,7 @@ Route::get('test', [TestController::class, 'test']);
 Route::get('pdftoimage', [TestController::class, 'pdftoimage']);
 Route::get('downloadpdf', [TestController::class, 'downloadpdf']);
 Route::get('viewpdf', [TestController::class, 'viewpdf']);
+Route::get('crawl', [TestController::class, 'crawl']);
 
 //Crawl data from Pesthubt
 Route::get('pest', function(){

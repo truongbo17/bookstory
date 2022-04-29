@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use eloquentFilter\QueryFilter\ModelFilters\Filterable;
 
 class Document extends Model
 {
     use CrudTrait;
+    use Filterable;
 
     /*
     |--------------------------------------------------------------------------
@@ -65,4 +67,5 @@ class Document extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    private static $whiteListFilter = ['*'];
 }

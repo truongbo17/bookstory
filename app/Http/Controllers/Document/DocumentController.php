@@ -58,9 +58,13 @@ class DocumentController extends Controller
 
     public function list()
     {
-        $documents = Document::where('status', Status::ACTIVE)->paginate(8);
         $count_documents = Document::count();
+        $perpage = request()->get('perpage') ?? 12;
 
-        return view('documents.list', compact('documents','count_documents'));
+        $documents = Document::where('status', Status::ACTIVE)->AcceptRequest(['binding'])
+            ->filter()
+            ->paginate($perpage, ['*'], 'page');
+
+        return view('documents.list', compact('documents', 'count_documents'));
     }
 }

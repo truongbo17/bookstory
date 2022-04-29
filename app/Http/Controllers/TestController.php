@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Nesk\Puphpeteer\Puppeteer;
 use Nesk\Rialto\Data\JsFunction;
@@ -11,6 +12,18 @@ use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 class TestController extends Controller
 {
+    public function crawl()
+    {
+        $client = new Client(config('crawl.browsers.guzzle'));
+        $response = $client->get('https://5pdf.org/books');
+        $html = $response->getBody()->getContents();
+        $dom_crawler = new DomCrawler($html);
+        $linkCrawler = $dom_crawler->filter('div.dload-pdf a')->each(function (DomCrawler $node, $i) {
+            return $node->text();
+        });
+        dd($linkCrawler);
+    }
+
     public function test()
     {
         $puppeteer = new Puppeteer;
