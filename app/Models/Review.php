@@ -4,14 +4,10 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use eloquentFilter\QueryFilter\ModelFilters\Filterable;
-use App\ModelFilters\DocumentsFilter;
 
-class Document extends Model
+class Review extends Model
 {
     use CrudTrait;
-    use Filterable;
-    use DocumentsFilter;
 
     /*
     |--------------------------------------------------------------------------
@@ -19,7 +15,7 @@ class Document extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'documents';
+    protected $table = 'reviews';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -38,20 +34,7 @@ class Document extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function keywords()
-    {
-        return $this->belongsToMany(Keyword::class, 'document_keyword', 'document_id', 'keyword_id');
-    }
 
-    public function reviews()
-    {
-        return $this->hasMany(Review::class, 'document_id');
-    }
-
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'document_user', 'document_id', 'user_id');
-    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -69,5 +52,4 @@ class Document extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-    private static $whiteListFilter = ['*'];
 }

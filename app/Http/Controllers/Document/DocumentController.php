@@ -23,6 +23,7 @@ class DocumentController extends Controller
             ->where('status', Status::ACTIVE)
             ->with('keywords')
             ->with('users')
+            ->with('reviews')
             ->first();
 
         if (!$document) abort(404);

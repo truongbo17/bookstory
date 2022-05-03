@@ -207,160 +207,365 @@
                 </div>
             </div>
 
-            <div class="w-full max-w-2xl mx-auto mt-16 col-auto lg:max-w-none lg:mt-0">
-                <div>
-                    <div class="border-b border-gray-200">
-                        <div class="-mb-px flex space-x-8" aria-orientation="horizontal" role="tablist">
-                            <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-700 hover:text-gray-800 hover:border-gray-300" -->
-                            <button id="tab-reviews"
-                                    class="border-transparent text-gray-700 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap py-6 border-b-2 font-medium text-sm"
-                                    aria-controls="tab-panel-reviews" role="tab" type="button">
-                                Reader Feedback
-                            </button>
-                        </div>
-                    </div>
+            <!-- This example requires Tailwind CSS v2.0+ -->
+            <div class="bg-white">
+                <div
+                    class="max-w-2xl mx-auto mt-8 py-8 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:py-32 lg:px-8 lg:grid lg:grid-cols-12 lg:gap-x-8">
+                    <div class="lg:col-span-4">
+                        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Reader Reviews</h2>
 
-                    <!-- 'Customer Reviews' panel, show/hide based on tab state -->
-                    <div id="tab-panel-reviews" class="-mb-10" aria-labelledby="tab-reviews" role="tabpanel"
-                         tabindex="0">
-                        <h3 class="sr-only">Customer Reviews</h3>
-
-                        <div class="flex text-sm text-gray-500 space-x-4">
-                            <div class="flex-none py-10">
-                                <img
-                                    src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-                                    alt="" class="w-10 h-10 bg-gray-100 rounded-full">
-                            </div>
-                            <div class="py-10">
-                                <h3 class="font-medium text-gray-900">Emily Selman</h3>
-                                <p>
-                                    <time datetime="2021-07-16">July 16, 2021</time>
-                                </p>
-
-                                <div class="flex items-center mt-4">
+                        <div class="mt-3 flex items-center">
+                            <div>
+                                <div class="flex items-center">
                                     <!--
                                       Heroicon name: solid/star
 
                                       Active: "text-yellow-400", Default: "text-gray-300"
                                     -->
-                                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                         fill="currentColor" aria-hidden="true">
+                                    <svg class="flex-shrink-0 h-5 w-5 text-yellow-400"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                         aria-hidden="true">
                                         <path
                                             d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                     </svg>
 
                                     <!-- Heroicon name: solid/star -->
-                                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                         fill="currentColor" aria-hidden="true">
+                                    <svg class="flex-shrink-0 h-5 w-5 text-yellow-400"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                         aria-hidden="true">
                                         <path
                                             d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                     </svg>
 
                                     <!-- Heroicon name: solid/star -->
-                                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                         fill="currentColor" aria-hidden="true">
+                                    <svg class="flex-shrink-0 h-5 w-5 text-yellow-400"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                         aria-hidden="true">
                                         <path
                                             d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                     </svg>
 
                                     <!-- Heroicon name: solid/star -->
-                                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                         fill="currentColor" aria-hidden="true">
+                                    <svg class="flex-shrink-0 h-5 w-5 text-yellow-400"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                         aria-hidden="true">
                                         <path
                                             d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                     </svg>
 
                                     <!-- Heroicon name: solid/star -->
-                                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                         fill="currentColor" aria-hidden="true">
+                                    <svg class="flex-shrink-0 h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg"
+                                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path
                                             d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                                     </svg>
                                 </div>
-                                <p class="sr-only">5 out of 5 stars</p>
-
-                                <div class="mt-4 prose prose-sm max-w-none text-gray-500">
-                                    <p>This icon pack is just what I need for my latest project. There's an icon
-                                        for just about anything I could ever need. Love the playful look!</p>
-                                </div>
+                                <p class="sr-only">4 out of 5 stars</p>
                             </div>
+                            <p class="ml-2 text-sm text-gray-900">Based on {{count($document->reviews)}} reviews</p>
                         </div>
 
-                        <div class="flex text-sm text-gray-500 space-x-4">
-                            <div class="flex-none py-10">
-                                <img
-                                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-                                    alt="" class="w-10 h-10 bg-gray-100 rounded-full">
-                            </div>
-                            <div class="py-10 border-t border-gray-200">
-                                <h3 class="font-medium text-gray-900">Hector Gibbons</h3>
-                                <p>
-                                    <time datetime="2021-07-12">July 12, 2021</time>
-                                </p>
+                        <div class="mt-6">
+                            <h3 class="sr-only">Review data</h3>
 
-                                <div class="flex items-center mt-4">
-                                    <!--
-                                      Heroicon name: solid/star
+                            <dl class="space-y-3">
+                                <div class="flex items-center text-sm">
+                                    <dt class="flex-1 flex items-center">
+                                        <p class="w-3 font-medium text-gray-900">5<span
+                                                class="sr-only"> star reviews</span></p>
+                                        <div aria-hidden="true" class="ml-1 flex-1 flex items-center">
+                                            <!-- Heroicon name: solid/star -->
+                                            <svg class="flex-shrink-0 h-5 w-5 text-yellow-400"
+                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                 fill="currentColor" aria-hidden="true">
+                                                <path
+                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
 
-                                      Active: "text-yellow-400", Default: "text-gray-300"
-                                    -->
-                                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                         fill="currentColor" aria-hidden="true">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                    </svg>
+                                            <div class="ml-3 relative flex-1">
+                                                <div class="h-3 bg-gray-100 border border-gray-200 rounded-full"></div>
 
-                                    <!-- Heroicon name: solid/star -->
-                                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                         fill="currentColor" aria-hidden="true">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                    </svg>
-
-                                    <!-- Heroicon name: solid/star -->
-                                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                         fill="currentColor" aria-hidden="true">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                    </svg>
-
-                                    <!-- Heroicon name: solid/star -->
-                                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                         fill="currentColor" aria-hidden="true">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                    </svg>
-
-                                    <!-- Heroicon name: solid/star -->
-                                    <svg class="text-yellow-400 h-5 w-5 flex-shrink-0"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                         fill="currentColor" aria-hidden="true">
-                                        <path
-                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                    </svg>
+                                                <div style="width: calc(1019 / 1624 * 100%);"
+                                                     class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
+                                            </div>
+                                        </div>
+                                    </dt>
+                                    <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">63%</dd>
                                 </div>
-                                <p class="sr-only">5 out of 5 stars</p>
 
-                                <div class="mt-4 prose prose-sm max-w-none text-gray-500">
-                                    <p>Blown away by how polished this icon pack is. Everything looks so
-                                        consistent and each SVG is optimized out of the box so I can use it
-                                        directly with confidence. It would take me several hours to create a
-                                        single icon this good, so it's a steal at this price.</p>
+                                <div class="flex items-center text-sm">
+                                    <dt class="flex-1 flex items-center">
+                                        <p class="w-3 font-medium text-gray-900">4<span
+                                                class="sr-only"> star reviews</span></p>
+                                        <div aria-hidden="true" class="ml-1 flex-1 flex items-center">
+                                            <!-- Heroicon name: solid/star -->
+                                            <svg class="flex-shrink-0 h-5 w-5 text-yellow-400"
+                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                 fill="currentColor" aria-hidden="true">
+                                                <path
+                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+
+                                            <div class="ml-3 relative flex-1">
+                                                <div class="h-3 bg-gray-100 border border-gray-200 rounded-full"></div>
+
+                                                <div style="width: calc(162 / 1624 * 100%);"
+                                                     class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
+                                            </div>
+                                        </div>
+                                    </dt>
+                                    <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">10%</dd>
                                 </div>
-                            </div>
+
+                                <div class="flex items-center text-sm">
+                                    <dt class="flex-1 flex items-center">
+                                        <p class="w-3 font-medium text-gray-900">3<span
+                                                class="sr-only"> star reviews</span></p>
+                                        <div aria-hidden="true" class="ml-1 flex-1 flex items-center">
+                                            <!-- Heroicon name: solid/star -->
+                                            <svg class="flex-shrink-0 h-5 w-5 text-yellow-400"
+                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                 fill="currentColor" aria-hidden="true">
+                                                <path
+                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+
+                                            <div class="ml-3 relative flex-1">
+                                                <div class="h-3 bg-gray-100 border border-gray-200 rounded-full"></div>
+
+                                                <div style="width: calc(97 / 1624 * 100%);"
+                                                     class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
+                                            </div>
+                                        </div>
+                                    </dt>
+                                    <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">6%</dd>
+                                </div>
+
+                                <div class="flex items-center text-sm">
+                                    <dt class="flex-1 flex items-center">
+                                        <p class="w-3 font-medium text-gray-900">2<span
+                                                class="sr-only"> star reviews</span></p>
+                                        <div aria-hidden="true" class="ml-1 flex-1 flex items-center">
+                                            <!-- Heroicon name: solid/star -->
+                                            <svg class="flex-shrink-0 h-5 w-5 text-yellow-400"
+                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                 fill="currentColor" aria-hidden="true">
+                                                <path
+                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+
+                                            <div class="ml-3 relative flex-1">
+                                                <div class="h-3 bg-gray-100 border border-gray-200 rounded-full"></div>
+
+                                                <div style="width: calc(199 / 1624 * 100%);"
+                                                     class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
+                                            </div>
+                                        </div>
+                                    </dt>
+                                    <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">12%</dd>
+                                </div>
+
+                                <div class="flex items-center text-sm">
+                                    <dt class="flex-1 flex items-center">
+                                        <p class="w-3 font-medium text-gray-900">1<span
+                                                class="sr-only"> star reviews</span></p>
+                                        <div aria-hidden="true" class="ml-1 flex-1 flex items-center">
+                                            <!-- Heroicon name: solid/star -->
+                                            <svg class="flex-shrink-0 h-5 w-5 text-yellow-400"
+                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                 fill="currentColor" aria-hidden="true">
+                                                <path
+                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+
+                                            <div class="ml-3 relative flex-1">
+                                                <div class="h-3 bg-gray-100 border border-gray-200 rounded-full"></div>
+
+                                                <div style="width: calc(147 / 1624 * 100%);"
+                                                     class="absolute inset-y-0 bg-yellow-400 border border-yellow-400 rounded-full"></div>
+                                            </div>
+                                        </div>
+                                    </dt>
+                                    <dd class="ml-3 w-10 text-right tabular-nums text-sm text-gray-900">9%</dd>
+                                </div>
+                            </dl>
                         </div>
 
-                        <!-- More reviews... -->
+                        <div class="mt-10">
+                            <section aria-labelledby="notes-title">
+                                <div class="bg-white shadow sm:rounded-lg sm:overflow-hidden">
+                                    <div class="divide-y divide-gray-200">
+                                        <div class="px-4 py-5 sm:px-6">
+                                            <h2 id="notes-title"
+                                                class="text-lg font-medium text-gray-900">{{count($document->reviews)}}
+                                                Reviews</h2>
+                                        </div>
+                                        <div class="px-4 py-6 sm:px-6">
+                                            <ul role="list" class="space-y-8">
+                                                @foreach($document->reviews as $review)
+                                                    <li>
+                                                        <div class="flex space-x-3">
+                                                            <div class="flex-shrink-0">
+                                                                <img class="h-10 w-10 rounded-full"
+                                                                     src="{{asset($review->image ?? 'images/avatar/default.jpg')}}"
+                                                                     alt="Avatar review">
+                                                            </div>
+                                                            <div>
+                                                                <div class="text-sm">
+                                                                    <a class="font-medium text-gray-900">{{$review->name}}</a>
+                                                                    <div class="flex items-center mt-1 mb-4">
+                                                                        <!--
+                                                                          Heroicon name: solid/star
+                                                                          Active: "text-yellow-400", Default: "text-gray-300"
+                                                                        -->
+                                                                        @php($total_star = 5)
+                                                                        @for ($i = 1; $i <= $review->star; $i++)
+                                                                            <svg
+                                                                                class="text-yellow-400 h-5 w-5 flex-shrink-0"
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor"
+                                                                                aria-hidden="true">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                                            </svg>
+                                                                        @endfor
+                                                                        @for ($i = 1; $i <= $total_star-$review->star; $i++)
+                                                                            <svg
+                                                                                class="text-gray-300 h-5 w-5 flex-shrink-0"
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor"
+                                                                                aria-hidden="true">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                                            </svg>
+                                                                        @endfor
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mt-1 text-sm text-gray-700">
+                                                                    <p>{{$review->review}}</p>
+                                                                </div>
+                                                                <div class="mt-2 text-sm space-x-2">
+                                                                    <span
+                                                                        class="text-gray-500 font-medium">{{Carbon\Carbon::parse($document->created_at)->format('H:i M d Y')}}</span>
+                                                                    <span
+                                                                        class="text-gray-500 font-medium">&middot;</span>
+                                                                    <button type="button"
+                                                                            class="text-gray-900 font-medium">
+                                                                        Reply
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-50 px-4 py-6 sm:px-6">
+                                        <div class="flex space-x-3">
+                                            <div class="flex-shrink-0">
+                                                <img class="h-10 w-10 rounded-full"
+                                                     src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
+                                                     alt="">
+                                            </div>
+                                            <div class="min-w-0 flex-1">
+                                                @if (session('success'))
+                                                    <div id="alert-3"
+                                                         class="flex p-4 mb-4 bg-green-100 rounded-lg dark:bg-green-200"
+                                                         role="alert">
+                                                        <svg
+                                                            class="flex-shrink-0 w-5 h-5 text-green-700 dark:text-green-800"
+                                                            fill="currentColor" viewBox="0 0 20 20"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd"
+                                                                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                                                  clip-rule="evenodd"></path>
+                                                        </svg>
+                                                        <div
+                                                            class="ml-3 text-sm font-medium text-green-700 dark:text-green-800">
+                                                            {{session('success')}}
+                                                        </div>
+                                                        <button type="button"
+                                                                class="ml-auto -mx-1.5 -my-1.5 bg-green-100 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex h-8 w-8 dark:bg-green-200 dark:text-green-600 dark:hover:bg-green-300"
+                                                                data-dismiss-target="#alert-3" aria-label="Close">
+                                                            <span class="sr-only">Close</span>
+                                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill-rule="evenodd"
+                                                                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                                      clip-rule="evenodd"></path>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                @endif
+                                                <form action="{{route('review.send')}}" method="POST">
+                                                    @csrf
+                                                    <input type="number" name="document_id" value="{{$document->id}}"
+                                                           hidden>
+                                                    <div class="mb-6">
+                                                        <label for="name"
+                                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
+                                                            Name</label>
+                                                        <input type="text" value="{{auth()->user()->name}}" id="name"
+                                                               name="name"
+                                                               class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                                               placeholder="Your name">
+                                                        @if($errors->has('name'))
+                                                            <p class="text-red-500 text-sm">{{ $errors->first('name') }}</p>
+                                                        @endif
+                                                    </div>
+                                                    <div class="mb-6">
+                                                        <label for="email"
+                                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
+                                                            Email</label>
+                                                        <input type="email" name="email" id="email"
+                                                               value="{{auth()->user()->email}}"
+                                                               class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                                               placeholder="example@company.com">
+                                                        @if($errors->has('email'))
+                                                            <p class="text-red-500 text-sm">{{ $errors->first('email') }}</p>
+                                                        @endif
+                                                    </div>
+                                                    <div>
+                                                        <label for="comment"
+                                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Review</label>
+                                                        <textarea id="review" name="review" rows="3"
+                                                                  class="shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+                                                                  placeholder="Write a review..."></textarea>
+                                                        @if($errors->has('review'))
+                                                            <p class="text-red-500 text-sm">{{ $errors->first('review') }}</p>
+                                                        @endif
+                                                    </div>
+                                                    <div class="mt-3 flex items-center justify-between">
+                                                        <a href="#"
+                                                           class="group inline-flex items-start text-sm space-x-2 text-gray-500 hover:text-gray-900">
+                                                            <!-- Heroicon name: solid/question-mark-circle -->
+                                                            <svg
+                                                                class="flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                                fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd"
+                                                                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                                                                      clip-rule="evenodd"/>
+                                                            </svg>
+                                                            <div id="rater"></div>
+                                                        </a>
+                                                        <button type="submit"
+                                                                class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                            Send
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
                     </div>
+
                 </div>
             </div>
 
