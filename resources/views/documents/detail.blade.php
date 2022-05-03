@@ -208,10 +208,10 @@
             </div>
 
             <!-- This example requires Tailwind CSS v2.0+ -->
-            <div class="bg-white">
+            <div class="bg-white rounded-md">
                 <div
-                    class="max-w-2xl mx-auto mt-8 py-8 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:py-32 lg:px-8 lg:grid lg:grid-cols-12 lg:gap-x-8">
-                    <div class="lg:col-span-4">
+                    class="mx-auto mt-8 py-8 px-4 sm:py-8 sm:px-6 max-w-7xl">
+                    <div>
                         <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Reader Reviews</h2>
 
                         <div class="mt-3 flex items-center">
@@ -467,8 +467,8 @@
                                         <div class="flex space-x-3">
                                             <div class="flex-shrink-0">
                                                 <img class="h-10 w-10 rounded-full"
-                                                     src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
-                                                     alt="">
+                                                     src="{{asset($review->image ?? 'images/avatar/default.jpg')}}"
+                                                     alt="avatar reviewer">
                                             </div>
                                             <div class="min-w-0 flex-1">
                                                 @if (session('success'))
@@ -504,29 +504,34 @@
                                                     @csrf
                                                     <input type="number" name="document_id" value="{{$document->id}}"
                                                            hidden>
-                                                    <div class="mb-6">
-                                                        <label for="name"
-                                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
-                                                            Name</label>
-                                                        <input type="text" value="{{auth()->user()->name}}" id="name"
-                                                               name="name"
-                                                               class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                                                               placeholder="Your name">
-                                                        @if($errors->has('name'))
-                                                            <p class="text-red-500 text-sm">{{ $errors->first('name') }}</p>
-                                                        @endif
-                                                    </div>
-                                                    <div class="mb-6">
-                                                        <label for="email"
-                                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
-                                                            Email</label>
-                                                        <input type="email" name="email" id="email"
-                                                               value="{{auth()->user()->email}}"
-                                                               class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
-                                                               placeholder="example@company.com">
-                                                        @if($errors->has('email'))
-                                                            <p class="text-red-500 text-sm">{{ $errors->first('email') }}</p>
-                                                        @endif
+                                                    <div class="grid grid-cols-2 gap-4">
+                                                        <div class="mb-6">
+                                                            <label for="name"
+                                                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
+                                                                Name</label>
+                                                            <input type="text"
+                                                                   @if(auth()->user()) value="{{auth()->user()->name}}"
+                                                                   @endif id="name"
+                                                                   name="name"
+                                                                   class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                                                   placeholder="Your name">
+                                                            @if($errors->has('name'))
+                                                                <p class="text-red-500 text-sm">{{ $errors->first('name') }}</p>
+                                                            @endif
+                                                        </div>
+                                                        <div class="mb-6">
+                                                            <label for="email"
+                                                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
+                                                                Email</label>
+                                                            <input type="email" name="email" id="email"
+                                                                   @if(auth()->user()) value="{{auth()->user()->email}}"
+                                                                   @endif
+                                                                   class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                                                   placeholder="example@company.com">
+                                                            @if($errors->has('email'))
+                                                                <p class="text-red-500 text-sm">{{ $errors->first('email') }}</p>
+                                                            @endif
+                                                        </div>
                                                     </div>
                                                     <div>
                                                         <label for="comment"
