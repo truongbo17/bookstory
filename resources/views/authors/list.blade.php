@@ -29,7 +29,8 @@
                             class="max-w-7xl mx-auto flex space-x-6 divide-x divide-gray-200 text-sm px-4 sm:px-6 lg:px-8">
                             <div class="pt-1.5">
                                 <button type="button" class="group text-gray-700 font-medium flex items-center"
-                                        aria-controls="disclosure-1" aria-expanded="false">
+                                        onclick="filterToggle()"
+                                        aria-expanded="false">
                                     <!-- Heroicon name: solid/filter -->
                                     <svg class="flex-none w-5 h-5 mr-2 text-gray-400 group-hover:text-gray-500"
                                          aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -42,19 +43,9 @@
                                 </button>
                             </div>
                             <div class="pl-3">
-                            <span
-                                class="inline-flex rounded-full border border-gray-200 items-center py-1.5 pl-3 pr-2 text-sm font-medium bg-white text-gray-900">
-                              <span>Objects</span>
-                              <button type="button"
-                                      class="flex-shrink-0 ml-1 h-4 w-4 p-1 rounded-full inline-flex text-gray-400 hover:bg-gray-200 hover:text-gray-500">
-                                <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
-                                  <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7"></path>
-                                </svg>
-                              </button>
-                            </span>
                                 <span
                                     class="inline-flex rounded-full border border-gray-200 items-center py-2 pl-1 pr-2 text-sm font-medium bg-white text-indigo-700">
-                              <button type="button"
+                              <button type="button" id="clearFilter"
                                       class="flex-shrink-0 ml-1 h-4 w-4 p-1 rounded-full inline-flex text-indigo-700 hover:bg-gray-200 hover:text-indigo-900">
                                 <svg class="h-2 w-2 fill-indigo-700" stroke="currentColor" fill="none"
                                      viewBox="0 0 8 8">
@@ -65,12 +56,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="border-t border-gray-200 py-10" id="disclosure-1">
+                    <div class="border-t border-gray-200 py-10" style="display: none;" id="filter" tabindex="-1"
+                         aria-hidden="true">
                         <div class="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
                             <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
                                 <fieldset>
                                     <legend class="block font-medium">
-                                        Price
+                                        documents
                                     </legend>
                                     <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
                                         <div class="flex items-center text-base sm:text-sm">
@@ -107,164 +99,6 @@
                                     </div>
                                 </fieldset>
                                 <fieldset>
-                                    <legend class="block font-medium">
-                                        Color
-                                    </legend>
-                                    <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-0" name="color[]" value="white" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="color-0" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                White
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-1" name="color[]" value="beige" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="color-1" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Beige
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-2" name="color[]" value="blue" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                                                   checked>
-                                            <label for="color-2" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Blue
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-3" name="color[]" value="brown" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="color-3" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Brown
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-4" name="color[]" value="green" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="color-4" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Green
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-5" name="color[]" value="purple" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="color-5" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Purple
-                                            </label>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-                                <fieldset>
-                                    <legend class="block font-medium">
-                                        Size
-                                    </legend>
-                                    <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-0" name="size[]" value="xs" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="size-0" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                XS
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-1" name="size[]" value="s" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                                                   checked>
-                                            <label for="size-1" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                S
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-2" name="size[]" value="m" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="size-2" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                M
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-3" name="size[]" value="l" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="size-3" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                L
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-4" name="size[]" value="xl" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="size-4" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                XL
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-5" name="size[]" value="2xl" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="size-5" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                2XL
-                                            </label>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend class="block font-medium">
-                                        Category
-                                    </legend>
-                                    <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="category-0" name="category[]" value="all-new-arrivals"
-                                                   type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="category-0" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                All New Arrivals
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="category-1" name="category[]" value="tees" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="category-1" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Tees
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="category-2" name="category[]" value="objects" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="category-2" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Objects
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="category-3" name="category[]" value="sweatshirts" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="category-3" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Sweatshirts
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="category-4" name="category[]" value="pants-and-shorts"
-                                                   type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="category-4" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Pants &amp; Shorts
-                                            </label>
-                                        </div>
-                                    </div>
                                 </fieldset>
                             </div>
                         </div>
@@ -273,10 +107,10 @@
                         <div class="flex justify-end max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <div class="relative inline-block">
                                 <div class="flex">
-                                    <button type="button"
+                                    <button onclick="sortToggle()" type="button"
                                             class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
                                             id="menu-button" aria-expanded="false" aria-haspopup="true">
-                                        Sort
+                                        <span id="sortTitle"></span>
                                         <!-- Heroicon name: solid/chevron-down -->
                                         <svg
                                             class="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
@@ -288,39 +122,36 @@
                                         </svg>
                                     </button>
                                 </div>
-
-                                <!--
-                                  Dropdown menu, show/hide based on menu state.
-
-                                  Entering: "transition ease-out duration-100"
-                                    From: "transform opacity-0 scale-95"
-                                    To: "transform opacity-100 scale-100"
-                                  Leaving: "transition ease-in duration-75"
-                                    From: "transform opacity-100 scale-100"
-                                    To: "transform opacity-0 scale-95"
-                                -->
                                 <div
-                                    class="hidden origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    style="display: none" id="sort"
+                                    class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                                     <div class="py-1" role="none">
-                                        <!--
-                                          Active: "bg-gray-100", Not Active: ""
-
-                                          Selected: "font-medium text-gray-900", Not Selected: "text-gray-500"
-                                        -->
-                                        <a href="#" class="font-medium text-gray-900 block px-4 py-2 text-sm"
+                                        <a onclick="sortValue('az')"
+                                           class="font-medium cursor-pointer text-gray-600 @if(app('request')->input('sort')== 'az') text-indigo-600 @endif block px-4 py-2 text-sm hover:text-gray-900"
                                            role="menuitem" tabindex="-1" id="menu-item-0">
-                                            Most Popular
+                                            Name Ascending
                                         </a>
 
-                                        <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem"
+                                        <a onclick="sortValue('za')"
+                                           class="font-medium cursor-pointer text-gray-600 @if(app('request')->input('sort')== 'za') text-indigo-600 @endif block px-4 py-2 text-sm hover:text-gray-900"
+                                           role="menuitem"
                                            tabindex="-1" id="menu-item-1">
-                                            Best Rating
+                                            Name Descending
                                         </a>
 
-                                        <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem"
-                                           tabindex="-1" id="menu-item-2">
-                                            Newest
+                                        <a onclick="sortValue('daz')"
+                                           class="font-medium cursor-pointer text-gray-600 @if(app('request')->input('sort')== 'daz') text-indigo-600 @endif block px-4 py-2 text-sm hover:text-gray-900"
+                                           role="menuitem"
+                                           tabindex="-1" id="menu-item-1">
+                                            Date Ascending
+                                        </a>
+
+                                        <a onclick="sortValue('dza')"
+                                           class="font-medium cursor-pointer text-gray-600 @if(app('request')->input('sort')== 'dza') text-indigo-600 @endif block px-4 py-2 text-sm hover:text-gray-900"
+                                           role="menuitem"
+                                           tabindex="-1" id="menu-item-1">
+                                            Date Descending
                                         </a>
                                     </div>
                                 </div>
@@ -356,7 +187,8 @@
                                     <a href="#"
                                        class="relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500">
                                         <!-- Heroicon name: solid/mail -->
-                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
+                                             viewBox="0 0 24 24"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                   d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
@@ -387,14 +219,19 @@
                 {{ $authors->links() }}
             </div>
             <div>
-                <select id="per_page" name="per_page"
-                        class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:border-gray-700 rounded-md font-medium text-sm px-4 py-2 text-center items-center">
-                    <option disabled>Author per page :</option>
-                    <option value="8" selected>8 Authors</option>
-                    <option value="16">16 Authors</option>
-                    <option value="32">32 Authors</option>
-                    <option value="48">48 Authors</option>
-                </select>
+                <form>
+                    <select id="per_page" name="per_page"
+                            class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:border-gray-700 rounded-md font-medium text-sm px-4 py-2 text-center items-center">
+                        <option disabled>Books per page :</option>
+                        <option value="12" @if(!app('request')->input('perpage')) selected @endif>12 Authors</option>
+                        <option value="16" @if(app('request')->input('perpage')== 16) selected @endif>16 Authors
+                        </option>
+                        <option value="32" @if(app('request')->input('perpage')== 32) selected @endif>32 Authors
+                        </option>
+                        <option value="48" @if(app('request')->input('perpage')== 48) selected @endif>48 Authors
+                        </option>
+                    </select>
+                </form>
             </div>
         </div>
     </div>
@@ -402,4 +239,96 @@
 @endsection
 
 @push('javascript')
+    <script>
+        let url = "{{ url()->full() }}";
+        url = unEntity(url);
+        const rootUrl = '{{url()->current()}}';
+        newUrl = new URL(url);
+
+        //Toggle modal filter
+        const filter = document.getElementById('filter');
+        const sort = document.getElementById('sort');
+
+        function filterToggle() {
+            if (filter.style.display === "none") {
+                filter.style.display = "block";
+            } else {
+                filter.style.display = "none";
+            }
+        }
+
+        function sortToggle() {
+            if (sort.style.display === "none") {
+                sort.style.display = "block";
+            } else {
+                sort.style.display = "none";
+            }
+        }
+
+        //End toggle modal filter
+
+        //Perpage
+        document.getElementById('per_page').onchange = function () {
+            let perpage = this.value;
+            url = updateQueryStringParameter(url, "perpage", perpage);
+            url = unEntity(url);
+            url = decodeURI(url);
+            window.location = url;
+        };
+        //End Perpage
+
+        //Sort
+        function sortValue(sortValue) {
+            url = updateQueryStringParameter(url, "sort", sortValue);
+            url = unEntity(url);
+            url = decodeURI(url);
+            window.location = url;
+        }
+
+        var sortTitle = document.getElementById('sortTitle');
+        var requestSort = '{{app('request')->input('sort')}}';
+        if (requestSort === 'az') {
+            sortTitle.innerText = 'Name Ascending'
+        } else if (requestSort === 'za') {
+            sortTitle.innerText = 'Name Descending'
+        } else if (requestSort === 'daz') {
+            sortTitle.innerText = 'Date Ascending'
+        } else if (requestSort === 'dza') {
+            sortTitle.innerText = 'Date Descending'
+        } else {
+            sortTitle.innerText = 'Sort';
+        }
+        //End sort
+
+
+        //End Select one CheckBox
+
+        //Clear Filter
+        document.getElementById('clearFilter').onclick = function () {
+            window.location = rootUrl;
+        };
+        //End Clear Filter
+
+
+        //Update end set param url
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            } else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        //End Update end set param url
+
+        //Replace &amp url
+        function unEntity(str) {
+            return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+        }
+
+        //End replace
+
+    </script>
 @endpush

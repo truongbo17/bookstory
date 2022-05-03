@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\ModelFilters\UsersFilter;
+use eloquentFilter\QueryFilter\ModelFilters\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +15,8 @@ class User extends Authenticatable
     use HasRoles;
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasApiTokens, HasFactory, Notifiable;
+    use Filterable;
+    use UsersFilter;
 
     /**
      * The attributes that are mass assignable.
@@ -53,4 +57,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Document::class, 'document_user', 'user_id', 'document_id');
     }
+
+    private static $whiteListFilter = ['*'];
 }

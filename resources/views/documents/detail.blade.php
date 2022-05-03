@@ -215,7 +215,7 @@
                             <button id="tab-reviews"
                                     class="border-transparent text-gray-700 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap py-6 border-b-2 font-medium text-sm"
                                     aria-controls="tab-panel-reviews" role="tab" type="button">
-                                Customer Reviews
+                                Reader Feedback
                             </button>
                         </div>
                     </div>

@@ -43,19 +43,9 @@
                                 </button>
                             </div>
                             <div class="pl-3">
-                            <span
-                                class="inline-flex rounded-full border border-gray-200 items-center py-1.5 pl-3 pr-2 text-sm font-medium bg-white text-gray-900">
-                              <span>Objects</span>
-                              <button type="button"
-                                      class="flex-shrink-0 ml-1 h-4 w-4 p-1 rounded-full inline-flex text-gray-400 hover:bg-gray-200 hover:text-gray-500">
-                                <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
-                                  <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7"></path>
-                                </svg>
-                              </button>
-                            </span>
                                 <span
                                     class="inline-flex rounded-full border border-gray-200 items-center py-2 pl-1 pr-2 text-sm font-medium bg-white text-indigo-700">
-                              <button type="button"
+                              <button type="button" id="clearFilter"
                                       class="flex-shrink-0 ml-1 h-4 w-4 p-1 rounded-full inline-flex text-indigo-700 hover:bg-gray-200 hover:text-indigo-900">
                                 <svg class="h-2 w-2 fill-indigo-700" stroke="currentColor" fill="none"
                                      viewBox="0 0 8 8">
@@ -68,208 +58,71 @@
                     </div>
                     <div class="border-t border-gray-200 py-10" style="display: none;" id="filter" tabindex="-1"
                          aria-hidden="true">
-                        <div class="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
-                            <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-                                <fieldset>
-                                    <legend class="block font-medium">
-                                        Price
-                                    </legend>
-                                    <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="price-0" name="price[]" value="0" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="price-0" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                $0 - $25
-                                            </label>
+                        <form id="filterForm">
+                            <div
+                                class="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
+                                <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
+                                    <fieldset>
+                                        <legend class="block font-medium">
+                                            Count Page
+                                        </legend>
+                                        <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
+                                            <div class="flex items-center text-base sm:text-sm">
+                                                <input id="check-1" name="count_page" value="1" type="checkbox"
+                                                       class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                                                       onclick="selectOnlyThis(this.id)">
+                                                <label for="price-0" class="ml-3 min-w-0 flex-1 text-gray-600">
+                                                    0 - 100
+                                                </label>
+                                            </div>
+                                            <div class="flex items-center text-base sm:text-sm">
+                                                <input id="check-2" name="count_page" value="2" type="checkbox"
+                                                       class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                                                       onclick="selectOnlyThis(this.id)">
+                                                <label for="price-0" class="ml-3 min-w-0 flex-1 text-gray-600">
+                                                    100 - 200
+                                                </label>
+                                            </div>
+                                            <div class="flex items-center text-base sm:text-sm">
+                                                <input id="check-3" name="count_page" value="3" type="checkbox"
+                                                       class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                                                       onclick="selectOnlyThis(this.id)">
+                                                <label for="price-0" class="ml-3 min-w-0 flex-1 text-gray-600">
+                                                    200 - 500
+                                                </label>
+                                            </div>
+                                            <div class="flex items-center text-base sm:text-sm">
+                                                <input id="check-4" name="count_page" value="4" type="checkbox"
+                                                       class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                                                       onclick="selectOnlyThis(this.id)">
+                                                <label for="price-0" class="ml-3 min-w-0 flex-1 text-gray-600">
+                                                    > 500
+                                                </label>
+                                            </div>
                                         </div>
 
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="price-1" name="price[]" value="25" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="price-1" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                $25 - $50
-                                            </label>
+                                    </fieldset>
+                                    <fieldset>
+                                        <legend class="block font-medium">
+                                            Author
+                                        </legend>
+                                        <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
+                                            <div class="flex items-center text-base sm:text-sm">
+                                                <label for="size-0" class="mr-3 text-gray-600">
+                                                    Name:
+                                                </label>
+                                                <input id="author" name="author" type="text"
+                                                       class="border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
+                                            </div>
                                         </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="price-2" name="price[]" value="50" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="price-2" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                $50 - $75
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="price-3" name="price[]" value="75" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="price-3" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                $75+
-                                            </label>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend class="block font-medium">
-                                        Color
-                                    </legend>
-                                    <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-0" name="color[]" value="white" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="color-0" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                White
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-1" name="color[]" value="beige" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="color-1" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Beige
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-2" name="color[]" value="blue" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                                                   checked>
-                                            <label for="color-2" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Blue
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-3" name="color[]" value="brown" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="color-3" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Brown
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-4" name="color[]" value="green" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="color-4" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Green
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="color-5" name="color[]" value="purple" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="color-5" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Purple
-                                            </label>
-                                        </div>
-                                    </div>
-                                </fieldset>
+                                    </fieldset>
+                                </div>
                             </div>
-                            <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-                                <fieldset>
-                                    <legend class="block font-medium">
-                                        Size
-                                    </legend>
-                                    <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-0" name="size[]" value="xs" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="size-0" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                XS
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-1" name="size[]" value="s" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                                                   checked>
-                                            <label for="size-1" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                S
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-2" name="size[]" value="m" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="size-2" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                M
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-3" name="size[]" value="l" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="size-3" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                L
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-4" name="size[]" value="xl" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="size-4" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                XL
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="size-5" name="size[]" value="2xl" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="size-5" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                2XL
-                                            </label>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                    <legend class="block font-medium">
-                                        Category
-                                    </legend>
-                                    <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="category-0" name="category[]" value="all-new-arrivals"
-                                                   type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="category-0" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                All New Arrivals
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="category-1" name="category[]" value="tees" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="category-1" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Tees
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="category-2" name="category[]" value="objects" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="category-2" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Objects
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="category-3" name="category[]" value="sweatshirts" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="category-3" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Sweatshirts
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="category-4" name="category[]" value="pants-and-shorts"
-                                                   type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="category-4" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                Pants &amp; Shorts
-                                            </label>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div>
+                            <button type="submit"
+                                    class="flex justify-center ml-8 mt-4 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Filter Now
+                            </button>
+                        </form>
                     </div>
                     <div class="col-start-1 row-start-1 py-4">
                         <div class="flex justify-end max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -278,7 +131,7 @@
                                     <button onclick="sortToggle()" type="button"
                                             class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
                                             id="menu-button" aria-expanded="false" aria-haspopup="true">
-                                        Sort
+                                        <span id="sortTitle"></span>
                                         <!-- Heroicon name: solid/chevron-down -->
                                         <svg
                                             class="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
@@ -295,19 +148,31 @@
                                     class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                                     <div class="py-1" role="none">
-                                        <a href="#" class="font-medium text-gray-900 block px-4 py-2 text-sm"
+                                        <a onclick="sortValue('az')"
+                                           class="font-medium cursor-pointer text-gray-600 @if(app('request')->input('sort')== 'az') text-indigo-600 @endif block px-4 py-2 text-sm hover:text-gray-900"
                                            role="menuitem" tabindex="-1" id="menu-item-0">
-                                            Most Popular
+                                            Title Ascending
                                         </a>
 
-                                        <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem"
+                                        <a onclick="sortValue('za')"
+                                           class="font-medium cursor-pointer text-gray-600 @if(app('request')->input('sort')== 'za') text-indigo-600 @endif block px-4 py-2 text-sm hover:text-gray-900"
+                                           role="menuitem"
                                            tabindex="-1" id="menu-item-1">
-                                            Best Rating
+                                            Title Descending
                                         </a>
 
-                                        <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem"
-                                           tabindex="-1" id="menu-item-2">
-                                            Newest
+                                        <a onclick="sortValue('daz')"
+                                           class="font-medium cursor-pointer text-gray-600 @if(app('request')->input('sort')== 'daz') text-indigo-600 @endif block px-4 py-2 text-sm hover:text-gray-900"
+                                           role="menuitem"
+                                           tabindex="-1" id="menu-item-1">
+                                            Date Ascending
+                                        </a>
+
+                                        <a onclick="sortValue('dza')"
+                                           class="font-medium cursor-pointer text-gray-600 @if(app('request')->input('sort')== 'dza') text-indigo-600 @endif block px-4 py-2 text-sm hover:text-gray-900"
+                                           role="menuitem"
+                                           tabindex="-1" id="menu-item-1">
+                                            Date Descending
                                         </a>
                                     </div>
                                 </div>
@@ -388,6 +253,12 @@
 
 @push('javascript')
     <script>
+        let url = "{{ url()->full() }}";
+        url = unEntity(url);
+        const rootUrl = '{{url()->current()}}';
+        newUrl = new URL(url);
+
+        //Toggle modal filter
         const filter = document.getElementById('filter');
         const sort = document.getElementById('sort');
 
@@ -407,24 +278,115 @@
             }
         }
 
-        document.getElementById('per_page').onchange = function () {
-            let url = '{!! url()->full() !!}';
-            const regex = /(\?|%3F)perpage=\d*/;
-            const regex1 = /&perpage=\d*/;
-            const regex2 = /(\?|%3F)\w*/;
+        //End toggle modal filter
 
-            if (url.match(regex)) {
-                url = url.replace(regex, "?perpage=" + this.value);
-                window.location = url;
-            } else if (url.match(regex1)) {
-                url = url.replace(regex1, "&perpage=" + this.value);
-                window.location = url;
-            } else if (url.match(regex2)) {
-                url = url + "&perpage=" + this.value;
-                window.location = url;
-            } else {
-                window.location = url + "?perpage=" + this.value;
-            }
+        //Perpage
+        document.getElementById('per_page').onchange = function () {
+            let perpage = this.value;
+            url = updateQueryStringParameter(url, "perpage", perpage);
+            url = unEntity(url);
+            url = decodeURI(url);
+            window.location = url;
         };
+        //End Perpage
+
+        //Sort
+        function sortValue(sortValue) {
+            url = updateQueryStringParameter(url, "sort", sortValue);
+            url = unEntity(url);
+            url = decodeURI(url);
+            window.location = url;
+        }
+
+        var sortTitle = document.getElementById('sortTitle');
+        var requestSort = '{{app('request')->input('sort')}}';
+        if (requestSort === 'az') {
+            sortTitle.innerText = 'Title Ascending'
+        } else if (requestSort === 'za') {
+            sortTitle.innerText = 'Title Descending'
+        } else if (requestSort === 'daz') {
+            sortTitle.innerText = 'Date Ascending'
+        } else if (requestSort === 'dza') {
+            sortTitle.innerText = 'Date Descending'
+        } else {
+            sortTitle.innerText = 'Sort';
+        }
+        //End sort
+
+        //Select one CheckBox
+        function selectOnlyThis(id) {
+            for (var i = 1; i <= 4; i++) {
+                document.getElementById("check-" + i).checked = false;
+            }
+            document.getElementById(id).checked = true;
+        }
+
+        //End Select one CheckBox
+
+        //Clear Filter
+        document.getElementById('clearFilter').onclick = function () {
+            window.location = rootUrl;
+        };
+        //End Clear Filter
+
+        //Submit form filter
+        var filterForm = document.getElementById('filterForm');
+        filterForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            var author = filterForm.querySelector('input[name="author"]').value;
+            var count_page = Array.from(filterForm.querySelectorAll('input[type=checkbox]:checked'))
+                .map(item => item.value)
+                .join(',');
+
+            if (author.length > 0 && count_page.length > 0) {
+                newUrl.searchParams.set('users[name]', author);
+                newUrl.searchParams.set('count_page', count_page);
+
+                url = rootUrl + newUrl.search;
+            } else if (author.length > 0 && count_page.length < 1) {
+                url = updateQueryStringParameter(url, 'users[name]', author);
+            } else if (author.length < 1 && count_page.length > 0) {
+                url = updateQueryStringParameter(url, 'count_page', count_page);
+            }
+            url = unEntity(url);
+            url = decodeURI(url);
+            window.location = url;
+        });
+        //End submit form filter
+
+        //Update end set param url
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            } else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        //End Update end set param url
+
+        //Replace &amp url
+        function unEntity(str) {
+            return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+        }
+
+        //End replace
+
+        //Get author and count_page
+        const authorValue = newUrl.searchParams.get("users[name]");
+        const count_pageValue = newUrl.searchParams.get("count_page");
+
+        document.getElementById('author').value = authorValue;
+
+        let elements = document.getElementsByName("count_page");
+        for (let i = 0; i < elements.length; i++) {
+            if (elements[i].value === count_pageValue) {
+                elements[i].checked = true;
+            }
+        }
+        //End get author and count_page
     </script>
 @endpush

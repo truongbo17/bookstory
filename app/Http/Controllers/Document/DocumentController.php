@@ -61,7 +61,7 @@ class DocumentController extends Controller
         $count_documents = Document::count();
         $perpage = request()->get('perpage', 12);
 
-        $documents = Document::where('status', Status::ACTIVE)
+        $documents = Document::ignoreRequest(['perpage'])->where('status', Status::ACTIVE)
             ->filter()
             ->paginate($perpage, ['*'], 'page');
 

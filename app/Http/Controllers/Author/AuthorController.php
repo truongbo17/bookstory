@@ -12,17 +12,23 @@ class AuthorController extends Controller
 {
     public function list()
     {
-        $authors = User::where('status', UserStatus::ACTIVE)
-            ->withCount('documents')
-            ->paginate(8);
         $count_authors = User::count();
+
+        $perpage = request()->get('perpage', 12);
+
+        $authors = User::withCount('documents')
+            ->ignoreRequest(['perpage'])
+            ->where('status', UserStatus::ACTIVE)
+            ->filter()
+            ->paginate($perpage, ['*'], 'page');
 
         return view('authors.list', compact('authors', 'count_authors'));
     }
 
     public function showDetail($author_id)
     {
-        $author = User::where('id',$author_id)->with(['documents' => function ($query) {
+        User::findOrFail($author_id);
+        $author = User::where('id', $author_id)->with(['documents' => function ($query) {
             $query->where('status', Status::ACTIVE);
         }])->get();
 
