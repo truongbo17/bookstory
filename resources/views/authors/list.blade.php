@@ -58,50 +58,58 @@
                     </div>
                     <div class="border-t border-gray-200 py-10" style="display: none;" id="filter" tabindex="-1"
                          aria-hidden="true">
-                        <div class="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
-                            <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
-                                <fieldset>
-                                    <legend class="block font-medium">
-                                        documents
-                                    </legend>
-                                    <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="price-0" name="price[]" value="0" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="price-0" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                $0 - $25
-                                            </label>
+                        <form id="filterForm">
+                            <div
+                                class="max-w-7xl mx-auto grid grid-cols-2 gap-x-4 px-4 text-sm sm:px-6 md:gap-x-6 lg:px-8">
+                                <div class="grid grid-cols-1 gap-y-10 auto-rows-min md:grid-cols-2 md:gap-x-6">
+                                    <fieldset>
+                                        <legend class="block font-medium">
+                                            Count Documents
+                                        </legend>
+                                        <div class="pt-6 space-y-6 sm:pt-4 sm:space-y-4">
+                                            <div class="flex items-center text-base sm:text-sm">
+                                                <input id="check-1" name="count_document" value="1" type="checkbox"
+                                                       class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                                                       onclick="selectOnlyThis(this.id)">
+                                                <label for="price-0" class="ml-3 min-w-0 flex-1 text-gray-600">
+                                                    0 - 20
+                                                </label>
+                                            </div>
+                                            <div class="flex items-center text-base sm:text-sm">
+                                                <input id="check-2" name="count_document" value="2" type="checkbox"
+                                                       class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                                                       onclick="selectOnlyThis(this.id)">
+                                                <label for="price-0" class="ml-3 min-w-0 flex-1 text-gray-600">
+                                                    20 - 50
+                                                </label>
+                                            </div>
+                                            <div class="flex items-center text-base sm:text-sm">
+                                                <input id="check-3" name="count_document" value="3" type="checkbox"
+                                                       class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                                                       onclick="selectOnlyThis(this.id)">
+                                                <label for="price-0" class="ml-3 min-w-0 flex-1 text-gray-600">
+                                                    50 - 100
+                                                </label>
+                                            </div>
+                                            <div class="flex items-center text-base sm:text-sm">
+                                                <input id="check-4" name="count_document" value="4" type="checkbox"
+                                                       class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
+                                                       onclick="selectOnlyThis(this.id)">
+                                                <label for="price-0" class="ml-3 min-w-0 flex-1 text-gray-600">
+                                                    > 100
+                                                </label>
+                                            </div>
                                         </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="price-1" name="price[]" value="25" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="price-1" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                $25 - $50
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="price-2" name="price[]" value="50" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="price-2" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                $50 - $75
-                                            </label>
-                                        </div>
-
-                                        <div class="flex items-center text-base sm:text-sm">
-                                            <input id="price-3" name="price[]" value="75" type="checkbox"
-                                                   class="flex-shrink-0 h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500">
-                                            <label for="price-3" class="ml-3 min-w-0 flex-1 text-gray-600">
-                                                $75+
-                                            </label>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                                <fieldset>
-                                </fieldset>
+                                    </fieldset>
+                                    <fieldset>
+                                    </fieldset>
+                                </div>
                             </div>
-                        </div>
+                            <button type="submit"
+                                    class="flex justify-center ml-8 mt-4 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                Filter Now
+                            </button>
+                        </form>
                     </div>
                     <div class="col-start-1 row-start-1 py-4">
                         <div class="flex justify-end max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -301,8 +309,6 @@
         //End sort
 
 
-        //End Select one CheckBox
-
         //Clear Filter
         document.getElementById('clearFilter').onclick = function () {
             window.location = rootUrl;
@@ -330,5 +336,41 @@
 
         //End replace
 
+        //Select one CheckBox
+        function selectOnlyThis(id) {
+            for (var i = 1; i <= 4; i++) {
+                document.getElementById("check-" + i).checked = false;
+            }
+            document.getElementById(id).checked = true;
+        }
+
+        //End Select one CheckBox
+
+        //Submit form filter
+        var filterForm = document.getElementById('filterForm');
+        filterForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            var count_document = Array.from(filterForm.querySelectorAll('input[type=checkbox]:checked'))
+                .map(item => item.value)
+                .join(',');
+
+            url = updateQueryStringParameter(url, 'count_document', count_document);
+            url = unEntity(url);
+            url = decodeURI(url);
+            window.location = url;
+        });
+        //End submit form filter
+
+        //Get count document
+        const count_documentValue = newUrl.searchParams.get("count_document");
+
+        let elements = document.getElementsByName("count_document");
+        for (let i = 0; i < elements.length; i++) {
+            if (elements[i].value === count_documentValue) {
+                elements[i].checked = true;
+            }
+        }
+        //End get count document
     </script>
 @endpush
