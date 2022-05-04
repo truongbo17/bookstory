@@ -29,7 +29,7 @@ class AuthorController extends Controller
     {
         User::findOrFail($author_id);
         $author = User::where('id', $author_id)->with(['documents' => function ($query) {
-            $query->where('status', Status::ACTIVE);
+            $query->where('status', Status::ACTIVE)->paginate(5);
         }])->get();
 
         return view('authors.detail', compact('author'));
