@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Exception;
 
 class DocumentController extends Controller
 {
@@ -38,6 +39,7 @@ class DocumentController extends Controller
 
         $array_star = array_slice($array_star, -5); //Số star (1,2,3,4,5) ở document
         $count_star = array_sum($array_star); //Tong tat ca cac
+        if ($count_star == 0) $count_star = 0.01; //Fix loi divide zero
         $total_star = 5; //co 5 star
         $avg_star = (5 * $array_star['five_star_count']
                 + 4 * $array_star['four_star_count']
@@ -46,11 +48,11 @@ class DocumentController extends Controller
                 + 1 * $array_star['one_star_count']) / ($count_star);
 
         $percent = [
-            'one_star' => $array_star['one_star_count'] / $count_star * 100,
-            'two_star' => $array_star['two_star_count'] / $count_star * 100,
-            'three_star' => $array_star['three_star_count'] / $count_star * 100,
-            'four_star' => $array_star['four_star_count'] / $count_star * 100,
-            'five_star' => $array_star['five_star_count'] / $count_star * 100,
+            'one_star' => round($array_star['one_star_count'] / $count_star * 100, 2),
+            'two_star' => round($array_star['two_star_count'] / $count_star * 100, 2),
+            'three_star' => round($array_star['three_star_count'] / $count_star * 100, 2),
+            'four_star' => round($array_star['four_star_count'] / $count_star * 100, 2),
+            'five_star' => round($array_star['five_star_count'] / $count_star * 100, 2),
         ];
 
         $star = [
