@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function send(SendReviewRequest $request)
+    public function send(Request $request)
     {
         if (Review::create($request->all())) {
             return redirect(url()->previous() . '#success')->with('success', 'Thank you for your review !');

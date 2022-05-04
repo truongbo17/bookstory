@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email');
             $table->text('review');
-            $table->integer('star')->default(4);
+            $table->integer('rating')->default(4);
             $table->timestamps();
         });
     }

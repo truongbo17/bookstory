@@ -26,6 +26,41 @@ class DocumentController extends Controller
             ->with('reviews')
             ->first();
 
+        $array_star = Document::where('slug', $document_slug)
+            ->where('status', Status::ACTIVE)
+            ->withCount('oneStar')
+            ->withCount('twoStar')
+            ->withCount('threeStar')
+            ->withCount('fourStar')
+            ->withCount('fiveStar')
+            ->first()
+            ->toArray();
+
+        $array_star = array_slice($array_star, -5); //Số star (1,2,3,4,5) ở document
+        $count_star = array_sum($array_star); //Tong tat ca cac
+        $total_star = 5; //co 5 star
+        $avg_star = (5 * $array_star['five_star_count']
+                + 4 * $array_star['four_star_count']
+                + 3 * $array_star['three_star_count']
+                + 2 * $array_star['two_star_count']
+                + 1 * $array_star['one_star_count']) / ($count_star);
+
+        $percent = [
+            'one_star' => $array_star['one_star_count'] / $count_star * 100,
+            'two_star' => $array_star['two_star_count'] / $count_star * 100,
+            'three_star' => $array_star['three_star_count'] / $count_star * 100,
+            'four_star' => $array_star['four_star_count'] / $count_star * 100,
+            'five_star' => $array_star['five_star_count'] / $count_star * 100,
+        ];
+
+        $star = [
+            'array_star' => $array_star,
+            'count_star' => $count_star,
+            'total_star' => $total_star,
+            'avg_star' => $avg_star,
+            'percent' => $percent,
+        ];
+
         if (!$document) abort(404);
 
         $document->view = $document->view + 1;
@@ -41,7 +76,7 @@ class DocumentController extends Controller
         Storage::disk('document')->put($file, $contents);
         $link = asset('document/' . $file);
 
-        return view('documents.detail', compact('document', 'link'));
+        return view('documents.detail', compact('document', 'link', 'star'));
     }
 
     public function download($document_id)

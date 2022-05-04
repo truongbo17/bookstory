@@ -40,6 +40,11 @@
 </div>
 
 <script src="https://unpkg.com/flowbite@1.4.2/dist/flowbite.js"></script>
+<script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+
 <script>
     // Get the button
     let mybutton = document.getElementById('btn-back-to-top');
