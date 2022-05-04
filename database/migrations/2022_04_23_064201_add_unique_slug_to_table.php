@@ -17,9 +17,6 @@ return new class extends Migration
             $table->string('slug')->nullable(false)->change();
             $table->unique('slug');
         });
-        Schema::table('categories', function (Blueprint $table) {
-            $table->unique('slug');
-        });
     }
 
     /**
