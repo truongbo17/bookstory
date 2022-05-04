@@ -9,12 +9,10 @@ use App\Services\DocumentManager;
 use Exception;
 use Illuminate\Support\Str;
 use Log;
-use App\Traits\SaveImageFromUrl;
 use Vuh\CliEcho\CliEcho;
 
 class StoreData implements StoreDataInterface
 {
-    use SaveImageFromUrl;
 
     private static $instance;
 

@@ -59,11 +59,12 @@ class Crawler
 
                     if ($site->shouldGetData($crawl_url->url)) {
                         try {
-                            dump('get data....');
+                            CliEcho::infonl('Get data...');
                             $data = $site->getInfoFromCrawler($dom_crawler, $crawl_url->url); //get data
                             /*
                              * save data
                              * */
+                            if (is_null($data['content'] && mb_strlen($data['content'], 'UTF-8') > 5)) $data['content'] = $data['title'];
                             $crawl_url->setData($data);
                         } catch (Exception $e) {
                             Log::error($e);

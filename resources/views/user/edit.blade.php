@@ -96,7 +96,7 @@
                                         </div>
                                     @endforeach
                                     <form class="space-y-8 divide-y divide-gray-200"
-                                          action="{{ route('user.update') }}" method="POST" enctype="multipart/form-data">
+                                          action="{{ route('user.dashbroad_update') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                                             <div>

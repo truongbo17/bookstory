@@ -105,7 +105,7 @@
                 </span>
                                                             </div>
                                                             <div class="ml-4 flex-shrink-0">
-                                                                <a href="{{route('user.edit')}}"
+                                                                <a href="{{route('user.dashbroad_edit')}}"
                                                                    class="font-medium text-indigo-600 hover:text-indigo-500">
                                                                     Edit
                                                                 </a>

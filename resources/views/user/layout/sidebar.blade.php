@@ -24,7 +24,7 @@
                 </div>
                 <nav id="sidebar_user" class="mt-5 flex-1 px-2 space-y-1">
                     <!-- Current: "bg-indigo-800 text-white", Default: "text-white hover:bg-indigo-600 hover:bg-opacity-75" -->
-                    <a href="{{route('user.index')}}"
+                    <a href="{{route('user.dashbroad_index')}}"
                        class="hover:bg-indigo-600 hover:bg-opacity-75 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                         <!-- Heroicon name: outline/home -->
                         <svg class="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"

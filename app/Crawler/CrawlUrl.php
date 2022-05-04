@@ -7,7 +7,9 @@ use App\Crawler\Enum\DataStatus;
 use App\Crawler\Site\SiteInterface;
 use App\Crawler\Site\SiteManager;
 use App\Crawler\StoreData\StoreData;
+use Exception;
 use GuzzleHttp\Psr7\Uri;
+use Illuminate\Support\Facades\Log;
 use Psr\Http\Message\UriInterface;
 
 class CrawlUrl
