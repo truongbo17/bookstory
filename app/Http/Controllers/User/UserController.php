@@ -9,7 +9,7 @@ use App\Http\Requests\UserAddDocumentRequest;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
@@ -37,13 +37,16 @@ class UserController extends Controller
         $user = User::find(auth()->user()->id);
 
         if ($request->hasFile('image')) {
-            File::delete(public_path($user->image)); //Xóa file cũ đi
+            if ($user->image != null && Storage::disk(config('crawl.document_disk'))->exists($user->image)) {
+                Storage::disk(config('crawl.document_disk'))->delete($user->image);
+            }
+
             $image = $request->file('image');
             $image_name = uniqid() . $image->getClientOriginalName();
-            $image->move(public_path('/images/avatar'), $image_name);
 
-            $image_path = "/images/avatar/" . $image_name;
-            $user->image = $image_path;
+            $path = Storage::disk(config('crawl.document_disk'))->put(config('crawl.path.avatar_user'), $image);
+
+            $user->image = $path;
         }
         if ($request->password) {
             $user->password = Hash::make($request->password);
@@ -60,7 +63,7 @@ class UserController extends Controller
     public function deactive(Request $request)
     {
         if (!Hash::check($request->password, Auth::user()->password)) {
-            return response()->json(['message' => 'Password is don\'t match'],500);
+            return response()->json(['message' => 'Password is don\'t match'], 500);
         }
 
         User::find(auth()->user()->id)->update(['status' => UserStatus::DEACTIVE]);
@@ -70,10 +73,11 @@ class UserController extends Controller
         return response()->json(['message' => 'Deactive success'], 200);
     }
 
-    public function listDocument(){
+    public function listDocument()
+    {
         $user = User::findorFail(auth()->user()->id)->with('documents')->get();
 
-        return view('user.document.list',compact('user'));
+        return view('user.document.list', compact('user'));
     }
 
     public function addDocument()

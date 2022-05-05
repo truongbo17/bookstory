@@ -13,6 +13,10 @@ use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Carbon\Carbon;
+use File;
+use Response;
+use Symfony\Component\Console\Input\Input;
 
 /**
  * Class UrlCrudController
@@ -66,7 +70,11 @@ class UrlCrudController extends CrudController
             ],
         ]);
 
+        CRUD::button('delete')->remove();
+
+        $this->crud->addButtonFromView('top', 'import', 'import_url', 'beginning');
         $this->crud->addButtonFromView('line', 'moderate', 'change_status_url', 'beginning');
+        $this->crud->addButtonFromView('line', 'small', 'export_url', 'beginning');
     }
 
     /**
@@ -168,5 +176,38 @@ class UrlCrudController extends CrudController
         ]);
 
         return true;
+    }
+
+    public function exportUrl($id)
+    {
+        $url = Url::findOrFail($id)->toArray();
+        $json_name = $url['id'] . '-' . Carbon::now()->format('H-i-s-d-M-Y') . '.json';
+
+        unset($url['id']);
+        unset($url['created_at']);
+        unset($url['updated_at']);
+        $data = json_encode($url);
+
+        File::put(public_path('/upload/json/' . $json_name), $data);
+
+        $file = public_path() . "/upload/json/" . $json_name;
+        $headers = ['Content-Type: application/json'];
+        return Response::download($file, 'plugin.json', $headers);
+    }
+
+    public function importUrl(UrlRequest $request)
+    {
+        $file = Input::file('json_url');
+        if($file === null) {
+            throw new \Exception('File was not sent !');
+        }
+        if($file->isReadable()) {
+            $file->open('r');
+            $contents = $file->fread($file->getSize());
+            $json = json_decode($contents, true);
+        } else {
+            throw new \Exception('File is not readable');
+        }
+        dd($json);
     }
 }

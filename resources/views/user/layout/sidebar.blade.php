@@ -8,7 +8,7 @@
                         <div class="flex items-center">
                             <div>
                                 <img class="inline-block h-9 w-9 rounded-full"
-                                     src="{{asset(auth()->user()->image ?? 'images/avatar/default.jpg')}}"
+                                     src="{{asset('storage/data/'.auth()->user()->image ?? 'images/avatar/default.jpg')}}"
                                      alt="">
                             </div>
                             <div class="ml-3">

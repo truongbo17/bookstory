@@ -49,4 +49,7 @@ return [
         'ext_image' => 'png', //Lưu ảnh dưới dạng
     ],
     'public_link_document_image' => 'document_image',
+    'path' => [
+        'avatar_user' => 'avatar',
+    ]
 ];

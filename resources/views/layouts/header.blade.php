@@ -139,7 +139,7 @@
                             @else
                                 <a href="{{route('login')}}">
                                     <img class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
-                                         src="{{asset(auth()->user()->image ?? 'images/avatar/default.jpg')}}"
+                                         src="{{asset('storage/data/'.auth()->user()->image ?? 'images/avatar/default.jpg')}}"
                                          alt="avatar">
                                 </a>
                             @endif

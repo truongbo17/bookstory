@@ -96,7 +96,8 @@
                                         </div>
                                     @endforeach
                                     <form class="space-y-8 divide-y divide-gray-200"
-                                          action="{{ route('user.dashbroad_update') }}" method="POST" enctype="multipart/form-data">
+                                          action="{{ route('user.dashbroad_update') }}" method="POST"
+                                          enctype="multipart/form-data">
                                         @csrf
                                         <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
                                             <div>
@@ -143,7 +144,7 @@
                                                               <span
                                                                   class="h-14 w-14 rounded-full overflow-hidden bg-gray-100">
                                                                     <img
-                                                                        src="{{asset(auth()->user()->image ?? 'images/avatar/default.jpg')}}"
+                                                                        src="{{asset('storage/data/'.auth()->user()->image ?? 'images/avatar/default.jpg')}}"
                                                                         id="image"/>
                                                               </span>
                                                                 <button type="button"

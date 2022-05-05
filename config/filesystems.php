@@ -43,6 +43,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'local_storage_01' => [
+            'driver' => 'local',
+            'root' => env('ROOT_LOCAL_STORAGE_01', storage_path('data')),
+            'visibility' => 'public',
+        ],
+
         'document' => [
             'driver' => 'local',
             'root' => storage_path('app/public/document'),
@@ -91,7 +97,7 @@ return [
     */
 
     'links' => [
-//        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => storage_path('app/public'),
         public_path('document_image') => storage_path('app/public/document_image'),
         public_path('document') => storage_path('app/public/document'),
     ],

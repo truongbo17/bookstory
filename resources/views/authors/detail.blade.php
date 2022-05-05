@@ -235,7 +235,7 @@
         let url = "{{ url()->full() }}";
         url = unEntity(url);
         currentPage = parseInt(getDocumentPageFromUrl(url));
-        if (currentPage !== null && currentPage % 5 !== 0) currentPage = 5;
+        if (currentPage !== null && currentPage % 5 !== 0) currentPage = 0;
 
         function backPage() {
             if (currentPage === null || currentPage < 1) return;

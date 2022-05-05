@@ -21,6 +21,8 @@
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('keyword') }}'><i
                     class='nav-icon la la-tag'></i>
                 Keywords</a></li>
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('review') }}'><i
+                    class='nav-icon la la-comment'></i> Reviews</a></li>
     </ul>
 </li>
 
@@ -46,5 +48,3 @@
 
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('log') }}'><i class='nav-icon la la-terminal'></i>
         Logs</a></li>
-
-<li class='nav-item'><a class='nav-link' href='{{ backpack_url('review') }}'><i class='nav-icon la la-question'></i> Reviews</a></li>

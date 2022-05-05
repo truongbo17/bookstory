@@ -23,6 +23,8 @@ Route::group([
     Route::crud('news', 'NewsCrudController');
     Route::crud('user', 'UserCrudController');
     Route::post('url/{id}/update_status_url', 'UrlCrudController@updateStatus');
+    Route::get('url/{id}/export_url', 'UrlCrudController@exportUrl');
+    Route::post('url/import_url', 'UrlCrudController@importUrl');
     Route::crud('contact', 'ContactCrudController');
     Route::crud('review', 'ReviewCrudController');
 }); // this should be the absolute last line of this file
