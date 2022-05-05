@@ -25,12 +25,17 @@ class AuthorController extends Controller
         return view('authors.list', compact('authors', 'count_authors'));
     }
 
-    public function showDetail($author_id)
+    public function showDetail(Request $request, $author_id)
     {
+        $start_limit = 0;
+        if ($request->document_page != null) $start_limit = $request->document_page;
         User::findOrFail($author_id);
-        $author = User::where('id', $author_id)->with(['documents' => function ($query) {
-            $query->where('status', Status::ACTIVE)->paginate(5);
-        }])->get();
+        $author = User::where('id', $author_id)
+            ->with(['documents' => function ($query) use ($start_limit) {
+                $query->where('status', Status::ACTIVE)->skip($start_limit)->take(5)->get();
+            }])
+            ->withCount('documents')
+            ->get();
 
         return view('authors.detail', compact('author'));
     }

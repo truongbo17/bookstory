@@ -108,7 +108,7 @@
                                                 Total Document
                                             </dt>
                                             <dd class="mt-1 text-sm text-gray-900">
-                                                {{count($author[0]->documents)}}
+                                                {{$author[0]->documents_count}}
                                             </dd>
                                         </div>
                                     @endif
@@ -147,7 +147,7 @@
                 <section aria-labelledby="timeline-title" class="lg:col-start-3 lg:col-span-1">
                     <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
                         <h2 id="timeline-title" class="text-lg font-medium text-gray-900">Documents
-                            ({{count($author[0]->documents)}})</h2>
+                            ({{$author[0]->documents_count}})</h2>
 
                         <!-- Activity Feed -->
                         <div class="mt-6 flow-root">
@@ -202,7 +202,7 @@
                         </div>
                         <div class="mt-6 flex flex-col justify-stretch">
                             <div class="grid grid-cols-2 gat-4">
-                                <button type="button"
+                                <button type="button" onclick="backPage()"
                                         class="mr-8 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                     <svg class="mr-1 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                          xmlns="http://www.w3.org/2000/svg">
@@ -211,7 +211,7 @@
                                     </svg>
                                     Back
                                 </button>
-                                <button type="button"
+                                <button type="button" onclick="nextPage()"
                                         class="ml-6 inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                     Next
                                     <svg class="ml-1 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -231,4 +231,45 @@
 @endsection
 
 @push('javascript')
+    <script>
+        let url = "{{ url()->full() }}";
+        url = unEntity(url);
+        currentPage = parseInt(getDocumentPageFromUrl(url));
+        if (currentPage !== null && currentPage % 5 !== 0) currentPage = 5;
+
+        function backPage() {
+            if (currentPage === null || currentPage < 1) return;
+            currentPage = currentPage - 5;
+            url = updateQueryStringParameter(url, 'document_page', currentPage);
+            window.location = url;
+        }
+
+        function nextPage() {
+            currentPage = currentPage + 5;
+            url = updateQueryStringParameter(url, 'document_page', currentPage);
+            window.location = url;
+        }
+
+        function getDocumentPageFromUrl(url) {
+            return new URL(url).searchParams.get('document_page');
+        }
+
+        //Replace &amp url
+        function unEntity(str) {
+            return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+        }
+
+        //Update end set param url
+        function updateQueryStringParameter(uri, key, value) {
+            var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+            var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+            if (uri.match(re)) {
+                return uri.replace(re, '$1' + key + "=" + value + '$2');
+            } else {
+                return uri + separator + key + "=" + value;
+            }
+        }
+
+        //End Update end set param url
+    </script>
 @endpush

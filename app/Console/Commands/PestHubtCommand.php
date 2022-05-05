@@ -144,8 +144,6 @@ class PestHubtCommand extends Command
                             'quizs' => $data['quiz_content'],
                         ];
 
-//                        dd($data['quizs']);
-
                         try {
                             $pdf = PDF::loadView('pdf.pest', $data);
                             Storage::put('public/pdf/invoice.pdf', $pdf->output());
