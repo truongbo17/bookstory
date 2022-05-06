@@ -50,7 +50,8 @@
                                                       stroke-linejoin="round" stroke-width="2"
                                                       d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
                                             </svg>
-                                            <h3 class="mt-2 text-sm font-medium text-gray-900">Update your documents free!!</h3>
+                                            <h3 class="mt-2 text-sm font-medium text-gray-900">Update your documents
+                                                free!!</h3>
                                             <p class="mt-1 text-sm text-gray-500">
                                                 Get started by creating a new document.
                                             </p>
@@ -72,47 +73,57 @@
                                             </a>
                                         </div>
 
-                                        <h2 class="pt-4 text-sm font-medium text-gray-500">Your documents (Total {{count($user[0]->documents)}} documents)</h2>
+                                        <h2 class="pt-4 text-sm font-medium text-gray-500">Your documents
+                                            (Total {{count($user[0]->documents)}} documents)</h2>
                                         <div class="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
                                             @foreach($user[0]->documents as $document)
-                                            <div
-                                                class="relative rounded-lg border border-gray-300 mx-2 my-2 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-pink-500">
-                                                <div class="flex-shrink-0">
-                                                    <img class="h-30 w-20 border border-gray-50"
-                                                         src="{{asset($document->image ?? 'images/avatar/default.png')}}"
-                                                         alt="{{$document->title}}">
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <a href="#" class="focus:outline-none">
-                                                        <span class="absolute inset-0" aria-hidden="true"></span>
-                                                        <p class="text-sm font-medium text-gray-900">
-                                                            {{$document->title}}
-                                                        </p>
-                                                        <p class="text-sm text-gray-500 truncate">
-                                                            {{array_search($document->status,\App\Crawler\Enum\Status::asArray())}}
-                                                        </p>
-                                                        <div class="flex flex-row">
-                                                            <p class="text-sm text-gray-500 mt-2">{{$document->view}}
+                                                <div
+                                                    class="relative rounded-lg border border-gray-300 mx-2 my-2 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-pink-500">
+                                                    <div class="flex-shrink-0">
+                                                        <img class="h-30 w-20 border border-gray-50"
+                                                             @if(!is_null($document->image))
+                                                                 src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+                                                             @else
+                                                                 src="{{asset('images/avatar/default.png')}}"
+                                                             @endif
+                                                             alt="{{$document->title}}">
+                                                    </div>
+                                                    <div class="flex-1 min-w-0">
+                                                        <a href="#" class="focus:outline-none">
+                                                            <span class="absolute inset-0" aria-hidden="true"></span>
+                                                            <p class="text-sm font-medium text-gray-900">
+                                                                {{$document->title}}
                                                             </p>
-                                                            <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                                 xmlns="http://www.w3.org/2000/svg">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                                            </svg>
+                                                            <p class="text-sm text-gray-500 truncate">
+                                                                {{array_search($document->status,\App\Crawler\Enum\Status::asArray())}}
+                                                            </p>
+                                                            <div class="flex flex-row">
+                                                                <p class="text-sm text-gray-500 mt-2">{{$document->view}}
+                                                                </p>
+                                                                <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none"
+                                                                     stroke="currentColor" viewBox="0 0 24 24"
+                                                                     xmlns="http://www.w3.org/2000/svg">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                          stroke-width="2"
+                                                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                          stroke-width="2"
+                                                                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                                                </svg>
 
-                                                            <p class="text-sm ml-5 text-gray-500 mt-2">{{$document->download}}
-                                                            </p>
-                                                            <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                                 xmlns="http://www.w3.org/2000/svg">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
-                                                            </svg>
-                                                        </div>
-                                                    </a>
+                                                                <p class="text-sm ml-5 text-gray-500 mt-2">{{$document->download}}
+                                                                </p>
+                                                                <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none"
+                                                                     stroke="currentColor" viewBox="0 0 24 24"
+                                                                     xmlns="http://www.w3.org/2000/svg">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                          stroke-width="2"
+                                                                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                                                                </svg>
+                                                            </div>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             @endforeach
                                         </div>
                                     </div>
@@ -126,7 +137,6 @@
             </main>
         </div>
     </div>
-
 
 @endsection
 

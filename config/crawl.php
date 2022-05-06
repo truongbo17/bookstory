@@ -1,13 +1,28 @@
 <?php
 
 return [
+    /*
+     * Disk storage
+     * Path data
+     * */
+    'document_disk' => env('DOCUMENT_DISK', 'data'),
+    'path' => [
+        'avatar_user' => 'avatar',
+        'document_pdf' => 'document',
+        'document_image' => 'document_image',
+        'import_json_urls' => 'import_json_urls',
+        'content_file' => 'content',
+    ],
+//-------------------------------------------------------------------------------------
+    /*
+     * Crawler
+     * */
     'driver_browser' => env('DRIVER_BROWSER', 'guzzle'),
     'should_get_data' => [
         'title',
         'download_link',
         'content',
     ],
-    'document_disk' => env('DOCUMENT_DISK', 'data'),
     'browsers' => [
         'puppeteer' => [
             'timeout' => env('BROWSER_TIMEOUT', 120),
@@ -42,14 +57,5 @@ return [
         429, // Too Many Requests
         509, // Bandwidth Limit Exceeded (Apache)
     ],
-    'pdf_to_image' => [
-        'disk_document' => 'document', //disk save document
-        'file_name' => 'document.pdf', //file name save pdf tạm thời (tất cả các document thay nhau lưu ở đây)
-        'disk_image' => 'document_image', //Disk image document
-        'ext_image' => 'png', //Lưu ảnh dưới dạng
-    ],
-    'public_link_document_image' => 'document_image',
-    'path' => [
-        'avatar_user' => 'avatar',
-    ]
+//-------------------------------------------------------------------------------------
 ];

@@ -144,7 +144,11 @@
                                                               <span
                                                                   class="h-14 w-14 rounded-full overflow-hidden bg-gray-100">
                                                                     <img
-                                                                        src="{{asset('storage/data/'.auth()->user()->image ?? 'images/avatar/default.jpg')}}"
+                                                                        @if(!is_null(auth()->user()->image))
+                                                                            src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse(auth()->user()->image)->path())}}"
+                                                                        @else
+                                                                            src="{{asset('images/avatar/default.jpg')}}"
+                                                                        @endif
                                                                         id="image"/>
                                                               </span>
                                                                 <button type="button"

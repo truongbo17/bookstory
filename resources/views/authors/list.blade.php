@@ -175,7 +175,11 @@
                         <a href="{{route('author.show_detail', $author->id)}}">
                             <div class="flex-1 flex flex-col p-8">
                                 <img class="w-32 h-32 flex-shrink-0 mx-auto rounded-full"
-                                     src="@if($author->image){{asset('storage/data/'.$author->image)}}@else{{asset('images/avatar/default.jpg')}} @endif "
+                                     @if(!is_null($author->image))
+                                         src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse($author->image)->path())}}"
+                                     @else
+                                         src="{{asset('images/avatar/default.jpg')}}"
+                                     @endif
                                      alt="{{$author->name}}">
                                 <h3 class="mt-6 text-gray-900 text-sm font-medium">{{Str::of($author->name)->limit(100)}}</h3>
                                 <dl class="mt-1 flex-grow flex flex-col justify-between">

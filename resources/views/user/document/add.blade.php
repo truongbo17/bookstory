@@ -101,7 +101,7 @@
                                           enctype="multipart/form-data">
                                         @csrf
                                         <div class="shadow sm:rounded-md sm:overflow-hidden">
-                                            <div class="grid grid-cols-6 px-4 py-5 bg-white space-y-6 sm:p-6">
+                                            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                                                 <p class="text-gray-600 text-sm font-semibold">Note : Field <span
                                                         class="text-red-700 text-sm">(*)</span> is required</p>
                                                 <p class="text-gray-600 text-sm font-semibold"> <span
@@ -153,6 +153,19 @@
                                                     </div>
                                                 </div>
 
+                                                <div>
+                                                    <label for="about" class="block text-sm font-medium text-gray-700">
+                                                        Keyword <span
+                                                            class="text-red-700 text-sm">(separated by commas)</span>
+                                                    </label>
+                                                    <div class="mt-1">
+                                                        <input type="text" value="{{ old('keyword') }}" name="keyword"
+                                                               id="keyword"
+                                                               autocomplete="keyword" placeholder="keyword of document"
+                                                               class="@error('keyword') border-pink-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                                    </div>
+                                                </div>
+
                                                 <div class="grid grid-cols-2">
                                                     <div>
                                                         <label for="about"
@@ -169,7 +182,7 @@
                                                     <div class="ml-5">
                                                         <label for="about"
                                                                class="block text-sm font-medium text-gray-700">
-                                                            Page
+                                                            Page<span class="text-red-700 text-sm">*</span>
                                                         </label>
                                                         <div class="mt-1">
                                                             <input type="number" name="page" id="page"
@@ -183,8 +196,8 @@
                                                 <div>
                                                     <div class="">
                                                         <label class="block text-sm font-medium text-gray-700">
-                                                            Image <span class="mt-2 text-sm text-gray-500">
-                                                                (If the image is blank, it will be automatically generate.)
+                                                            Image <span class="mt-2 text-sm text-red-700">
+                                                                *
                                                             </span>
                                                         </label>
                                                         <div class="mt-1 flex items-center">
@@ -194,9 +207,11 @@
                                                              src="{{asset('images/avatar/default.png')}}"
                                                              id="image"/>
                                                         </span>
-                                                            <input class="text-sm ml-1" accept="image/*" name="image"
-                                                                   type="file"
-                                                                   id="files"/>
+                                                            <input
+                                                                class="text-sm ml-1 @error('image') border-pink-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror"
+                                                                accept="image/*" name="image"
+                                                                type="file"
+                                                                id="files"/>
                                                         </div>
                                                     </div>
                                                     <script type="text/javascript">
@@ -211,9 +226,9 @@
                                                     <label class="block text-sm font-medium text-gray-700">
                                                         Document file <span class="text-red-700 text-sm">*</span>
                                                     </label>
-                                                    <label for="file-upload">
+                                                    <label for="file_upload">
                                                         <div
-                                                            class="@error('file-upload') border-pink-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                                            class="@error('file_upload') border-pink-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                                             <div class="space-y-1 text-center">
                                                                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none"
                                                                      stroke="currentColor"
@@ -224,10 +239,10 @@
                                                                           d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                                                 </svg>
                                                                 <div class="flex text-sm text-gray-600">
-                                                                    <label for="file-upload"
+                                                                    <label for="file_upload"
                                                                            class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                                                         <span>Upload a document</span>
-                                                                        <input id="file-upload" name="file-upload"
+                                                                        <input id="file_upload" name="file_upload"
                                                                                type="file" accept="application/pdf"
                                                                                class="sr-only">
                                                                     </label>

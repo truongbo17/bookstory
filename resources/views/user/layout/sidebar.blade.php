@@ -8,7 +8,11 @@
                         <div class="flex items-center">
                             <div>
                                 <img class="inline-block h-9 w-9 rounded-full"
-                                     src="{{asset('storage/data/'.auth()->user()->image ?? 'images/avatar/default.jpg')}}"
+                                     @if(!is_null(auth()->user()->image))
+                                         src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse(auth()->user()->image)->path())}}"
+                                     @else
+                                         src="{{asset('images/avatar/default.jpg')}}"
+                                     @endif
                                      alt="">
                             </div>
                             <div class="ml-3">

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Crawler\HandlePdf\PdfToImage;
 use App\Libs\DiskPathTools\DiskPathInfo;
 use App\Libs\IdToPath;
 use App\Libs\StringUtils;
@@ -9,7 +10,10 @@ use App\Models\Category;
 use App\Models\Document;
 use App\Models\Keyword;
 use App\Models\User;
+use Exception;
+use Hash;
 use Illuminate\Support\Str;
+use Log;
 
 class DocumentManager
 {
@@ -17,23 +21,29 @@ class DocumentManager
         'XML', 'HTML', 'PDF', 'Citations'
     ];
 
-    public static function updateCategories(Document $document, array $categories)
+    public static function savePdf(Document $document, string $download_link, bool $pdf_to_image = true)
     {
-        $categories_id = [];
-
-        foreach ($categories as $category) {
-            $slug = Str::slug($category);
-
-            $categories_id[] = Category::create([
-                'name' => $categories,
-                'slug' => $slug,
-            ])->id;
+        $pdf_to_image = new PdfToImage();
+        try {
+            $path = $pdf_to_image->savePdf($document->id, $download_link);
+        } catch (Exception $e) {
+            \Illuminate\Support\Facades\Log::error($e);
+            return false;
         }
 
-        foreach ($categories_id as $category_id) {
-            $document = Document::find($document->id);
-            $document->categories()->attach($category_id);
-        }
+        $document->download_link = $path;
+        $document->save();
+
+        if ($pdf_to_image) self::pdfToImage($document, $pdf_to_image);
+    }
+
+    public static function pdfToImage(Document $document, $pdf_to_image)
+    {
+        $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
+
+        $document->image = $pdf_to_image['image'];
+        if (is_null($document->count_page)) $document->count_page = $pdf_to_image['count_page'];
+        $document->save();
     }
 
     public static function updateUser(Document $document, array $users)
@@ -56,7 +66,7 @@ class DocumentManager
             $user_name = self::stripVN($user);
 
             $email = strtolower(preg_replace('/\s/', '_', $user_name)) . $domain_mail;
-            $password = \Hash::make($email . uniqid()); //random password
+            $password = Hash::make($email . uniqid()); //random password
 
             $check_email = User::where('email', $email)->first();
 
@@ -86,7 +96,7 @@ class DocumentManager
             $new_file = false;
         } else {
             $disk = config('crawl.document_disk');
-            $path = 'docs/' . IdToPath::make($document->id, 'txt');
+            $path = config('crawl.path.content_file') . '/' . IdToPath::make($document->id, 'txt');
             $path_info = new DiskPathInfo($disk, $path);
             $new_file = true;
         }
@@ -98,7 +108,7 @@ class DocumentManager
             }
             return true;
         } else {
-            \Log::error("Can't not update content for document [$document->id] : ");
+            Log::error("Can't not update content for document [$document->id] : ");
             return false;
         }
     }
@@ -111,7 +121,7 @@ class DocumentManager
             try {
                 $entry = self::getKeyword($keyword);
                 $id = $entry->id;
-            } catch (\Exception) {
+            } catch (Exception) {
                 continue;
             }
             if (in_array($id, $keywords_id)) continue;

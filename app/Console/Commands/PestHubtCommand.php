@@ -5,14 +5,22 @@ namespace App\Console\Commands;
 use App\Crawler\Browsers\BrowserManager;
 use App\Crawler\Enum\CrawlStatus;
 use App\Crawler\Enum\DataStatus;
+use App\Crawler\Enum\Status;
+use App\Crawler\HandlePdf\PdfToImage;
 use App\Crawler\StoreData\StoreData;
+use App\Libs\DiskPathTools\DiskPathInfo;
+use App\Libs\IdToPath;
 use App\Libs\PhpUri;
 use App\Models\CrawlUrl;
+use App\Models\Document;
+use App\Services\DocumentManager;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use PDO;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use Vuh\CliEcho\CliEcho;
@@ -111,48 +119,46 @@ class PestHubtCommand extends Command
                             $data['content'] = $data['title'];
                         }
 
-                        $unset_key_object = [
-                            'id',
-                            'note',
-                            'category_id',
-                            'user_id',
-                            'total_question',
-                            'created_at',
-                            'viewed',
-                            'quiz_slug',
-                            'status',
-                            'download',
-                            'updated_at',
-                            'total_time',
-                            'total_grade',
-                            'liked_count',
-                            'is_liked',
-                            'is_favorited',
-                            'answer_shuffle',
-                            'qs_shuffle',
-                            'mode',
-                            'user',
-                            'category',
-                            'check_quiz',
-                        ];
-                        foreach ($unset_key_object as $key) {
-                            unset($data[$key]);
-                        }
+                        $data = Arr::only($data, ['title', 'category', 'content', 'author', 'quiz_content']);
 
-                        $data = [
-                            'title' => $data['title'],
-                            'quizs' => $data['quiz_content'],
-                        ];
+                        $document = Document::create([
+                            "title" => $data['title'],
+                            "slug" => createSlug($data['title']),
+                            "download_link" => "",
+                            "content_file" => "",
+                            "count_page" => null,
+                            "content_hash" => md5($data['content']),
+                            'is_crawl' => 1,
+                            'status' => Status::PENDING,
+                        ]);
+
+                        DocumentManager::updateContentFile($document, $data['content']);
+                        DocumentManager::updateKeywords($document, $data['category']);
+                        DocumentManager::updateUser($document, $data['author']);
 
                         try {
-                            $pdf = PDF::loadView('pdf.pest', $data);
-                            Storage::put('public/pdf/invoice.pdf', $pdf->output());
+                            $data_pdf = [
+                                'title' => $data['title'],
+                                'quizs' => $data['quiz_content'],
+                            ];
+                            $pdf = PDF::loadView('pdf.pest', $data_pdf);
+
+                            $file_name = IdToPath::make($document->id, 'pdf');
+                            $file_name = new DiskPathInfo(config('crawl.document_disk'), config('crawl.path.document_pdf') . '/' . $file_name);
+                            $file_name->put($pdf->output());
+                            $document->download_link = $file_name;
+                            $document->save();
+
+                            $pdf_to_image = new PdfToImage();
+                            $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
+
+                            $document->image = $pdf_to_image['image'];
+                            if (is_null($document->count_page)) $document->count_page = $pdf_to_image['count_page'];
+                            $document->save();
                         } catch (Exception $exception) {
                             dd($exception);
                         }
 
-//                        $check_data = StoreData::create();
-//                        $check = $check_data->saveData($data);
 //
 //                        if ($check) {
 //                            CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::HAS_DATA]);

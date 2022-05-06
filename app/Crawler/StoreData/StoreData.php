@@ -42,7 +42,7 @@ class StoreData implements StoreDataInterface
 
         $title = $data['title'] ?? "title";
         //Check slug
-        $slug = $this->createSlug($title);
+        $slug = createSlug($title);
 
         $download_link = $data['download_link'] ?? "";
         $content = $data['content'] ?? $title;
@@ -65,7 +65,7 @@ class StoreData implements StoreDataInterface
         $document = Document::create([
             "title" => $title,
             "slug" => $slug,
-            "download_link" => $download_link,
+            "download_link" => "",
             "content_file" => "",
             "content_hash" => md5($content),
             "count_page" => $count_page,
@@ -78,36 +78,10 @@ class StoreData implements StoreDataInterface
 
         DocumentManager::updateContentFile($document, $content);
         DocumentManager::updateKeywords($document, $keywords);
-        DocumentManager::updateCategories($document, $categories);
         DocumentManager::updateUser($document, $users);
-
-        //Update image and count page
-        if (is_null($image)) {
-            $pdf_to_image = new PdfToImage();
-            try {
-                $pdf_to_image->savePdf($download_link);
-            } catch (Exception $e) {
-                \Illuminate\Support\Facades\Log::error($e);
-                return false;
-            }
-            $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
-            $document->image = $pdf_to_image['image'];
-            if (is_null($count_page)) $document->count_page = $pdf_to_image['count_page'];
-            $document->save();
-        }
+        DocumentManager::savePdf($document,$download_link);
 
         return true;
-    }
-
-    public function createSlug(string $title): string
-    {
-        $slug = Str::slug($title);
-        $check_slug = Document::where('slug', $slug)->exists();
-        if ($check_slug) {
-            $slug = $slug . '-' . time() . mt_rand();
-        }
-
-        return $slug;
     }
 
     /*
