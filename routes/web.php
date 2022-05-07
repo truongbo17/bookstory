@@ -2,12 +2,7 @@
 
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\TestController;
-use App\Models\Category;
-use App\Models\CrawlUrl;
-use App\Models\Document;
-use App\Models\Keyword;
-use App\Models\Review;
-use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,3 +31,9 @@ Route::get('crawl', [TestController::class, 'crawl']);
 Route::get('pest', function () {
     return view('pdf.pest');
 });
+
+use Illuminate\Http\Request;
+Route::get('doc', function (Request $request) {
+    $path = $request->input('path');
+    return Storage::disk(config('crawl.document_disk'))->download($path);
+})->name('local.temp');

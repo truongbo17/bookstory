@@ -29,7 +29,9 @@ class TestController extends Controller
 
         $browser = $puppeteer->launch();
         $page = $browser->newPage();
-        $page->goto('https://pesthubt.com/quiz/22385/kinh-te-hoc-dai-cuong-epu.html');
+        $page->goto('https://www.scirp.org/pdf/ojmn_2022022816255359.pdf');
+        $path = '/var/www/bookstory.test/public/ex.png';
+        $page->screenshot(['path' => $path]);
 
         $html = '';
 
@@ -41,7 +43,7 @@ class TestController extends Controller
         }
 
         $browser->close();
-//dd($html);
+        dd($html);
 
 //        $title = 'body > div:nth-child(3) > div > div.col-xs-12.col-sm-8.col-md-8.col-lg-8 > div.content_page.pd-20 > div.row > div.col-xs-12.col-sm-4.col-md-4.col-lg-4 > img';
 

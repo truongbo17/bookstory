@@ -251,6 +251,8 @@
                                                                 <p class="text-xs text-gray-500">
                                                                     PDF up to 10MB
                                                                 </p>
+                                                                <p class="text-sm text-bold text-indigo-700"
+                                                                   id="result"></p>
                                                             </div>
                                                         </div>
                                                     </label>
@@ -289,4 +291,10 @@
 @endsection
 
 @push('javascript')
+    <script>
+        $('#file_upload').change(function () {
+            var filename = $(this)[0].files[0].name;
+            $('#result').text("Your file upload : "+filename);
+        });
+    </script>
 @endpush

@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
-                        <a href="{{route('document.detail_download',$document->id)}}"
+                        <a href="{{$download_link}}"
                            class="button w-full bg-indigo-600 border border-black border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">
                             Download
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"

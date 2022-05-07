@@ -157,7 +157,11 @@
                                         class="relative rounded-lg border border-gray-300 mx-2 my-2 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-pink-500">
                                         <div class="flex-shrink-0">
                                             <img class="h-30 w-20 border border-gray-50"
-                                                 src="{{asset($document->image ?? 'images/avatar/default.png')}}"
+                                                 @if(!is_null($document->image))
+                                                     src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+                                                 @else
+                                                     src="{{asset('images/avatar/default.png')}}"
+                                                 @endif
                                                  alt="{{$document->title}}">
                                         </div>
                                         <div class="flex-1 min-w-0">

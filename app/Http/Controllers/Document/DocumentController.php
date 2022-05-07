@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Document;
 
 use App\Crawler\Enum\Status;
 use App\Http\Controllers\Controller;
+use App\Libs\DiskPathTools\DiskPathInfo;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -72,13 +73,9 @@ class DocumentController extends Controller
             return abort(404);
         }
 
-        //Save file PDF để hiển thị
-        $file = 'read_document.pdf';
-        $contents = file_get_contents($document->download_link, false, stream_context_create($this->arrContextOptions));
-        Storage::disk('document')->put($file, $contents);
-        $link = asset('document/' . $file);
+        $download_link = DiskPathInfo::parse($document->download_link)->tempUrl();
 
-        return view('documents.detail', compact('document', 'link', 'star'));
+        return view('documents.detail', compact('document', 'download_link', 'star'));
     }
 
     public function download($document_id)
