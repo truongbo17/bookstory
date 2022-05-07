@@ -20,7 +20,7 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <object class="w-full" data="{{$link}}" type="application/pdf" style="height: 75vh">
+                <object class="w-full" data="{{$read_link}}" type="application/pdf" style="height: 75vh">
                     <p>Your web browser doesn't have a PDF plugin.
                         Instead you can <a class="text-indigo-700"
                                            href="{{route('document.detail_download',$document->id)}}">click here to

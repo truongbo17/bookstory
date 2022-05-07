@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Document\DocumentController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,8 +34,5 @@ Route::get('pest', function () {
     return view('pdf.pest');
 });
 
-use Illuminate\Http\Request;
-Route::get('doc', function (Request $request) {
-    $path = $request->input('path');
-    return Storage::disk(config('crawl.document_disk'))->download($path);
-})->name('local.temp');
+//Temp URL
+Route::get('doc', [DocumentController::class, 'handle'])->name('document.handle');

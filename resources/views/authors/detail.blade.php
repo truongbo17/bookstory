@@ -25,11 +25,15 @@
                         <div class="relative">
                             @if($author[0]->status == \App\Crawler\Enum\UserStatus::ACTIVE)
                                 <img class="h-16 w-16 rounded-full"
-                                     src="{{asset($author[0]->image ?? 'images/avatar/default.jpg')}}"
+                                     @if(!is_null($author[0]->image))
+                                         src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse($author[0]->image)->path())}}"
+                                     @else
+                                         src="{{asset('images/avatar/default.png')}}"
+                                     @endif
                                      alt="">
                             @else
                                 <img class="h-16 w-16 rounded-full"
-                                     src="{{asset($author[0]->image ?? 'images/avatar/banned.png')}}"
+                                     src="{{asset('images/avatar/banned.png')}}"
                                      alt="">
                             @endif
                             <span class="absolute inset-0 shadow-inner rounded-full" aria-hidden="true"></span>

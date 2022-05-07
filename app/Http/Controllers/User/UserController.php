@@ -100,6 +100,7 @@ class UserController extends Controller
         $document = Document::create([
             "title" => $request->input('title'),
             "slug" => $slug,
+            "code" => $request->input('code'),
             "download_link" => "",
             "content_file" => "",
             "binding" => "PDF",
@@ -112,6 +113,7 @@ class UserController extends Controller
         if ($request->hasFile('image')) {
             $image_name = IdToPath::make($document->id, $request->image->extension());
             $image_name = new DiskPathInfo(config('crawl.document_disk'), config('crawl.path.document_image') . '/' . $image_name);
+
             $image_name->put($request->file('image')->getContent());
 
             $document->image = $image_name;

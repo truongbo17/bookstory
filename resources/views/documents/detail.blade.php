@@ -22,9 +22,14 @@
                 <!-- Product image -->
                 <div class="lg:row-end-1 lg:col-span-3">
                     <div class="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
-                        <img src="{{asset($document->image ?? 'images/avatar/default.png')}}"
-                             alt="{{$document->title}}"
-                             class="object-center object-cover">
+                        <img
+                            @if(!is_null($document->image))
+                                src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+                            @else
+                                src="{{asset('images/avatar/default.png')}}"
+                            @endif
+                            alt="{{$document->title}}"
+                            class="object-center object-cover">
                     </div>
 
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">

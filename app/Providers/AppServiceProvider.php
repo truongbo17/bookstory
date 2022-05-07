@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Storage;
+use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,8 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Storage::disk(config('crawl.document_disk'))->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
-            return \URL::temporarySignedRoute(
-                'local.temp',
+            return URL::temporarySignedRoute(
+                'document.handle',
                 $expiration,
                 array_merge($options, ['path' => $path])
             );

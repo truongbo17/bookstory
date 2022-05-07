@@ -12,13 +12,6 @@ use PHPUnit\Exception;
 
 class DocumentController extends Controller
 {
-    public array $arrContextOptions = [
-        "ssl" => [
-            "verify_peer" => false,
-            "verify_peer_name" => false,
-        ],
-    ];
-
     public function showDetail($document_slug)
     {
         $document = Document::where('slug', $document_slug)
@@ -73,22 +66,22 @@ class DocumentController extends Controller
             return abort(404);
         }
 
-        $download_link = DiskPathInfo::parse($document->download_link)->tempUrl();
+        $download_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(2), ['action' => 'download']);
+        $read_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(2), ['action' => 'read']);
 
-        return view('documents.detail', compact('document', 'download_link', 'star'));
+        return view('documents.detail', compact('document', 'download_link', 'read_link', 'star'));
     }
 
-    public function download($document_id)
+    public function handle(Request $request)
     {
-        $document = Document::findOrFail($document_id);
-        $document->download = $document->download + 1;
-        $document->save();
-
-        $filename = $document->slug . '.' . $document->binding;
-        $tempImage = tempnam(sys_get_temp_dir(), $filename);
-        copy($document->download_link, $tempImage, stream_context_create($this->arrContextOptions));
-
-        return response()->download($tempImage, $filename);
+        if ($request->input('action') == 'download') {
+            $path = $request->input('path');
+            return Storage::disk(config('crawl.document_disk'))->download($path, '');
+        } else if ($request->input('action') == 'read') {
+            $path = $request->input('path');
+            return Storage::disk(config('crawl.document_disk'))->get($path);
+        }
+        return false;
     }
 
     public function list()
