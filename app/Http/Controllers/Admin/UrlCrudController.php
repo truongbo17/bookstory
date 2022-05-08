@@ -192,7 +192,7 @@ class UrlCrudController extends CrudController
         $file = Storage::disk(config('crawl.document_disk'))->put(config('crawl.path.import_json_urls') . '/' . $file_name, $data);
 
         if ($file) {
-            $file = public_path() . "/storage/data/" . config('crawl.path.import_json_urls') . '/' . $file_name;
+            $file = public_path() . config('crawl.public_link_storage') . config('crawl.path.import_json_urls') . '/' . $file_name;
             $headers = ['Content-Type: application/json'];
             return Response::download($file, $file_name, $headers);
         }
