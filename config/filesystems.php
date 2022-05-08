@@ -91,7 +91,7 @@ return [
 
     'links' => [
 //        public_path('storage') => storage_path('app/public'),
-        public_path('storage') => env('ROOT_LOCAL_STORAGE_01', storage_path('app/public')),
+        public_path('storage/data') => env('ROOT_LOCAL_STORAGE_01', storage_path('app/public')),
     ],
 
 ];
