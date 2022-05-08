@@ -82,7 +82,7 @@
                                                     <div class="flex-shrink-0">
                                                         <img class="h-30 w-20 border border-gray-50"
                                                              @if(!is_null($document->image))
-                                                                 src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+                                                                 src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
                                                              @else
                                                                  src="{{asset('images/avatar/default.png')}}"
                                                              @endif

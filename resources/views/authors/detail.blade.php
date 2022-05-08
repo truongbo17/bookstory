@@ -26,7 +26,7 @@
                             @if($author[0]->status == \App\Crawler\Enum\UserStatus::ACTIVE)
                                 <img class="h-16 w-16 rounded-full"
                                      @if(!is_null($author[0]->image))
-                                         src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse($author[0]->image)->path())}}"
+                                         src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($author[0]->image)->path())}}"
                                      @else
                                          src="{{asset('images/avatar/default.png')}}"
                                      @endif
@@ -162,7 +162,7 @@
                                         <div class="flex-shrink-0">
                                             <img class="h-30 w-20 border border-gray-50"
                                                  @if(!is_null($document->image))
-                                                     src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+                                                     src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
                                                  @else
                                                      src="{{asset('images/avatar/default.png')}}"
                                                  @endif

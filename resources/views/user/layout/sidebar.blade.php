@@ -9,7 +9,7 @@
                             <div>
                                 <img class="inline-block h-9 w-9 rounded-full"
                                      @if(!is_null(auth()->user()->image))
-                                         src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse(auth()->user()->image)->path())}}"
+                                         src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse(auth()->user()->image)->path())}}"
                                      @else
                                          src="{{asset('images/avatar/default.jpg')}}"
                                      @endif

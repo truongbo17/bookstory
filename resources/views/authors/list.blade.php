@@ -176,7 +176,7 @@
                             <div class="flex-1 flex flex-col p-8">
                                 <img class="w-32 h-32 flex-shrink-0 mx-auto rounded-full"
                                      @if(!is_null($author->image))
-                                         src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse($author->image)->path())}}"
+                                         src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($author->image)->path())}}"
                                      @else
                                          src="{{asset('images/avatar/default.jpg')}}"
                                      @endif

@@ -13,6 +13,7 @@ return [
         'import_json_urls' => 'import_json_urls',
         'content_file' => 'content',
     ],
+    'public_link_storage' => env('PUBLIC_LINK_STORAGE', 'storage/data/'),
 //-------------------------------------------------------------------------------------
     /*
      * Crawler

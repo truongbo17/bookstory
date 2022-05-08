@@ -24,7 +24,7 @@
                     <div class="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
                         <img
                             @if(!is_null($document->image))
-                                src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+                                src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
                             @else
                                 src="{{asset('images/avatar/default.png')}}"
                             @endif
@@ -367,7 +367,7 @@
                                                         <div class="flex space-x-3">
                                                             <div class="flex-shrink-0">
                                                                 <img class="h-10 w-10 rounded-full"
-                                                                     src="{{asset($review->image ?? 'images/avatar/default.jpg')}}"
+                                                                     src="{{asset('images/avatar/default.jpg')}}"
                                                                      alt="Avatar review">
                                                             </div>
                                                             <div>
@@ -417,7 +417,11 @@
                                         <div class="flex space-x-3">
                                             <div class="flex-shrink-0">
                                                 <img class="h-10 w-10 rounded-full"
-                                                     src="{{asset($review->image ?? 'images/avatar/default.jpg')}}"
+                                                     @if(!is_null(auth()->user()->image))
+                                                         src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse(auth()->user()->image)->path())}}"
+                                                     @else
+                                                         src="{{asset('images/avatar/default.jpg')}}"
+                                                     @endif
                                                      alt="avatar reviewer">
                                             </div>
                                             <div class="min-w-0 flex-1">

@@ -145,7 +145,7 @@
                                                                   class="h-14 w-14 rounded-full overflow-hidden bg-gray-100">
                                                                     <img
                                                                         @if(!is_null(auth()->user()->image))
-                                                                            src="{{asset('storage/data/'.\App\Libs\DiskPathTools\DiskPathInfo::parse(auth()->user()->image)->path())}}"
+                                                                            src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse(auth()->user()->image)->path())}}"
                                                                         @else
                                                                             src="{{asset('images/avatar/default.jpg')}}"
                                                                         @endif

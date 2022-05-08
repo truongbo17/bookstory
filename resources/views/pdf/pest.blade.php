@@ -32,13 +32,10 @@
 <header>
     &copy; <?php echo date("Y");?>  BookStory
 </header>
-<footer style="text-align: center">
-    Contact : truongnq017@gmail.com
-</footer>
 
 <div>
     <div class="container" style="margin-top: 30px">
-        <h2 class="text-center" style="text-align: center">{{$title}}</h2>
+        <h1 class="text-center" style="text-align: center">{{$title}}</h1>
         @foreach($quizs as $quiz_sections)
             <div class="section-content">
                 <h2>{{$quiz_sections['section']}}</h2>
