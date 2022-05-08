@@ -23,7 +23,7 @@
                 <object class="w-full" data="{{$read_link}}" type="application/pdf" style="height: 75vh">
                     <p>Your web browser doesn't have a PDF plugin.
                         Instead you can <a class="text-indigo-700"
-                                           href="{{route('document.detail_download',$document->id)}}">click here to
+                                           href="{{$download_link}}">click here to
                             download the PDF file.</a></p>
                 </object>
             </div>

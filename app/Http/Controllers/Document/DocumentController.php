@@ -21,6 +21,8 @@ class DocumentController extends Controller
             ->with('reviews')
             ->first();
 
+        if (!$document) abort(404);
+
         $array_star = Document::where('slug', $document_slug)
             ->where('status', Status::ACTIVE)
             ->withCount('oneStar')
@@ -66,17 +68,19 @@ class DocumentController extends Controller
             return abort(404);
         }
 
-        $download_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(2), ['action' => 'download']);
-        $read_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(2), ['action' => 'read']);
+        $download_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(2), ['action' => 'download', 'slug' => $document->slug]);
+        $read_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(2), ['action' => 'read', 'slug' => $document->slug]);
 
         return view('documents.detail', compact('document', 'download_link', 'read_link', 'star'));
     }
 
     public function handle(Request $request)
     {
-        if ($request->input('action') == 'download') {
+        $slug = $request->input('slug') . '.pdf';
+
+            if ($request->input('action') == 'download') {
             $path = $request->input('path');
-            return Storage::disk(config('crawl.document_disk'))->download($path, '');
+            return Storage::disk(config('crawl.document_disk'))->download($path, $slug);
         } else if ($request->input('action') == 'read') {
             $path = $request->input('path');
             return Storage::disk(config('crawl.document_disk'))->get($path);

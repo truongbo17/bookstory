@@ -33,7 +33,7 @@ return [
         'private' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'url' => env('APP_URL').'/private-storage',
+            'url' => env('APP_URL') . '/private-storage',
             'visibility' => 'private',
         ],
 
@@ -90,7 +90,8 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+//        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => env('ROOT_LOCAL_STORAGE_01', storage_path('app/public')),
     ],
 
 ];
