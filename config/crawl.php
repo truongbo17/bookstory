@@ -66,7 +66,7 @@ return [
     'lang' => [
         'vi' => [
             'name' => 'VIE',
-            'img' => '/images/flag/vietnam.png',
+            'img' => env('APP_URL') . '/images/flag/vietnam.png',
             'href' => [
                 'route' => 'user.change-language',
                 'param' => ['vi'],
@@ -74,7 +74,7 @@ return [
         ],
         'en' => [
             'name' => 'ENG',
-            'img' => 'images/flag/english.webp',
+            'img' => env('APP_URL') . '/images/flag/english.webp',
             'href' => [
                 'route' => 'user.change-language',
                 'param' => ['en'],
@@ -82,7 +82,7 @@ return [
         ],
         'id' => [
             'name' => 'INDIA',
-            'img' => 'images/flag/indo.png',
+            'img' => env('APP_URL') . '/images/flag/indo.png',
             'href' => [
                 'route' => 'user.change-language',
                 'param' => ['id'],
@@ -90,7 +90,7 @@ return [
         ],
         'fr' => [
             'name' => 'FRA',
-            'img' => 'images/flag/france.png',
+            'img' => env('APP_URL') . '/images/flag/france.png',
             'href' => [
                 'route' => 'user.change-language',
                 'param' => ['fr'],
@@ -98,7 +98,7 @@ return [
         ],
         'cn' => [
             'name' => 'CHINA',
-            'img' => 'images/flag/cn.png',
+            'img' => env('APP_URL') . '/images/flag/cn.png',
             'href' => [
                 'route' => 'user.change-language',
                 'param' => ['cn'],

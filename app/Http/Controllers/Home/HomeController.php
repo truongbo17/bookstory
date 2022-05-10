@@ -19,10 +19,16 @@ class HomeController extends Controller
             ->limit(8)
             ->get();
 
+        $authors = User::where('status', 1)
+            ->withCount('documents')
+            ->orderBy('documents_count', 'DESC')
+            ->limit(8)
+            ->get();
+
         $count_user = User::count();
         $count_document = Document::count();
 
-        return view('home.index', compact('documents', 'count_user', 'count_document'));
+        return view('home.index', compact('documents', 'count_user', 'count_document', 'authors'));
     }
 
     public function changeLanguage($language)

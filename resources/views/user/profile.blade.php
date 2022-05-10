@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Profile')
+@section('title', __('Profile'))
 
 @push('css')
 @endpush
@@ -33,7 +33,7 @@
             <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
                 <div class="py-6">
                     <div class="max-w-7xl mx-auto pl-4 sm:pl-6 md:pl-8">
-                        <h1 class="text-2xl font-semibold text-gray-900">Dashboard - Profile</h1>
+                        <h1 class="text-2xl font-semibold text-gray-900">{{__('Dashbroad')}} - {{__('Profile')}}</h1>
                     </div>
                     <div class="max-w-7xl mx-auto pl-4 sm:pl-6 md:pl-8">
                         <!-- Replace with your content -->
@@ -45,7 +45,7 @@
                                         <dl class="sm:divide-y sm:divide-gray-200">
                                             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                                 <dt class="text-sm font-medium text-gray-500">
-                                                    Full name
+                                                    {{__('Full name')}}
                                                 </dt>
                                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                     {{auth()->user()->name}}
@@ -53,7 +53,7 @@
                                             </div>
                                             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                                 <dt class="text-sm font-medium text-gray-500">
-                                                    Role
+                                                    {{__('Role')}}
                                                 </dt>
                                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                     {{auth()->user()->is_admin ? 'Admin' : 'Author'}}
@@ -69,7 +69,7 @@
                                             </div>
                                             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                                 <dt class="text-sm font-medium text-gray-500">
-                                                    Count documents
+                                                    {{__('Total Document')}}
                                                 </dt>
                                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                     {{count(auth()->user()->documents)}}
@@ -77,7 +77,7 @@
                                             </div>
                                             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                                 <dt class="text-sm font-medium text-gray-500">
-                                                    Join date
+                                                    {{__('Join date')}}
                                                 </dt>
                                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                     {{\Carbon\Carbon::parse(auth()->user()->created_at)->format('H:i d-m-Y')}}
@@ -85,7 +85,7 @@
                                             </div>
                                             <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                                 <dt class="text-sm font-medium text-gray-500">
-                                                    Action
+                                                    {{__('Action')}}
                                                 </dt>
                                                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                                                     <ul role="list"
@@ -101,13 +101,13 @@
                                                                           d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                                                 </svg>
                                                                 <span class="ml-2 flex-1 w-0 truncate">
-                  Edit Profile
+                  {{__('Edit Profile')}}
                 </span>
                                                             </div>
                                                             <div class="ml-4 flex-shrink-0">
                                                                 <a href="{{route('user.dashbroad_edit')}}"
                                                                    class="font-medium text-indigo-600 hover:text-indigo-500">
-                                                                    Edit
+                                                                    {{__('Edit')}}
                                                                 </a>
                                                             </div>
                                                         </li>
@@ -122,7 +122,7 @@
                                                                           d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01"></path>
                                                                 </svg>
                                                                 <span class="ml-2 flex-1 w-0 truncate">
-                  Deactive your account
+                  {{__('Deactive your account')}}
                 </span>
                                                             </div>
                                                             <div class="ml-4 flex-shrink-0">
@@ -130,7 +130,7 @@
                                                                     class="font-medium text-indigo-600 hover:text-indigo-500"
                                                                     type="button"
                                                                     data-modal-toggle="deactive-modal">
-                                                                    Deactive
+                                                                    {{__('Deactive')}}
                                                                 </button>
                                                             </div>
                                                         </li>
@@ -169,23 +169,20 @@
                 <form id="deactiveForm" class="px-6 pb-4 space-y-6 lg:px-8 sm:pb-6 xl:pb-8"
                       action="{{route('user.deactive')}}"
                       method="POST">
-                    <h3 class="text-sm font-medium text-red-600 dark:text-white">After deactivating your account, you
-                        will not be able to access your account again. However, your documents will still be
-                        displayed</h3>
+                    <h3 class="text-sm font-medium text-red-600 dark:text-white">{{__('After deactivating your account, you will not be able to access your account again. However, your documents will still be displayed')}}</h3>
                     <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enter
-                            password to continue</label>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{__('Enter password to continue')}}</label>
                         <input id="inputDeactive" type="password" name="password" id="password" placeholder="••••••••"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                         <span id="spanDeactive" class="text-red-700 text-sm mt-1"></span>
                     </div>
                     <button type="submit"
                             class="w-full text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                        Deactive your account
+                        {{__('Deactive your account')}}
                     </button>
                     <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                        Privacy? <a href="{{route('privacy.index')}}"
-                                    class="text-indigo-700 hover:underline dark:text-indigo-500">Read now</a>
+                        {{__('Privacy')}}? <a href="{{route('privacy.index')}}"
+                                    class="text-indigo-700 hover:underline dark:text-indigo-500">{{__('Read now')}}</a>
                     </div>
                 </form>
             </div>

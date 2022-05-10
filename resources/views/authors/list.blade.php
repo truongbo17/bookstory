@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'List Document')
+@section('title', __('List Document'))
 
 @push('css')
 @endpush
@@ -16,8 +16,7 @@
 @section('main')
     <div class="bg-gray-50">
         <div class="max-w-2xl mx-auto pt-16 pb-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-            <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Found {{$count_authors}} authors in
-                total</h2>
+            <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">{{__('total_author_in_list',[ 'count_authors' => $count_authors])}}</h2>
 
             <!-- Filters -->
             <div class="mt-8">
@@ -234,13 +233,13 @@
                 <form>
                     <select id="per_page" name="per_page"
                             class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:border-gray-700 rounded-md font-medium text-sm px-4 py-2 text-center items-center">
-                        <option disabled>Books per page :</option>
-                        <option value="12" @if(!app('request')->input('perpage')) selected @endif>12 Authors</option>
-                        <option value="16" @if(app('request')->input('perpage')== 16) selected @endif>16 Authors
+                        <option disabled>Authors per page :</option>
+                        <option value="12" @if(!app('request')->input('perpage')) selected @endif>12 {{__('Authors')}}</option>
+                        <option value="16" @if(app('request')->input('perpage')== 16) selected @endif>16 {{__('Authors')}}
                         </option>
-                        <option value="32" @if(app('request')->input('perpage')== 32) selected @endif>32 Authors
+                        <option value="32" @if(app('request')->input('perpage')== 32) selected @endif>32 {{__('Authors')}}
                         </option>
-                        <option value="48" @if(app('request')->input('perpage')== 48) selected @endif>48 Authors
+                        <option value="48" @if(app('request')->input('perpage')== 48) selected @endif>48 {{__('Authors')}}
                         </option>
                     </select>
                 </form>

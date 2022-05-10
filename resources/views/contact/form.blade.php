@@ -50,9 +50,8 @@
                             </defs>
                         </svg>
                     </div>
-                    <h3 class="text-lg font-medium text-white">Contact information</h3>
-                    <p class="mt-6 text-base text-indigo-50 max-w-3xl">Send any complaints or contributions to us
-                        here.Thanks.</p>
+                    <h3 class="text-lg font-medium text-white">{{__('Contact information')}}</h3>
+                    <p class="mt-6 text-base text-indigo-50 max-w-3xl">{{__('Send any complaints or contributions to us here.Thanks.')}}</p>
                     <dl class="mt-8 space-y-6">
                         <dt><span class="sr-only">Phone number</span></dt>
                         <dd class="flex text-base text-indigo-50">
@@ -114,7 +113,7 @@
 
                 <!-- Contact form -->
                 <div class="py-10 px-6 sm:px-10 lg:col-span-2 xl:p-12">
-                    <h3 class="text-lg font-medium text-gray-900">Send us a message</h3>
+                    <h3 class="text-lg font-medium text-gray-900">{{__('Send us a message')}}</h3>
                     <form action="{{route('contact.send')}}" method="POST"
                           class="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
                         @csrf
@@ -169,7 +168,8 @@
                             </div>
                         @endforeach
                         <div class="sm:col-span-2">
-                            <label for="fullname" class="block text-sm font-medium text-gray-900">Full name</label>
+                            <label for="fullname"
+                                   class="block text-sm font-medium text-gray-900">{{__('Full name')}}</label>
                             <div class="mt-1">
                                 <input type="text" name="fullname" id="fullname"
                                        class="py-3 px-4 block w-full shadow-sm text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 @error('fullname') border-red-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror"
@@ -177,7 +177,7 @@
                             </div>
                         </div>
                         <div class="sm:col-span-2">
-                            <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
+                            <label for="email" class="block text-sm font-medium text-gray-900">{{__('Email')}}</label>
                             <div class="mt-1">
                                 <input type="email" name="email" id="email"
                                        class="py-3 px-4 block w-full shadow-sm text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 @error('email') border-pink-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror"
@@ -185,7 +185,8 @@
                             </div>
                         </div>
                         <div class="sm:col-span-2">
-                            <label for="subject" class="block text-sm font-medium text-gray-900">Subject</label>
+                            <label for="subject"
+                                   class="block text-sm font-medium text-gray-900">{{__('Subject')}}</label>
                             <div class="mt-1">
                                 <input type="text" name="subject" id="subject"
                                        class="py-3 px-4 block w-full shadow-sm text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 @error('subject') border-red-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror"
@@ -194,8 +195,10 @@
                         </div>
                         <div class="sm:col-span-2">
                             <div class="flex justify-between">
-                                <label for="message" class="block text-sm font-medium text-gray-900">Message</label>
-                                <span id="message-max" class="text-sm text-gray-500">Max. 500 characters</span>
+                                <label for="message"
+                                       class="block text-sm font-medium text-gray-900">{{__('Message')}}</label>
+                                <span id="message-max"
+                                      class="text-sm text-gray-500">{{__('Max. 500 characters')}}</span>
                             </div>
                             <div class="mt-1">
                                 <textarea id="message" name="message" rows="4"
@@ -206,7 +209,7 @@
                         <div class="sm:col-span-2 sm:flex sm:justify-end">
                             <button type="submit"
                                     class="mt-2 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto">
-                                Submit
+                                {{__('Submit')}}
                             </button>
                         </div>
                     </form>

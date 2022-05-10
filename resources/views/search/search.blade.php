@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', __('Contact us'))
+@section('title', 'Search')
 
 @push('css')
 @endpush
@@ -14,7 +14,7 @@
 @endsection
 
 @section('main')
-    @include('contact.form')
+search
 @endsection
 
 @push('javascript')

@@ -1,6 +1,6 @@
 <div class="bg-gray-50">
-    <div class="max-w-2xl mx-auto py-16 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Popular Documents</h2>
+    <div class="max-w-2xl mx-auto py-8 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">{{__('Popular Documents')}}</h2>
 
         <div class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             @foreach($documents as $document)
@@ -51,6 +51,37 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto mb-8 px-4 text-center sm:px-6 lg:px-8 lg:py-8">
+        <div class="space-y-8 sm:space-y-12">
+            <div class="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">
+                <h3 class="text-xl font-extrabold tracking-tight sm:text-4xl">{{__('Authors')}}</h3>
+                <p class="text-xl text-gray-500">{{__('Most active contributors')}}</p>
+            </div>
+            <ul role="list"
+                class="mx-auto grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-6 lg:max-w-5xl lg:gap-x-8 lg:gap-y-12 xl:grid-cols-4">
+                @foreach($authors as $author)
+                    <li>
+                        <div class="space-y-4">
+                            <img class="mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24"
+                                 @if(!is_null($author->image))
+                                     src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($author->image)->path())}}"
+                                 @else
+                                     src="{{asset('images/avatar/default.jpg')}}"
+                                 @endif
+                                 alt="{{$author->name}}">
+                            <div class="space-y-2">
+                                <div class="text-xs font-medium lg:text-sm">
+                                    <h3>{{$author->name}}</h3>
+                                    <p class="text-indigo-600">{{$author->documents_count}} {{__('Documents')}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
         </div>
     </div>
 </div>

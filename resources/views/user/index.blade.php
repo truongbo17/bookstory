@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Dashbroad')
+@section('title', __('Dashbroad'))
 
 @push('css')
 @endpush
@@ -158,7 +158,7 @@
             <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
                 <div class="py-6">
                     <div class="max-w-7xl mx-auto pl-4 sm:pl-6 md:pl-8">
-                        <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
+                        <h1 class="text-2xl font-semibold text-gray-900">{{__('Dashbroad')}}</h1>
                     </div>
                     <div class="max-w-7xl mx-auto pl-4 sm:pl-6 md:pl-8">
                         <!-- Replace with your content -->

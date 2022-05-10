@@ -82,10 +82,10 @@
                             <div class="px-4 py-5 sm:px-6">
                                 <h2 id="applicant-information-title"
                                     class="text-lg leading-6 font-medium text-gray-900">
-                                    Information
+                                    {{__('Information')}}
                                 </h2>
                                 <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                                    Personal details and documents.
+                                    {{__('Personal details and documents.')}}
                                 </p>
                             </div>
                             <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
@@ -93,7 +93,7 @@
                                     @if($author[0]->status == \App\Crawler\Enum\UserStatus::ACTIVE)
                                         <div class="sm:col-span-1">
                                             <dt class="text-sm font-medium text-gray-500">
-                                                Role
+                                                {{__('Role')}}
                                             </dt>
                                             <dd class="mt-1 text-sm text-gray-900">
                                                 {{$author[0]->is_admin ? 'Admin' : 'Author'}}
@@ -109,7 +109,7 @@
                                         </div>
                                         <div class="sm:col-span-1">
                                             <dt class="text-sm font-medium text-gray-500">
-                                                Total Document
+                                                {{__('Total Document')}}
                                             </dt>
                                             <dd class="mt-1 text-sm text-gray-900">
                                                 {{$author[0]->documents_count}}
@@ -118,7 +118,7 @@
                                     @endif
                                     <div class="sm:col-span-1">
                                         <dt class="text-sm font-medium text-gray-500">
-                                            Status
+                                            {{__('Status')}}
                                         </dt>
                                         <dd class="mt-1 text-sm text-gray-900">
                                             {{array_search($author[0]->status,\App\Crawler\Enum\UserStatus::asArray())}}
@@ -129,20 +129,14 @@
                                             User privacy
                                         </dt>
                                         <dd class="mt-1 text-sm text-gray-900">
-                                            User privacy, use of technology and cybersecurity are linked to each other.
-                                            Many previous studies consider online user base religion agnostic; this
-                                            chapter will try to shed light on the user behaviour factors associated with
-                                            religious beliefs. Current research did not fully explain the specifics of
-                                            user behaviour influenced by religion. This chapter will use Islam as the
-                                            religion in question.
+                                            {{__('User privacy, use of technology and cybersecurity are linked to each other. Many previous studies consider online user base religion agnostic; this chapter will try to shed light on the user behaviour factors associated with religious beliefs. Current research did not fully explain the specifics of user behaviour influenced by religion. This chapter will use Islam as the religion in question.')}}
                                         </dd>
                                     </div>
                                 </dl>
                             </div>
                             <div>
                                 <a href="#"
-                                   class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">Read
-                                    full application</a>
+                                   class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">{{__('Report Author')}}</a>
                             </div>
                         </div>
                     </section>
@@ -150,7 +144,7 @@
 
                 <section aria-labelledby="timeline-title" class="lg:col-start-3 lg:col-span-1">
                     <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
-                        <h2 id="timeline-title" class="text-lg font-medium text-gray-900">Documents
+                        <h2 id="timeline-title" class="text-lg font-medium text-gray-900">{{__('Documents')}}
                             ({{$author[0]->documents_count}})</h2>
 
                         <!-- Activity Feed -->

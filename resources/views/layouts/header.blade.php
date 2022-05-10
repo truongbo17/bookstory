@@ -54,7 +54,7 @@
                  style="top:100%; z-index: 100; "
                  class="hidden transition ease-in-out delay-150 absolute mx-4 mt-2 left-0 right-0 z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
                 <div class="relative mx-auto text-indigo-700">
-                    <form method="GET">
+                    <form method="GET" action="{{route('search')}}">
                         <button type="submit" class="absolute right-0 mx-4 mr-2"
                                 style="z-index: 100; top: 50%; transform: translateY(-50%)">
                             <svg class="w-6 h-6 pl-2 text-indigo-900"
@@ -67,7 +67,7 @@
                         </button>
                         <input
                             class="w-full py-6 border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-                            type="search" name="search" placeholder="Search">
+                            type="search" name="q" placeholder="{{__('Search')}}">
                     </form>
                 </div>
             </div>
@@ -97,21 +97,21 @@
                     <div class="hidden lg:ml-8 lg:block lg:self-stretch">
                         <div class="h-full flex space-x-8">
                             <a href="{{route('document.list_index')}}"
-                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Documents</a>
+                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{__('Documents')}}</a>
 
                             <a href="{{route('author.list_index')}}"
-                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Authors</a>
+                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{__('Authors')}}</a>
 
                             <a href="#"
                                class="flex items-center rounded-full text-pink-700 text-sm font-medium hover:text-red-800">
-                                News
+                                {{__('News')}}
                             </a>
 
                             <a href="{{route('privacy.index')}}"
-                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Privacy</a>
+                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{__('Privacy')}}</a>
 
                             <a href="{{route('contact.create')}}"
-                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Contact</a>
+                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{__('Contact')}}</a>
                         </div>
                     </div>
 

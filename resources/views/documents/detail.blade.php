@@ -125,7 +125,7 @@
                             </div>
 
                             <div class="pt-4">
-                                <span class="text-sm">Authors : </span>
+                                <span class="text-sm">{{__('Authors')}} : </span>
                                 @foreach($document->users as $author)
                                     <a href="{{route('author.show_detail',$author->id)}}"
                                        class="text-indigo-600">{{$author->name}}</a> ,
@@ -180,11 +180,11 @@
 
                     <div class="border-t border-gray-200 mt-5 pt-5">
                         <h3 class="text-sm font-medium text-gray-900">Privacy</h3>
-                        <p class="mt-4 text-sm text-gray-500">For personal and professional use. You cannot resell
-                            or redistribute these documents in their original or modified state. <a
+                        <p class="mt-4 text-sm text-gray-500">{{__('For personal and professional use. You cannot resell or redistribute these documents in their original or modified state.')}}
+                            <a
                                 href="{{route('privacy.index')}}"
-                                class="font-medium text-indigo-600 hover:text-indigo-500">Read
-                                full privacy</a></p>
+                                class="font-medium text-indigo-600 hover:text-indigo-500">{{__('Read full privacy')}}</a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -194,7 +194,7 @@
                 <div
                     class="mx-auto mt-8 py-8 px-4 sm:py-8 sm:px-6 max-w-7xl">
                     <div>
-                        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Reader Reviews</h2>
+                        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">{{__('Reader Reviews')}}</h2>
 
                         <div class="mt-3 flex items-center">
                             <div id="viewStar" class="flex">
@@ -412,7 +412,7 @@
                                     <div class="bg-gray-50 px-4 py-6 sm:px-6">
                                         <div class="pb-4 text-sm">
                                             <h2 id="notes-title"
-                                                class="font-medium text-gray-900">Write a review</h2>
+                                                class="font-medium text-gray-900">{{__('Write a review')}}</h2>
                                         </div>
                                         <div class="flex space-x-3">
                                             <div class="flex-shrink-0">

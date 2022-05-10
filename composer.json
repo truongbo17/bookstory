@@ -24,6 +24,7 @@
         "nesk/puphpeteer": "dev-master",
         "nesk/rialto": "dev-dev as 1.2",
         "spatie/pdf-to-image": "^2.2",
+        "stichoza/google-translate-php": "^4.1",
         "symfony/dom-crawler": "^6.0",
         "vuh/cli-echo": "^0.2.1"
     },
