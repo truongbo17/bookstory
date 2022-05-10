@@ -417,7 +417,7 @@
                                         <div class="flex space-x-3">
                                             <div class="flex-shrink-0">
                                                 <img class="h-10 w-10 rounded-full"
-                                                     @if(!is_null(auth()->user()->image))
+                                                     @if(isset(auth()->user()->image))
                                                          src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse(auth()->user()->image)->path())}}"
                                                      @else
                                                          src="{{asset('images/avatar/default.jpg')}}"

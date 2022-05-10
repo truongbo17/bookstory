@@ -17,6 +17,7 @@ class AuthorController extends Controller
         $perpage = request()->get('perpage', 12);
 
         $authors = User::withCount('documents')
+            ->AcceptRequest(['sort', 'count_document', 'perpage', 'page'])
             ->ignoreRequest(['perpage'])
             ->where('status', UserStatus::ACTIVE)
             ->filter()

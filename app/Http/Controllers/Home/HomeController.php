@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Document;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Session;
 
 class HomeController extends Controller
 {
@@ -22,5 +23,12 @@ class HomeController extends Controller
         $count_document = Document::count();
 
         return view('home.index', compact('documents', 'count_user', 'count_document'));
+    }
+
+    public function changeLanguage($language)
+    {
+        Session::put('website_language', $language);
+
+        return redirect()->back();
     }
 }

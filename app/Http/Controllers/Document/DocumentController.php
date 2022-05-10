@@ -68,8 +68,8 @@ class DocumentController extends Controller
             return abort(404);
         }
 
-        $download_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(2), ['action' => 'download', 'slug' => $document->slug]);
-        $read_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(2), ['action' => 'read', 'slug' => $document->slug]);
+        $download_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(1), ['action' => 'download', 'slug' => $document->slug]);
+        $read_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(1), ['action' => 'read', 'slug' => $document->slug]);
 
         return view('documents.detail', compact('document', 'download_link', 'read_link', 'star'));
     }
@@ -78,12 +78,15 @@ class DocumentController extends Controller
     {
         $slug = $request->input('slug') . '.pdf';
 
-            if ($request->input('action') == 'download') {
+        if ($request->input('action') == 'download') {
             $path = $request->input('path');
             return Storage::disk(config('crawl.document_disk'))->download($path, $slug);
         } else if ($request->input('action') == 'read') {
             $path = $request->input('path');
-            return Storage::disk(config('crawl.document_disk'))->get($path);
+            $content = Storage::disk(config('crawl.document_disk'))->get($path);
+            return response($content, 200, [
+                'Content-Type' => 'application/pdf',
+            ]);
         }
         return false;
     }
@@ -93,7 +96,9 @@ class DocumentController extends Controller
         $count_documents = Document::count();
         $perpage = request()->get('perpage', 12);
 
-        $documents = Document::ignoreRequest(['perpage'])->where('status', Status::ACTIVE)
+        $documents = Document::ignoreRequest(['perpage'])
+            ->AcceptRequest(['sort', 'author', 'count_page', 'perpage', 'page'])
+            ->where('status', Status::ACTIVE)
             ->filter()
             ->paginate($perpage, ['*'], 'page');
 

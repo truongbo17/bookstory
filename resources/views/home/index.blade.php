@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Read and download documents for free')
+@section('title', __('Read and download documents for free'))
 
 @push('css')
 @endpush

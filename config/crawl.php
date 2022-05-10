@@ -59,4 +59,51 @@ return [
         509, // Bandwidth Limit Exceeded (Apache)
     ],
 //-------------------------------------------------------------------------------------
+    /*
+     * Language Website
+     * us,can,en,vi,fr
+     * */
+    'lang' => [
+        'vi' => [
+            'name' => 'VIE',
+            'img' => '/images/flag/vietnam.png',
+            'href' => [
+                'route' => 'user.change-language',
+                'param' => ['vi'],
+            ]
+        ],
+        'en' => [
+            'name' => 'ENG',
+            'img' => 'images/flag/english.webp',
+            'href' => [
+                'route' => 'user.change-language',
+                'param' => ['en'],
+            ]
+        ],
+        'id' => [
+            'name' => 'INDIA',
+            'img' => 'images/flag/indo.png',
+            'href' => [
+                'route' => 'user.change-language',
+                'param' => ['id'],
+            ]
+        ],
+        'fr' => [
+            'name' => 'FRA',
+            'img' => 'images/flag/france.png',
+            'href' => [
+                'route' => 'user.change-language',
+                'param' => ['fr'],
+            ]
+        ],
+        'cn' => [
+            'name' => 'CHINA',
+            'img' => 'images/flag/cn.png',
+            'href' => [
+                'route' => 'user.change-language',
+                'param' => ['cn'],
+            ]
+        ],
+    ]
+//-------------------------------------------------------------------------------------
 ];

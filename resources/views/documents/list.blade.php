@@ -344,12 +344,12 @@
                 .join(',');
 
             if (author.length > 0 && count_page.length > 0) {
-                newUrl.searchParams.set('users[name]', author);
+                newUrl.searchParams.set('author', author);
                 newUrl.searchParams.set('count_page', count_page);
 
                 url = rootUrl + newUrl.search;
             } else if (author.length > 0 && count_page.length < 1) {
-                url = updateQueryStringParameter(url, 'users[name]', author);
+                url = updateQueryStringParameter(url, 'author', author);
             } else if (author.length < 1 && count_page.length > 0) {
                 url = updateQueryStringParameter(url, 'count_page', count_page);
             }
@@ -380,7 +380,7 @@
         //End replace
 
         //Get author and count_page
-        const authorValue = newUrl.searchParams.get("users[name]");
+        const authorValue = newUrl.searchParams.get("author");
         const count_pageValue = newUrl.searchParams.get("count_page");
 
         document.getElementById('author').value = authorValue;

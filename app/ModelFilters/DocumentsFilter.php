@@ -43,4 +43,11 @@ trait DocumentsFilter
         }
     }
 
+    public function author(Builder $builder, $value)
+    {
+        return $builder->with(['users' => function ($query) use ($value) {
+            $query->where('name', '=', $value);
+        }]);
+    }
+
 }

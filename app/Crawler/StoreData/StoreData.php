@@ -4,6 +4,7 @@ namespace App\Crawler\StoreData;
 
 use App\Crawler\Enum\Status;
 use App\Crawler\HandlePdf\PdfToImage;
+use App\Jobs\DownloadFilePdf;
 use App\Models\Document;
 use App\Services\DocumentManager;
 use Exception;
@@ -79,7 +80,8 @@ class StoreData implements StoreDataInterface
         DocumentManager::updateContentFile($document, $content);
         DocumentManager::updateKeywords($document, $keywords);
         DocumentManager::updateUser($document, $users);
-        DocumentManager::savePdf($document,$download_link);
+
+        DownloadFilePdf::dispatch($document, $download_link);
 
         return true;
     }
