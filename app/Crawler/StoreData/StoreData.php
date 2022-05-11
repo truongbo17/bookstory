@@ -3,14 +3,10 @@
 namespace App\Crawler\StoreData;
 
 use App\Crawler\Enum\Status;
-use App\Crawler\HandlePdf\PdfToImage;
 use App\Jobs\DownloadFilePdf;
 use App\Models\Document;
 use App\Services\DocumentManager;
-use Exception;
-use Illuminate\Support\Str;
 use Log;
-use Vuh\CliEcho\CliEcho;
 
 class StoreData implements StoreDataInterface
 {
@@ -103,7 +99,7 @@ class StoreData implements StoreDataInterface
                 $data[$key] = $this->cleanArray($value);
             }
             if ($key == 'content') {
-                $data['content'] = preg_replace('/^Introduction/', '', $data['content']);
+                $data['content'] = str_replace('Introduction', '', $data['content']);
             }
         }
         return $data;

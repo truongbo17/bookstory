@@ -6,12 +6,14 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use eloquentFilter\QueryFilter\ModelFilters\Filterable;
 use App\ModelFilters\DocumentsFilter;
+use ElasticScoutDriverPlus\Searchable;
 
 class Document extends Model
 {
     use CrudTrait;
     use Filterable;
     use DocumentsFilter;
+    use Searchable;
 
     /*
     |--------------------------------------------------------------------------
@@ -26,6 +28,28 @@ class Document extends Model
     // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
+
+    protected $mapping = [
+        'properties' => [
+            'title' => [
+                'type' => 'text'
+            ],
+            'content' => [
+                'type' => 'text'
+            ],
+        ]
+    ];
+
+    public function toSearchableArray()
+    {
+        $array = [
+            'title' => $this->title,
+            'content' => $this->content_file ? DiskPathInfo::parse($this->content_file)->read() : $this->title,
+        ];
+
+        return $array;
+    }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -53,22 +77,27 @@ class Document extends Model
     {
         return $this->hasMany(Review::class, 'document_id')->where('rating', 1);
     }
+
     public function twoStar()
     {
         return $this->hasMany(Review::class, 'document_id')->where('rating', 2);
     }
+
     public function threeStar()
     {
         return $this->hasMany(Review::class, 'document_id')->where('rating', 3);
     }
+
     public function fourStar()
     {
         return $this->hasMany(Review::class, 'document_id')->where('rating', 4);
     }
+
     public function fiveStar()
     {
         return $this->hasMany(Review::class, 'document_id')->where('rating', 5);
     }
+
     //End star rating
 
     public function users()

@@ -9,6 +9,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "babenkoivan/elastic-migrations": "^2.0",
+        "babenkoivan/elastic-client": "^1.2",
+        "babenkoivan/elastic-scout-driver-plus": "^3.4",
         "backpack/crud": "^5.0",
         "backpack/logmanager": "^4.0",
         "backpack/permissionmanager": "^6.0",
@@ -18,6 +21,7 @@
         "intervention/image": "^2.7",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
+        "laravel/scout": "^9.4",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
         "mehdi-fathi/eloquent-filter": "^2.6",

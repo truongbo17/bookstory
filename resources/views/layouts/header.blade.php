@@ -1,54 +1,5 @@
 <div class="bg-white">
-    <div class="fixed inset-0 flex z-40 lg:hidden hidden " role="dialog" aria-modal="true">
-        <div class="fixed inset-0 bg-black bg-opacity-25" aria-hidden="true"></div>
-        <div class="relative max-w-xs w-full bg-white shadow-xl pb-12 flex flex-col overflow-y-auto">
-            <div class="px-4 pt-5 pb-2 flex">
-                <button type="button"
-                        class="-m-2 p-2 rounded-md inline-flex items-center justify-center text-gray-400">
-                    <span class="sr-only">Close menu</span>
-                    <!-- Heroicon name: outline/x -->
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                </button>
-            </div>
-
-
-            <div class="border-t border-gray-200 py-6 px-4 space-y-6">
-                <div class="flow-root">
-                    <a href="#" class="-m-2 p-2 block font-medium text-gray-900">Company</a>
-                </div>
-
-                <div class="flow-root">
-                    <a href="#" class="-m-2 p-2 block font-medium text-gray-900">Stores</a>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-200 py-6 px-4 space-y-6">
-                <div class="flow-root">
-                    <a href="#" class="-m-2 p-2 block font-medium text-gray-900">Sign in</a>
-                </div>
-                <div class="flow-root">
-                    <a href="#" class="-m-2 p-2 block font-medium text-gray-900">Create account</a>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-200 py-6 px-4">
-                <a href="#" class="-m-2 p-2 flex items-center">
-                    <img src="{{ asset('images/logo/logo-header.png') }}" alt=""
-                         class="w-5 h-auto block flex-shrink-0">
-                    <span class="ml-3 block text-base font-medium text-gray-900"> CAD </span>
-                    <span class="sr-only">, change currency</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
     <header class="relative bg-white">
-
-
         <nav aria-label="Top" class=" relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div id="dropdownMenuSearch"
                  style="top:100%; z-index: 100; "
@@ -75,7 +26,7 @@
             <div class="border-b border-gray-200">
                 <div class="h-16 flex items-center">
                     <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
-                    <button type="button" class="bg-white p-2 rounded-md text-gray-400 lg:hidden">
+                    <button type="button" id="openMenuMobile" class="bg-white p-2 rounded-md text-gray-400 lg:hidden">
                         <span class="sr-only">Open menu</span>
                         <!-- Heroicon name: outline/menu -->
                         <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -158,7 +109,7 @@
                                 </a>
                             @endif
 
-                            <div class="hidden lg:ml-8 lg:flex relative" style="z-index:100000">
+                            <div class="ml-4 lg:ml-8 lg:flex relative" style="z-index:100000">
                                 <button id="dropdownButton"
                                         class="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
                                         type="button">
@@ -212,12 +163,56 @@
             </div>
         </nav>
     </header>
+    <div class="hidden" id="menuMobile">
+        <div class="z-10 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+            <div class="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
+                <div class="px-5 pt-4 flex items-center justify-between">
+                    <div>
+                        <img class="h-8 w-auto" src="{{ asset('images/logo/logo-header.png') }}"
+                             alt="">
+                    </div>
+                    <div class="-mr-2">
+                        <button id="closeMenuMobile" type="button"
+                                class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                            <span class="sr-only">Close main menu</span>
+                            <!-- Heroicon name: outline/x -->
+                            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="{{route('document.list_index')}}"
+                       class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">{{__('Documents')}}</a>
+
+                    <a href="{{route('author.list_index')}}"
+                       class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">{{__('Authors')}}</a>
+
+                    <a href="#"
+                       class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">{{__('News')}}</a>
+
+                    <a href="{{route('privacy.index')}}"
+                       class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">{{__('Privacy')}}</a>
+                    <a href="{{route('contact.create')}}"
+                       class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">{{__('Contact')}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
     //Language
     const buttonDropMenu = document.getElementById('dropdownButton');
     const menuLanguageDrop = document.getElementById('dropdownMenu');
+
+    //Menu mobile
+    const openMenuMobile = document.getElementById('openMenuMobile');
+    const menuMobile = document.getElementById('menuMobile');
+    const closeMenuMobile = document.getElementById('closeMenuMobile');
 
     //Search
     const dropdownButtonSearch = document.getElementById('dropdownButtonSearch');
@@ -230,4 +225,12 @@
     dropdownButtonSearch.addEventListener('click', function () {
         dropdownMenuSearch.classList.toggle('hidden');
     });
+
+    openMenuMobile.addEventListener('click', function () {
+        menuMobile.classList.toggle('hidden');
+    });
+    closeMenuMobile.addEventListener('click', function () {
+        menuMobile.classList.toggle('hidden');
+    });
+
 </script>
