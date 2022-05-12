@@ -5,14 +5,16 @@ namespace App\Jobs;
 use App\Models\Document;
 use App\Services\DocumentManager;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
+use Illuminate\Support\Facades\Log;
+use Throwable;
+use Exception;
 
-class DownloadFilePdf implements ShouldQueue, ShouldBeUnique
+class DownloadFilePdf implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -21,16 +23,6 @@ class DownloadFilePdf implements ShouldQueue, ShouldBeUnique
     protected string $download_link;
 
     public int $tries = 3;
-
-    /**
-     * The unique ID of the job.
-     *
-     * @return string
-     */
-    public function uniqueId()
-    {
-        return $this->document->id;
-    }
 
     /**
      * Create a new job instance.
@@ -51,7 +43,24 @@ class DownloadFilePdf implements ShouldQueue, ShouldBeUnique
      */
     public function handle()
     {
-        DocumentManager::savePdf($this->document, $this->download_link);
+        try {
+            DocumentManager::savePdf($this->document, $this->download_link);
+        } catch
+        (Exception $e) {
+            // bird is clearly not the word
+            $this->failed($e);
+        }
+    }
+
+    /**
+     * Handle a job failure.
+     *
+     * @param Throwable $exception
+     * @return void
+     */
+    public function failed(Throwable $exception)
+    {
+        Log::error($exception);
     }
 
     /**

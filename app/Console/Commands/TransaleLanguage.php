@@ -13,6 +13,7 @@ class TransaleLanguage extends Command
      * @var string
      */
     protected $signature = 'tran:lang
+    {--from: from language}
     {--source: link json source language converted}
     {--target: target language}
     {--source_target: target save file json}
@@ -32,10 +33,10 @@ class TransaleLanguage extends Command
      */
     public function handle()
     {
-        $source = 'en';
-        $file_name = $this->argument('source') ?? '/var/www/bookstory.test/lang/vi.json';
-        $target = $this->argument('target') ?? 'en';
-        $file_output = $this->argument('source_target') ?? '/var/www/bookstory.test/lang/en.json';
+        $file_name = $this->option('source') ?? '/var/www/bookstory.test/lang/vi.json';
+        $target = $this->option('target') ?? 'vi';
+        $from = $this->option('from') ?? 'en';
+        $file_output = $this->option('source_target') ?? '/var/www/bookstory.test/lang/en.json';
 
         $json = file_get_contents($file_name);
 
@@ -43,7 +44,7 @@ class TransaleLanguage extends Command
         $new_data = [];
 
         foreach ($data as $key => $value) {
-            $new_data[$key] = GoogleTranslate::trans($key, $target, $source);
+            $new_data[$key] = GoogleTranslate::trans($key, $target, $from);
         }
 
         $target_json = json_encode($new_data);

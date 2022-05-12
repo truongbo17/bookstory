@@ -6,21 +6,17 @@ use ElasticAdapter\Indices\Settings;
 use ElasticMigrations\Facades\Index;
 use ElasticMigrations\MigrationInterface;
 
-final class CreateMyIndex implements MigrationInterface
+final class CreateDocumentIndex implements MigrationInterface
 {
     /**
      * Run the migration.
      */
     public function up(): void
     {
-        Index::dropIfExists('documents');
-        Index::dropIfExists('keywords');
-
         Index::create('documents', function (Mapping $mapping, Settings $settings) {
+            $mapping->integer('document_id');
             $mapping->text('title');
-            $mapping->text('content');
-        });
-        Index::create('keywords', function (Mapping $mapping, Settings $settings) {
+            $mapping->text('slug');
             $mapping->text('content');
         });
     }
@@ -31,6 +27,5 @@ final class CreateMyIndex implements MigrationInterface
     public function down(): void
     {
         Index::dropIfExists('documents');
-        Index::dropIfExists('keywords');
     }
 }

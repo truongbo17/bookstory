@@ -12,6 +12,7 @@ return [
         'document_image' => 'document_image',
         'import_json_urls' => 'import_json_urls',
         'content_file' => 'content',
+        'seo_keyword_file' => 'seo_keyword',
     ],
     'public_link_storage' => env('PUBLIC_LINK_STORAGE', 'storage/data/'),
 //-------------------------------------------------------------------------------------

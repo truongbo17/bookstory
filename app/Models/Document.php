@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Libs\DiskPathTools\DiskPathInfo;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use eloquentFilter\QueryFilter\ModelFilters\Filterable;
@@ -31,10 +32,19 @@ class Document extends Model
 
     protected $mapping = [
         'properties' => [
+            'document_id' => [
+                'type' => 'int'
+            ],
+            'slug' => [
+                'type' => 'text'
+            ],
             'title' => [
                 'type' => 'text'
             ],
             'content' => [
+                'type' => 'text'
+            ],
+            'image' => [
                 'type' => 'text'
             ],
         ]
@@ -43,8 +53,11 @@ class Document extends Model
     public function toSearchableArray()
     {
         $array = [
+            'document_id' => $this->id,
             'title' => $this->title,
+            'slug' => $this->slug,
             'content' => $this->content_file ? DiskPathInfo::parse($this->content_file)->read() : $this->title,
+            'image' => $this->image,
         ];
 
         return $array;

@@ -116,7 +116,8 @@ class StoreData implements StoreDataInterface
 
         //Replace ký tự thừa
         $parent_replace_array = [
-            "Tác giả"
+            "Tác giả",
+            "PLOS ONE",
         ];
         foreach ($value as $key => $value_array) {
             $value[$key] = str_replace($parent_replace_array, "", $value_array);
