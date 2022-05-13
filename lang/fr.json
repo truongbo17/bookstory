@@ -105,5 +105,7 @@
     "Confirm password": "Confirmez le mot de passe",
     "Update": "Mise \u00e0 jour",
     "total_document_in_list": "Il y a tous :count_documents documents",
-    "total_author_in_list": "Il y a tous les auteurs :count_authors"
+    "total_author_in_list": "Il y a tous les auteurs :count_authors",
+    "Related keywords": "mots-clés associés",
+    "There are no matching documents, please try again": "Il n'y a pas de documents correspondants, veuillez réessayer"
 }

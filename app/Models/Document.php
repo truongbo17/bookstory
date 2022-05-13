@@ -47,6 +47,9 @@ class Document extends Model
             'image' => [
                 'type' => 'text'
             ],
+            'status' => [
+                'type' => 'int'
+            ],
         ]
     ];
 
@@ -58,6 +61,7 @@ class Document extends Model
             'slug' => $this->slug,
             'content' => $this->content_file ? DiskPathInfo::parse($this->content_file)->read() : $this->title,
             'image' => $this->image,
+            'status' => $this->status,
         ];
 
         return $array;

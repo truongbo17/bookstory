@@ -105,5 +105,7 @@
     "Confirm password": "Xác nhận mật khẩu",
     "Update": "Cập nhật",
     "total_document_in_list": "Có tất cả :count_documents tài liệu",
-    "total_author_in_list": "Có tất cả :count_authors tác giả"
+    "total_author_in_list": "Có tất cả :count_authors tác giả",
+    "Related keywords": "Từ khóa liên quan",
+    "There are no matching documents, please try again": "Không có tài liệu nào phù hợp,vui lòng thử lại"
 }

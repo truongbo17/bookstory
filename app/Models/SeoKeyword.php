@@ -36,6 +36,9 @@ class SeoKeyword extends Model
             'slug' => [
                 'type' => 'text'
             ],
+            'status' => [
+                'type' => 'int'
+            ],
         ]
     ];
 
@@ -44,7 +47,8 @@ class SeoKeyword extends Model
         $array = [
             'seo_keyword_id' => $this->id,
             'title' => $this->title,
-            'slug' => $this->slug
+            'slug' => $this->slug,
+            'status' => $this->status,
         ];
 
         return $array;

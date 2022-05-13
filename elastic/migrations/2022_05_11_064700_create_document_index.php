@@ -18,6 +18,7 @@ final class CreateDocumentIndex implements MigrationInterface
             $mapping->text('title');
             $mapping->text('slug');
             $mapping->text('content');
+            $mapping->integer('status');
         });
     }
 

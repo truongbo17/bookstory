@@ -17,6 +17,7 @@ final class CreateSeoKeywordIndex implements MigrationInterface
             $mapping->integer('seo_keyword_id');
             $mapping->text('title');
             $mapping->text('slug');
+            $mapping->integer('status');
         });
     }
 

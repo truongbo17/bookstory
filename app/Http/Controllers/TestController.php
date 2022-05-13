@@ -15,12 +15,12 @@ class TestController extends Controller
     public function crawl()
     {
         $client = new Client(config('crawl.browsers.guzzle'));
-        $response = $client->get('https://pesthubt.com/quiz/22825/sinh-li-2.html');
+        $response = $client->get('https://www.scirp.org/journal/paperinformation.aspx?paperid=50723');
         $html = $response->getBody()->getContents();
-//        $dom_crawler = new DomCrawler($html);
-//        $linkCrawler = $dom_crawler->filter('div.articles_main div')->eq(3)->filter('p')->eq(1)->text();
+        $dom_crawler = new DomCrawler($html);
+        $linkCrawler = $dom_crawler->filter('div#JournalInfor_div_showkeywords a')->text();
 
-        dd($html);
+        dd($linkCrawler);
     }
 
     public function test()

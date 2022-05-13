@@ -28,7 +28,7 @@
                                      @if(!is_null($author[0]->image))
                                          src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($author[0]->image)->path())}}"
                                      @else
-                                         src="{{asset('images/avatar/default.png')}}"
+                                         src="{{asset('images/avatar/default.jpg')}}"
                                      @endif
                                      alt="">
                             @else

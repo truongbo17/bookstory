@@ -64,8 +64,8 @@ class SearchController extends Controller
         }
 
         $data_seo_keyword = [];
-        $hits_seo_keyword = $search_result_document->hits();
-        $hits_highlights_seo_keyword = $search_result_document->highlights();
+        $hits_seo_keyword = $search_result_seo_keyword->hits();
+        $hits_highlights_seo_keyword = $search_result_seo_keyword->highlights();
         foreach ($hits_highlights_seo_keyword as $key => $highlight) {
             if (!array_key_exists('title', $highlight->raw())) {
                 $data_seo_keyword[$key]['title'] = $hits_seo_keyword[$key]->document()->content()['title'];

@@ -105,5 +105,7 @@
     "Confirm password": "\u786e\u8ba4\u5bc6\u7801",
     "Update": "\u66f4\u65b0",
     "total_document_in_list": "有所有 :count_documents 文件",
-    "total_author_in_list": "有所有 :count_authors 作者"
+    "total_author_in_list": "有所有 :count_authors 作者",
+    "Related keywords": "相关关键词",
+    "There are no matching documents, please try again": "没有匹配的文件，请重试"
 }
