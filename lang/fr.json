@@ -107,5 +107,7 @@
     "total_document_in_list": "Il y a tous :count_documents documents",
     "total_author_in_list": "Il y a tous les auteurs :count_authors",
     "Related keywords": "mots-clés associés",
-    "There are no matching documents, please try again": "Il n'y a pas de documents correspondants, veuillez réessayer"
+    "There are no matching documents, please try again": "Il n'y a pas de documents correspondants, veuillez réessayer",
+    "Keyword : ": "Mot-clé : ",
+    "Top Keyword" : "Meilleur mot-clé"
 }

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Crawler\Enum\SeoKeywordStatus;
+use App\Crawler\Enum\Status;
 use App\Libs\DiskPathTools\DiskPathInfo;
 use App\Libs\IdToPath;
 use App\Models\Document;
@@ -44,7 +45,7 @@ class SeoKeyWord extends Command
 
         while ($this->hasPendingKeyword()) {
             $keyword = $this->firstKeyword();
-            if ($this->checkExistSeoKeyWord($keyword->content)) {
+            if ($this->checkExistSeoKeyWord($keyword->content, $reset)) {
                 $keyword->status = SeoKeywordStatus::SEO_KEYWORD_ERROR;
                 continue;
             }
@@ -63,6 +64,7 @@ class SeoKeyWord extends Command
                             'content' => ['number_of_fragments' => 3],
                         ]
                 ])
+                ->postFilter(['term' => ['status' => Status::ACTIVE]])
                 ->execute();
 
             if ($searchResult->total() > 0) {
@@ -70,32 +72,38 @@ class SeoKeyWord extends Command
                 $hits = $searchResult->hits();
                 $highlights = $searchResult->highlights();
 
-                $seo_keyword = SeoKeyModel::create([
-                    'title' => $keyword->content,
-                    'slug' => createSlug($keyword->content),
-                    'title_hash' => $this->hashTitle($keyword->content),
-                    'documents_matched' => $searchResult->total(),
-                    'length' => mb_strlen($keyword->content),
-                ]);
-
+                $seo_keyword = SeoKeyModel::where('title_hash', $this->hashTitle($keyword->content))->first();
+                if (!$seo_keyword) {
+                    $this->warn('Create seo keyword');
+                    //Create
+                    $seo_keyword = SeoKeyModel::create([
+                        'title' => $keyword->content,
+                        'slug' => createSlug($keyword->content),
+                        'title_hash' => $this->hashTitle($keyword->content),
+                        'documents_matched' => $searchResult->total(),
+                        'length' => mb_strlen($keyword->content),
+                    ]);
+                } else {
+                    $this->warn('Update seo keyword');
+                }
 
                 $hits_json = [];
                 foreach ($highlights as $key => $highlight) {
                     if (!array_key_exists('title', $highlight->raw())) {
-                        $hits_json['title'] = $hits[$key]->document()->content()['title'];
+                        $hits_json[$key]['title'] = $hits[$key]->document()->content()['title'];
                     } else {
-                        $hits_json['title'] = implode("...", $highlight->raw()['title']);
+                        $hits_json[$key]['title'] = implode("...", $highlight->raw()['title']);
                     }
 
                     if (!array_key_exists('content', $highlight->raw())) {
-                        $hits_json['content'] = $hits[$key]->document()->content()['content'];
+                        $hits_json[$key]['content'] = $hits[$key]->document()->content()['content'];
                     } else {
-                        $hits_json['content'] = implode("...", $highlight->raw()['content']);
+                        $hits_json[$key]['content'] = implode("...", $highlight->raw()['content']);
                     }
 
-                    $hits_json['document_id'] = $hits[$key]->document()->content()['document_id'];
-                    $hits_json['slug'] = $hits[$key]->document()->content()['slug'];
-                    $hits_json['image'] = $hits[$key]->document()->content()['image'] ?? null;
+                    $hits_json[$key]['document_id'] = $hits[$key]->document()->content()['document_id'];
+                    $hits_json[$key]['slug'] = $hits[$key]->document()->content()['slug'];
+                    $hits_json[$key]['image'] = $hits[$key]->document()->content()['image'] ?? null;
                 }
                 $hits_json = json_encode($hits_json);
 
@@ -142,8 +150,11 @@ class SeoKeyWord extends Command
         return hash($algo, $title);
     }
 
-    public function checkExistSeoKeyWord(string $title)
+    public function checkExistSeoKeyWord(string $title, bool $reset)
     {
+        if ($reset) {
+            return false;
+        }
         return SeoKeyModel::where('title_hash', $this->hashTitle($title))->exists();
     }
 }

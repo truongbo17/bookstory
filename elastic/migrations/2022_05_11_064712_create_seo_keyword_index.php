@@ -13,6 +13,7 @@ final class CreateSeoKeywordIndex implements MigrationInterface
      */
     public function up(): void
     {
+        Index::dropIfExists('seo_keywords');
         Index::create('seo_keywords', function (Mapping $mapping, Settings $settings) {
             $mapping->integer('seo_keyword_id');
             $mapping->text('title');

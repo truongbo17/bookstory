@@ -21,9 +21,9 @@ class RelatedDocument extends Controller
         $related->view = $related->view + 1;
         $related->save();
 
-        $data = DiskPathInfo::parse($related->hits)->read();
-        $related->data = $data;
+        $data = json_decode(DiskPathInfo::parse($related->hits)->read() , true);
+        $title = $related->title;
 
-        return view('related.index', compact('related'));
+        return view('related.index', compact('title', 'data'));
     }
 }

@@ -107,5 +107,7 @@
     "total_document_in_list": "有所有 :count_documents 文件",
     "total_author_in_list": "有所有 :count_authors 作者",
     "Related keywords": "相关关键词",
-    "There are no matching documents, please try again": "没有匹配的文件，请重试"
+    "There are no matching documents, please try again": "没有匹配的文件，请重试",
+    "Keyword : ": "关键词 : ",
+    "Top Keyword": "热门关键词"
 }

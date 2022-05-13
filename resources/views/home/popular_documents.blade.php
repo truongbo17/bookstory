@@ -54,6 +54,31 @@
         </div>
     </div>
 
+    <section class="text-gray-900 body-font">
+        <div class="container px-5 py-24 mx-auto">
+            <div class="text-center mb-20 pb-10">
+                <h3 class="text-xl font-extrabold tracking-tight sm:text-4xl">{{__('Top Keyword')}}</h3>
+            </div>
+            <div class="flex flex-wrap lg:w-4/5 md:grid md:grid-cols-3 sm:mx-auto sm:mb-2 -mx-2">
+                @foreach($top_keyword as $keyword)
+                    <div class="p-2 sm:w-1/2 w-full text-indigo-600">
+                        <a href="{{route('related.show_detail',$keyword->slug)}}">
+                            <div class="bg-gray-100 rounded flex p-4 h-full items-center">
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                     stroke-width="3" class="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4"
+                                     viewBox="0 0 24 24">
+                                    <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                                    <path d="M22 4L12 14.01l-3-3"></path>
+                                </svg>
+                                <span class="title-font font-medium">{{$keyword->title}}</span>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     <div class="max-w-7xl mx-auto mb-8 px-4 text-center sm:px-6 lg:px-8 lg:py-8">
         <div class="space-y-8 sm:space-y-12">
             <div class="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl">

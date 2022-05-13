@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Search;
 
+use App\Crawler\Enum\Status;
 use App\Http\Controllers\Controller;
 use App\Models\Document;
 use App\Models\SeoKeyword;
@@ -29,6 +30,7 @@ class SearchController extends Controller
                         'content' => ['number_of_fragments' => 3],
                     ]
             ])
+            ->postFilter(['term' => ['status' => Status::ACTIVE]])
             ->paginate(10);
 
         $search_result_seo_keyword = SeoKeyword::searchQuery($query)
@@ -40,6 +42,7 @@ class SearchController extends Controller
                         'title' => ['number_of_fragments' => 0],
                     ]
             ])
+            ->postFilter(['term' => ['status' => Status::ACTIVE]])
             ->paginate(10);
 
         $hits_document = $search_result_document->hits();

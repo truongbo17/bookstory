@@ -13,11 +13,13 @@ final class CreateDocumentIndex implements MigrationInterface
      */
     public function up(): void
     {
+        Index::dropIfExists('documents');
         Index::create('documents', function (Mapping $mapping, Settings $settings) {
             $mapping->integer('document_id');
             $mapping->text('title');
             $mapping->text('slug');
             $mapping->text('content');
+            $mapping->text('image');
             $mapping->integer('status');
         });
     }

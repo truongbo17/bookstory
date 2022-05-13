@@ -107,5 +107,7 @@
     "total_document_in_list": "Ada semua :count_documents dokumen",
     "total_author_in_list": "Ada semua :count_authors penulis",
     "Related keywords" : "Kata kunci terkait",
-    "There are no matching documents, please try again": "Tidak ada dokumen yang cocok, silakan coba lagi"
+    "There are no matching documents, please try again": "Tidak ada dokumen yang cocok, silakan coba lagi",
+    "Keyword : ": "Kata kunci : ",
+    "Top Keyword" : "Kata Kunci Teratas"
 }
