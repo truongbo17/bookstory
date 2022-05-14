@@ -22,6 +22,7 @@ class HomeController extends Controller
             ->get();
 
         $authors = User::where('status', 1)
+            ->where('is_admin', 0)
             ->withCount('documents')
             ->orderBy('documents_count', 'DESC')
             ->limit(8)

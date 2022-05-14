@@ -187,7 +187,7 @@
                                     <dt class="sr-only">Role</dt>
                                     <dd class="mt-3">
                                         <span
-                                            class="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">{{$author->is_admin ? 'Admin' : 'Author'}}</span>
+                                            class="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">{{$author->is_admin ? 'Content' : 'Author'}}</span>
                                     </dd>
                                 </dl>
                             </div>

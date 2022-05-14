@@ -8,9 +8,11 @@ use App\Crawler\Enum\DataStatus;
 use App\Crawler\Enum\Status;
 use App\Crawler\HandlePdf\PdfToImage;
 use App\Crawler\StoreData\StoreData;
+use App\Jobs\DownloadFilePdf;
 use App\Libs\DiskPathTools\DiskPathInfo;
 use App\Libs\IdToPath;
 use App\Libs\PhpUri;
+use App\Libs\TitleToImage;
 use App\Models\CrawlUrl;
 use App\Models\Document;
 use App\Services\DocumentManager;
@@ -108,13 +110,20 @@ class PestHubtCommand extends Command
                         $array_data = json_decode($string, true);
                         $data = $array_data['quiz'];
 
-                        $author[] = $data['user']['fullname'];
+                        $author = $data['user']['fullname'];
+
                         $category[] = $data['category']['category'];
+                        $category[] = 'hubt';
+                        $category[] = 'kinh công';
+                        $category[] = 'đại học kinh doanh và công nghệ hà nội';
+                        $category[] = 'kinh doanh và công nghệ';
+
                         $content = $data['note'];
 
+                        $data['title'] = $data['title'] . ' - hubt';
                         $data['author'] = $author;
                         $data['category'] = $category;
-                        $data['content'] = $content;
+                        $data['content'] = $content . ' - hubt';
                         if (is_null($content)) {
                             $data['content'] = $data['title'];
                         }
@@ -126,6 +135,7 @@ class PestHubtCommand extends Command
                             "slug" => createSlug($data['title']),
                             "download_link" => "",
                             "content_file" => "",
+                            "binding" => "PDF",
                             "count_page" => null,
                             "content_hash" => md5($data['content']),
                             'is_crawl' => 1,
@@ -134,7 +144,7 @@ class PestHubtCommand extends Command
 
                         DocumentManager::updateContentFile($document, $data['content']);
                         DocumentManager::updateKeywords($document, $data['category']);
-                        DocumentManager::updateUser($document, $data['author']);
+                        DocumentManager::updateUser($document, array($data['author']));
 
                         try {
                             $data_pdf = [
@@ -149,22 +159,29 @@ class PestHubtCommand extends Command
                             $document->download_link = $file_name;
                             $document->save();
 
-                            $pdf_to_image = new PdfToImage();
-                            $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
+                            if (getCountPagePdf($file_name->view()) > config('crawl.max_pdf_count_page')) {
+                                if (is_null($document->count_page)) $document->count_page = getCountPagePdf($file_name->view());
+                                $img = new TitleToImage();
+                                $img->createImage($data['title']);
+                                $document->image = $img->saveImage($document);
+                            } else {
+                                $pdf_to_image = new PdfToImage();
+                                $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
 
-                            $document->image = $pdf_to_image['image'];
-                            if (is_null($document->count_page)) $document->count_page = $pdf_to_image['count_page'];
-                            $document->save();
+                                $document->image = $pdf_to_image['image'];
+                                if (is_null($document->count_page)) $document->count_page = $pdf_to_image['count_page'];
+                            }
+
+                            if ($document->save()) {
+                                CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::HAS_DATA]);
+                            } else {
+                                CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::GET_DATA_ERROR]);
+                            }
                         } catch (Exception $exception) {
-                            dd($exception);
+                            \Log::error($exception);
+                            CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::GET_DATA_ERROR]);
                         }
 
-//
-//                        if ($check) {
-//                            CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::HAS_DATA]);
-//                        } else {
-//                            CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::NO_DATA]);
-//                        }
                     } catch (Exception $e) {
                         Log::error($e);
                         CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::GET_DATA_ERROR]);

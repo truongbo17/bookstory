@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
-                        <a href="{{$download_link}}"
+                        <a href="{{$download_link}}" onclick="downloadHandle()"
                            class="button w-full bg-indigo-600 border border-black border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">
                             Download
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -114,7 +114,7 @@
                                           d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
 
-                                <p class="text-sm ml-5 text-gray-500 mt-2">{{$document->download}}
+                                <p class="text-sm ml-5 text-gray-500 mt-2" id="downloadCount">{{$document->download}}
                                 </p>
                                 <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none" stroke="currentColor"
                                      viewBox="0 0 24 24"
@@ -534,5 +534,9 @@
             titles: ["Very Bad", "Poorly", "Medium", "Good", "Excellent!"],
             stars: 5,
         });
+
+        function downloadHandle() {
+            document.getElementById('downloadCount').innerText = Number(document.getElementById('downloadCount').innerText) + 1;
+        }
     </script>
 @endpush

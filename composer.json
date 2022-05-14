@@ -30,7 +30,8 @@
         "spatie/pdf-to-image": "^2.2",
         "stichoza/google-translate-php": "^4.1",
         "symfony/dom-crawler": "^6.0",
-        "vuh/cli-echo": "^0.2.1"
+        "vuh/cli-echo": "^0.2.1",
+        "ext-gd": "*"
     },
     "repositories": [
         {
@@ -65,8 +66,7 @@
             "Tests\\": "tests/"
         },
         "files": [
-            "app/Libs/helpers.php",
-            "app/Libs/OverrideSaveImagePdf.php"
+            "app/Libs/helpers.php"
         ]
     },
     "scripts": {

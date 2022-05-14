@@ -68,8 +68,8 @@ class DocumentController extends Controller
             return abort(404);
         }
 
-        $download_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(1), ['action' => 'download', 'slug' => $document->slug]);
-        $read_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(1), ['action' => 'read', 'slug' => $document->slug]);
+        $download_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(config('crawl.timeout.download')), ['action' => 'download', 'slug' => $document->slug]);
+        $read_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(config('crawl.timeout.read')), ['action' => 'read', 'slug' => $document->slug]);
 
         return view('documents.detail', compact('document', 'download_link', 'read_link', 'star'));
     }
@@ -79,6 +79,9 @@ class DocumentController extends Controller
         $slug = $request->input('slug') . '.pdf';
 
         if ($request->input('action') == 'download') {
+            $document = Document::where('slug', $request->input('slug'))->first();
+            $document->download = ($document->download ?? 0) + 1;
+            $document->save();
             $path = $request->input('path');
             return Storage::disk(config('crawl.document_disk'))->download($path, $slug);
         } else if ($request->input('action') == 'read') {

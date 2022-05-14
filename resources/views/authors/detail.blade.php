@@ -96,7 +96,7 @@
                                                 {{__('Role')}}
                                             </dt>
                                             <dd class="mt-1 text-sm text-gray-900">
-                                                {{$author[0]->is_admin ? 'Admin' : 'Author'}}
+                                                {{$author[0]->is_admin ? 'Content' : 'Author'}}
                                             </dd>
                                         </div>
                                         <div class="sm:col-span-1">
