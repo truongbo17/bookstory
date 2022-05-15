@@ -25,14 +25,20 @@ class Crawler
 
     public function run()
     {
-        $sites = Url::where('status', UrlStatus::INIT)->get()->toArray();
+        $check_status_url = 0;
+        $sites = [];
+        if (Url::where('status', UrlStatus::RUNNING)->exists()) {
+            $sites = Url::where('status', UrlStatus::RUNNING)->get()->toArray();
+        }
 
-        foreach ($sites as $key => $site) {
+        foreach ($sites as $site) {
             $this->config_root_url = $site['config_root_url'];
             $site = new SiteManager($site);
             $this->init($site); //init site
 
             while ($this->queue->hasPendingUrls($site)) {
+                $check_status_url++;
+
                 $crawl_url = $this->queue->firstPendingUrl($site);
                 if (empty($crawl_url)) continue;
 
@@ -86,7 +92,11 @@ class Crawler
                     CliEcho::errornl('Fail : ' . $exception->getMessage());
                     $crawl_url->setStatus(CrawlStatus::FAIL);
                 }
+
+                if ($check_status_url == 100) break;
             }
+
+            $this->run();
         }
     }
 
