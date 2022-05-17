@@ -25,7 +25,7 @@
 
             <div class="border-b border-gray-200">
                 <div class="h-16 flex items-center">
-                    <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
+                    <!-- Mobile menu toggle a, controls the 'mobileMenuOpen' state. -->
                     <button type="button" id="openMenuMobile" class="bg-white p-2 rounded-md text-gray-400 lg:hidden">
                         <span class="sr-only">Open menu</span>
                         <!-- Heroicon name: outline/menu -->
@@ -164,7 +164,7 @@
         </nav>
     </header>
     <div class="hidden" id="menuMobile">
-        <div class="z-10 top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+        <div class="z-10 top-0 inset-x-0 p-2 transition transform origin-top-right">
             <div class="rounded-lg shadow-md bg-white ring-1 ring-black ring-opacity-5 overflow-hidden">
                 <div class="px-5 pt-4 flex items-center justify-between">
                     <div>

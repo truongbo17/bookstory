@@ -6,6 +6,7 @@ use App\Crawler\HandlePdf\PdfToImage;
 use App\Libs\DiskPathTools\DiskPathInfo;
 use App\Libs\IdToPath;
 use App\Libs\StringUtils;
+use App\Libs\TitleToImage;
 use App\Models\Category;
 use App\Models\Document;
 use App\Models\Keyword;
@@ -14,14 +15,13 @@ use Exception;
 use Hash;
 use Illuminate\Support\Str;
 use Log;
+use Vuh\CliEcho\CliEcho;
 
 class DocumentManager
 {
-    private static array $not_users = [
-        'XML', 'HTML', 'PDF', 'Citations'
-    ];
+    private static array $not_users = ['XML', 'HTML', 'PDF', 'Citations'];
 
-    public static function savePdf(Document $document, string $download_link, bool $pdf_to_image = true)
+    public static function savePdf(Document $document, string $download_link, bool $check_pdf_to_image = true)
     {
         $pdf_to_image = new PdfToImage();
         try {
@@ -34,7 +34,18 @@ class DocumentManager
         $document->download_link = $path;
         $document->save();
 
-        if ($pdf_to_image) self::pdfToImage($document, $pdf_to_image);
+        if ($check_pdf_to_image) {
+            if (getCountPagePdf($download_link) > config('crawl.max_pdf_count_page')) {
+                CliEcho::warningnl('TitleToImage');
+                if (is_null($document->count_page)) $document->count_page = getCountPagePdf($download_link);
+                $img = new TitleToImage();
+                $img->createImage($document->title);
+                $document->image = $img->saveImage($document);
+            } else {
+                CliEcho::warningnl('PDFToImage');
+                self::pdfToImage($document, $pdf_to_image);
+            }
+        }
     }
 
     public static function pdfToImage(Document $document, $pdf_to_image)
@@ -73,12 +84,7 @@ class DocumentManager
             if ($check_email) {
                 $users_id[] = $check_email->id;
             } else {
-                $users_id[] = User::create([
-                    'name' => $user,
-                    'email' => $email,
-                    'password' => $password,
-                    'is_crawl' => 1,
-                ])->id;
+                $users_id[] = User::create(['name' => $user, 'email' => $email, 'password' => $password, 'is_crawl' => 1,])->id;
             }
         }
 
@@ -152,12 +158,7 @@ class DocumentManager
     {
         $content_hash = md5(StringUtils::normalize($string));
 
-        return Keyword::firstOrCreate([
-            'content_hash' => $content_hash,
-        ], [
-            'content' => StringUtils::trim($string),
-            'length' => StringUtils::charactersCount($string),
-        ]);
+        return Keyword::firstOrCreate(['content_hash' => $content_hash,], ['content' => StringUtils::trim($string), 'length' => StringUtils::charactersCount($string),]);
     }
 
     public static function stripVN(string $str): string

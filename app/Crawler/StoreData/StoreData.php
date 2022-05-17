@@ -47,7 +47,7 @@ class StoreData implements StoreDataInterface
         $count_page = $data['count_page'] ?? null;
         $binding = $data['binding'] ?? "PDF";
         $code = $data['code'] ?? null;
-        $image = $data['image'] ?? null;
+        $image = $data['image'] ?? "";
 
         $keywords = $data['keywords'] ?? [];
         $categories = $data['categories'] ?? [];

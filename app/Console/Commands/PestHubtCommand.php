@@ -45,24 +45,7 @@ class PestHubtCommand extends Command
      */
     protected $description = 'Crawl data from pesthubt.com and convert data to PDF ';
 
-    protected array $site = [
-        'root_url' => 'https://pesthubt.com',
-        'start_url' => 'https://pesthubt.com',
-        'should_crawl_url' => '/^https:\/\/pesthubt\.com/',
-        'should_get_data' => '/^https:\/\/pesthubt\.com\/\w*\/\w*\/(.*).html/',
-        'should_get_info' => 'section.content.container-fluid.custom-content script',
-        'skip_url' => [
-            '/^https:\/\/pesthubt\.com\/danh-sach-yeu-thich.html/',
-            '/^https:\/\/pesthubt\.com\/admin/',
-            '/^https:\/\/pesthubt\.com\/thu-vien-sach/',
-            '/^https:\/\/pesthubt\.com\/login/',
-            '/^https:\/\/pesthubt\.com\/plugins/',
-            '/^https:\/\/pesthubt\.com\/css/',
-            '/^https:\/\/pesthubt\.com\/dist/',
-            '/^https:\/\/pesthubt\.com\/js/',
-            '/^https:\/\/pesthubt\.com\/download\/view/',
-        ],
-    ];
+    protected array $site = ['root_url' => 'https://pesthubt.com', 'start_url' => 'https://pesthubt.com', 'should_crawl_url' => '/^https:\/\/pesthubt\.com/', 'should_get_data' => '/^https:\/\/pesthubt\.com\/\w*\/\w*\/(.*).html/', 'should_get_info' => 'section.content.container-fluid.custom-content script', 'skip_url' => ['/^https:\/\/pesthubt\.com\/danh-sach-yeu-thich.html/', '/^https:\/\/pesthubt\.com\/admin/', '/^https:\/\/pesthubt\.com\/thu-vien-sach/', '/^https:\/\/pesthubt\.com\/login/', '/^https:\/\/pesthubt\.com\/plugins/', '/^https:\/\/pesthubt\.com\/css/', '/^https:\/\/pesthubt\.com\/dist/', '/^https:\/\/pesthubt\.com\/js/', '/^https:\/\/pesthubt\.com\/download\/view/',],];
 
     /**
      * Execute the console command.
@@ -74,9 +57,7 @@ class PestHubtCommand extends Command
         $this->init(); //Init crawl
 
         //Check pending
-        $check_pending_url = CrawlUrl::where('url', 'LIKE', 'https://pesthubt.com%')
-            ->where('status', CrawlStatus::INIT)
-            ->exists();
+        $check_pending_url = CrawlUrl::where('url', 'LIKE', 'https://pesthubt.com%')->where('status', CrawlStatus::INIT)->exists();
         while ($check_pending_url) {
             $crawl_url = $this->firstPendingUrl();
             if (empty($crawl_url)) continue;
@@ -130,27 +111,14 @@ class PestHubtCommand extends Command
 
                         $data = Arr::only($data, ['title', 'category', 'content', 'author', 'quiz_content']);
 
-                        $document = Document::create([
-                            "title" => $data['title'],
-                            "slug" => createSlug($data['title']),
-                            "download_link" => "",
-                            "content_file" => "",
-                            "binding" => "PDF",
-                            "count_page" => null,
-                            "content_hash" => md5($data['content']),
-                            'is_crawl' => 1,
-                            'status' => Status::PENDING,
-                        ]);
+                        $document = Document::create(["title" => $data['title'], "slug" => createSlug($data['title']), "download_link" => "", "content_file" => "", "binding" => "PDF", "count_page" => null, "content_hash" => md5($data['content']), "image" => "", "is_crawl" => 1, "status" => Status::PENDING,]);
 
                         DocumentManager::updateContentFile($document, $data['content']);
                         DocumentManager::updateKeywords($document, $data['category']);
                         DocumentManager::updateUser($document, array($data['author']));
 
                         try {
-                            $data_pdf = [
-                                'title' => $data['title'],
-                                'quizs' => $data['quiz_content'],
-                            ];
+                            $data_pdf = ['title' => $data['title'], 'quizs' => $data['quiz_content'],];
                             $pdf = PDF::loadView('pdf.pest', $data_pdf);
 
                             $file_name = IdToPath::make($document->id, 'pdf');
@@ -197,12 +165,7 @@ class PestHubtCommand extends Command
                     }
                     //push all url to database => pending url crawl
                     if (!$this->exists($url)) {
-                        CrawlUrl::create([
-                            'url' => $url,
-                            'url_hash' => $this->hashUrl($url),
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                        ]);
+                        CrawlUrl::create(['url' => $url, 'url_hash' => $this->hashUrl($url), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(),]);
                     }
                 }
 
@@ -243,12 +206,7 @@ class PestHubtCommand extends Command
     public function init()
     {
         if (!$this->exists($this->site['root_url'])) {
-            $push = CrawlUrl::insertGetId([
-                'url' => $this->site['root_url'],
-                'url_hash' => $this->hashUrl($this->site['root_url']),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
+            $push = CrawlUrl::insertGetId(['url' => $this->site['root_url'], 'url_hash' => $this->hashUrl($this->site['root_url']), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(),]);
 
             if ($push) {
                 $this->info("Site : pesthubt Added " . $this->site['root_url']);
@@ -271,11 +229,7 @@ class PestHubtCommand extends Command
     public function firstPendingUrl()
     {
         return DB::transaction(function () {
-            $first = CrawlUrl::where('url', 'LIKE', 'https://pesthubt.com%')
-                ->where('status', CrawlStatus::INIT)
-                ->orderBy('visited')
-                ->lock($this->getLockForPopping())
-                ->first();
+            $first = CrawlUrl::where('url', 'LIKE', 'https://pesthubt.com%')->where('status', CrawlStatus::INIT)->orderBy('visited')->lock($this->getLockForPopping())->first();
 
             if ($first) {
                 $first->status = CrawlStatus::VISITING;
@@ -293,8 +247,7 @@ class PestHubtCommand extends Command
         $databaseEngine = DB::getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME);
         $databaseVersion = DB::getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
 
-        if ($databaseEngine == 'mysql' && !strpos($databaseVersion, 'MariaDB') && !strpos($databaseVersion, 'TiDB') && version_compare($databaseVersion, '8.0.1', '>=') ||
-            $databaseEngine == 'pgsql' && version_compare($databaseVersion, '9.5', '>=')) {
+        if ($databaseEngine == 'mysql' && !strpos($databaseVersion, 'MariaDB') && !strpos($databaseVersion, 'TiDB') && version_compare($databaseVersion, '8.0.1', '>=') || $databaseEngine == 'pgsql' && version_compare($databaseVersion, '9.5', '>=')) {
             return 'FOR UPDATE SKIP LOCKED';
         }
 

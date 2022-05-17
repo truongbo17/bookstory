@@ -93,6 +93,7 @@ class DocumentCrudController extends CrudController
         CRUD::field('slug');
         CRUD::field('status');
         CRUD::field('title');
+        CRUD::field('image');
         CRUD::field('updated_at');
         CRUD::field('view');
 
