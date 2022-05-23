@@ -30,29 +30,6 @@ class Document extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
-    protected $mapping = [
-        'properties' => [
-            'document_id' => [
-                'type' => 'int'
-            ],
-            'slug' => [
-                'type' => 'text'
-            ],
-            'title' => [
-                'type' => 'text'
-            ],
-            'content' => [
-                'type' => 'text'
-            ],
-            'image' => [
-                'type' => 'text'
-            ],
-            'status' => [
-                'type' => 'int'
-            ],
-        ]
-    ];
-
     public function toSearchableArray()
     {
         $array = [

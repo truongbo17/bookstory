@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PdfToImage;
 use App\Http\Controllers\Document\DocumentController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\TestController;
@@ -28,6 +29,7 @@ Route::get('pdftoimage', [TestController::class, 'pdftoimage']);
 Route::get('downloadpdf', [TestController::class, 'downloadpdf']);
 Route::get('viewpdf', [TestController::class, 'viewpdf']);
 Route::get('crawl', [TestController::class, 'crawl']);
+Route::get('pdf', [PdfToImage::class, 'pdfToImage']);
 
 //Crawl data from Pesthubt
 Route::get('pest', function () {

@@ -1,3 +1,17 @@
+<style>
+    #pdf-viewer {
+        width: 100%;
+        height: 70vh;
+        background: rgba(0, 0, 0, 0.1);
+        overflow: auto;
+    }
+
+    .pdf-page-canvas {
+        display: block;
+        margin: 5px auto;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+</style>
 <div id="readDocument" tabindex="-1"
      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
     <div class="relative p-4 w-full max-w-7xl h-full md:h-auto">
@@ -20,13 +34,59 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <object class="w-full" data="{{$read_link}}" type="application/pdf" style="height: 75vh">
-                    <p>Your web browser doesn't have a PDF plugin.
-                        Instead you can <a class="text-indigo-700"
-                                           href="{{$download_link}}">click here to
-                            download the PDF file.</a></p>
-                </object>
+                <div id='pdf-viewer'></div>
+                <a href="{{$download_link}}" onclick="downloadHandle()"
+                   class="button w-full bg-indigo-600 border border-black border-transparent rounded-md py-2 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">
+                    Download to read in full
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </a>
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+<script>
+    let url = '{{$read_link}}';
+    const parseResult = new DOMParser().parseFromString(url, "text/html");
+    url = parseResult.documentElement.textContent;
+
+    let thePdf = null;
+    let scale = 1;
+    let numberPageView = 5;
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+    pdfjsLib.getDocument(url).promise.then(function (pdf) {
+        thePdf = pdf;
+        viewer = document.getElementById('pdf-viewer');
+
+        if (numberPageView > pdf.numPages) numberPageView = pdf.numPages;
+
+        for (let page = 1; page <= numberPageView; page++) {
+            const canvas = document.createElement("canvas");
+            canvas.className = 'pdf-page-canvas';
+
+            const numberPage = document.createElement("p");
+            numberPage.className = 'bg-indigo-700 text-white text-sm text-center w-full';
+            numberPage.textContent = 'Page ' + page + ' of ' + pdf.numPages;
+
+            viewer.appendChild(numberPage);
+            viewer.appendChild(canvas);
+            renderPage(page, canvas);
+        }
+    });
+
+    function renderPage(pageNumber, canvas) {
+        thePdf.getPage(pageNumber).then(function (page) {
+            const viewport = page.getViewport({scale: scale});
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            page.render({canvasContext: canvas.getContext('2d'), viewport: viewport});
+        });
+    }
+</script>

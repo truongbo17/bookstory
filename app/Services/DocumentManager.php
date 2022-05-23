@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Crawler\HandlePdf\PdfToImage;
 use App\Libs\DiskPathTools\DiskPathInfo;
 use App\Libs\IdToPath;
+use App\Libs\PdfJsToImage;
 use App\Libs\StringUtils;
 use App\Libs\TitleToImage;
 use App\Models\Category;
@@ -34,18 +35,15 @@ class DocumentManager
         $document->download_link = $path;
         $document->save();
 
-        if ($check_pdf_to_image) {
-            if (getCountPagePdf($download_link) > config('crawl.max_pdf_count_page')) {
-                CliEcho::warningnl('TitleToImage');
-                if (is_null($document->count_page)) $document->count_page = getCountPagePdf($download_link);
-                $img = new TitleToImage();
-                $img->createImage($document->title);
-                $document->image = $img->saveImage($document);
-            } else {
-                CliEcho::warningnl('PDFToImage');
-                self::pdfToImage($document, $pdf_to_image);
-            }
+        if (getCountPagePdf($download_link) > config('crawl.max_pdf_count_page')) {
+            if (is_null($document->count_page)) $document->count_page = getCountPagePdf($download_link);
+            $img = new TitleToImage();
+            $img->createImage($document->title);
+            $document->image = $img->saveImage($document);
+        } else {
+            self::pdfToImage($document, $pdf_to_image);
         }
+
     }
 
     public static function pdfToImage(Document $document, $pdf_to_image)
