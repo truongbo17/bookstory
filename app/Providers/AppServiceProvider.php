@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \URL::forceRootUrl(\Config::get('app.url'));
+
         Storage::disk(config('crawl.document_disk'))->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
             return URL::temporarySignedRoute(
                 'document.handle',
