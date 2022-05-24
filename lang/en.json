@@ -6,5 +6,6 @@
     "The given :attribute has appeared in a data leak. Please choose a different :attribute.": "The given :attribute has appeared in a data leak. Please choose a different :attribute.",
     "total_document_in_list": "Found :count_documents documents in total",
     "total_author_in_list": "Found :count_authors authors in total",
-    "lang" : "en"
+    "lang" : "en",
+    "locale" : "en_UK"
 }

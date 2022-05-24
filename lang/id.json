@@ -110,5 +110,6 @@
     "There are no matching documents, please try again": "Tidak ada dokumen yang cocok, silakan coba lagi",
     "Keyword : ": "Kata kunci : ",
     "Top Keyword" : "Kata Kunci Teratas",
-    "lang" : "id"
+    "lang" : "id",
+    "locale" : "id_ID"
 }

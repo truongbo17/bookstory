@@ -110,5 +110,6 @@
     "There are no matching documents, please try again": "Il n'y a pas de documents correspondants, veuillez réessayer",
     "Keyword : ": "Mot-clé : ",
     "Top Keyword" : "Meilleur mot-clé",
-    "lang" : "fr"
+    "lang" : "fr",
+    "locale" : "fr_FR"
 }

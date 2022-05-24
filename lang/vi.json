@@ -110,5 +110,6 @@
     "There are no matching documents, please try again": "Không có tài liệu nào phù hợp,vui lòng thử lại",
     "Keyword : ": "Từ khóa : ",
     "Top Keyword" : "Từ khóa nổi bật",
-    "lang" : "vi"
+    "lang" : "vi",
+    "locale" : "vi_VN"
 }

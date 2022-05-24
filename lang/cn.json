@@ -110,5 +110,6 @@
     "There are no matching documents, please try again": "没有匹配的文件，请重试",
     "Keyword : ": "关键词 : ",
     "Top Keyword": "热门关键词",
-    "lang": "zh"
+    "lang": "zh",
+    "locale" : "zh_CN"
 }
