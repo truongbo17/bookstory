@@ -25,23 +25,6 @@ class SeoKeyword extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
-    protected $mapping = [
-        'properties' => [
-            'seo_keyword_id' => [
-                'type' => 'int'
-            ],
-            'title' => [
-                'type' => 'text'
-            ],
-            'slug' => [
-                'type' => 'text'
-            ],
-            'status' => [
-                'type' => 'int'
-            ],
-        ]
-    ];
-
     public function toSearchableArray()
     {
         $array = [

@@ -39,20 +39,20 @@ class DocumentManager
             if (is_null($document->count_page)) $document->count_page = getCountPagePdf($download_link);
             $img = new TitleToImage();
             $img->createImage($document->title);
-            $document->image = $img->saveImage($document);
+            $document->image = $img->saveImage($document)->path();
         } else {
             self::pdfToImage($document, $pdf_to_image);
         }
 
+        $document->save();
     }
 
     public static function pdfToImage(Document $document, $pdf_to_image)
     {
         $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
 
-        $document->image = $pdf_to_image['image'];
+        $document->image = $pdf_to_image['image']->path();
         if (is_null($document->count_page)) $document->count_page = $pdf_to_image['count_page'];
-        $document->save();
     }
 
     public static function updateUser(Document $document, array $users)

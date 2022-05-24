@@ -131,12 +131,12 @@ class PestHubtCommand extends Command
                                 if (is_null($document->count_page)) $document->count_page = getCountPagePdf($file_name->view());
                                 $img = new TitleToImage();
                                 $img->createImage($data['title']);
-                                $document->image = $img->saveImage($document);
+                                $document->image = $img->saveImage($document)->path();
                             } else {
                                 $pdf_to_image = new PdfToImage();
                                 $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
 
-                                $document->image = $pdf_to_image['image'];
+                                $document->image = $pdf_to_image['image']->path();
                                 if (is_null($document->count_page)) $document->count_page = $pdf_to_image['count_page'];
                             }
 
