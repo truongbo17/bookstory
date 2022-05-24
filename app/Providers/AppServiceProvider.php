@@ -27,6 +27,10 @@ class AppServiceProvider extends ServiceProvider
     {
         \URL::forceRootUrl(\Config::get('app.url'));
 
+        if (\Str::contains(\Config::get('app.url'), 'https://')) {
+            \URL::forceScheme('https');
+        }
+
         Storage::disk(config('crawl.document_disk'))->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
             return URL::temporarySignedRoute(
                 'document.handle',
