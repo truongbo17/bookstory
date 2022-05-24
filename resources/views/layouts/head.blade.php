@@ -2,6 +2,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BookStory - @yield('title')</title>
+    <meta name="google-site-verification" content="C9aBycPGfUFFJ-UPegHJ2970JmiJH22WbeEEuuCU8cM" />
     <meta name=”robots” content=”all”/>
     <meta http-equiv=”content-language” content=”{{__('lang')}}”/>
     @stack('seo','<meta name="description" content="Bookstory it is contains Great selection of modern and classic books waiting to be discovered. All free and available in PDF Files.">
