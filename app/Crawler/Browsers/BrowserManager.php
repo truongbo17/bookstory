@@ -36,6 +36,7 @@ final class BrowserManager
             'guzzle' => new Guzzle(),
             'puppeteer' => new Puppeteer(),
             'browserless' => new Browserless(),
+            'browsershot' => new  BrowserShot(),
             default => throw new NotFoundBrowserDriver("No browser match with driver " . self::$driver),
         };
     }

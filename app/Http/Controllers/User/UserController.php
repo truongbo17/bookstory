@@ -116,7 +116,7 @@ class UserController extends Controller
 
             $image_name->put($request->file('image')->getContent());
 
-            $document->image = $image_name;
+            $document->image = $image_name->__toString();
         }
 
         if ($request->hasFile('file_upload')) {

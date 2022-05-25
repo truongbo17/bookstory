@@ -9,8 +9,9 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "babenkoivan/elastic-migrations": "^2.0",
+        "ext-gd": "*",
         "babenkoivan/elastic-client": "^1.2",
+        "babenkoivan/elastic-migrations": "^2.0",
         "babenkoivan/elastic-scout-driver-plus": "^3.4",
         "backpack/crud": "^5.0",
         "backpack/logmanager": "^4.0",
@@ -27,11 +28,11 @@
         "mehdi-fathi/eloquent-filter": "^2.6",
         "nesk/puphpeteer": "dev-master",
         "nesk/rialto": "dev-dev as 1.2",
+        "spatie/browsershot": "^3.54",
         "spatie/pdf-to-image": "^2.2",
         "stichoza/google-translate-php": "^4.1",
         "symfony/dom-crawler": "^6.0",
-        "vuh/cli-echo": "^0.2.1",
-        "ext-gd": "*"
+        "vuh/cli-echo": "^0.2.1"
     },
     "repositories": [
         {

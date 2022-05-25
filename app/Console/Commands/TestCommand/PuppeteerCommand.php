@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands\TestCommand;
 
-use App\Crawler\Browsers\Puppeteer;
+use App\Crawler\Browsers\BrowserShot;
 use Illuminate\Console\Command;
 
 class PuppeteerCommand extends Command
@@ -28,6 +28,6 @@ class PuppeteerCommand extends Command
      */
     public function handle()
     {
-        dd((new Puppeteer())->getHtml('https://bookstory.asia'));
+        dd((new BrowserShot())->getHtml('https://bookstory.asia'));
     }
 }
