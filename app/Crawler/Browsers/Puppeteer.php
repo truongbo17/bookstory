@@ -20,7 +20,9 @@ class Puppeteer implements BrowserInterface
 
     public function getHtml(string $url)
     {
-        $browser = $this->puppeteer->launch();
+        $browser = $this->puppeteer->launch([
+            'headless' => false
+        ]);
         $page = $browser->newPage();
             $page->goto($url);
 
