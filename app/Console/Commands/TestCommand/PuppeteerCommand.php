@@ -4,6 +4,7 @@ namespace App\Console\Commands\TestCommand;
 
 use App\Crawler\Browsers\BrowserShot;
 use App\Crawler\Browsers\Guzzle;
+use App\Crawler\Browsers\Puppeteer;
 use Illuminate\Console\Command;
 
 class PuppeteerCommand extends Command
@@ -29,6 +30,6 @@ class PuppeteerCommand extends Command
      */
     public function handle()
     {
-        dd((new Guzzle())->getHtml('https://bookstory.asia'));
+        dd((new Puppeteer())->getHtml('https://bookstory.asia'));
     }
 }
