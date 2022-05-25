@@ -18,6 +18,12 @@ class Guzzle implements BrowserInterface
         }
     }
 
+    public function getContent(string $url)
+    {
+        $response = $this->client->get($url);
+        return $response->getBody()->getContents();
+    }
+
     public function getHtml(string $url)
     {
         $response = $this->client->get($url);

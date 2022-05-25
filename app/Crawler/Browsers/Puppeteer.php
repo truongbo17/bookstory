@@ -7,7 +7,7 @@ use Nesk\Rialto\Data\JsFunction;
 
 class Puppeteer implements BrowserInterface
 {
-    protected Pup $puppeteer;
+    public Pup $puppeteer;
 
     public function __construct(?Pup $puppeteer = null)
     {
@@ -22,7 +22,7 @@ class Puppeteer implements BrowserInterface
     {
         $browser = $this->puppeteer->launch();
         $page = $browser->newPage();
-        $page->goto($url);
+            $page->goto($url);
 
         $divs = $page->querySelectorAll('html');
 

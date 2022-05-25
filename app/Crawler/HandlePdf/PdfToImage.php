@@ -2,6 +2,7 @@
 
 namespace App\Crawler\HandlePdf;
 
+use App\Crawler\Browsers\Guzzle;
 use App\Libs\DiskPathTools\DiskPathInfo;
 use App\Libs\IdToPath;
 use App\Models\Document;
@@ -12,13 +13,14 @@ class PdfToImage
 {
     public function savePdf(int $id, string $download_link)
     {
-        $arrContextOptions = array(
-            "ssl" => array(
-                "verify_peer"=>false,
-                "verify_peer_name"=>false,
-            ),
-        );
-        $contents = file_get_contents($download_link, false, stream_context_create($arrContextOptions));
+//        $arrContextOptions = array(
+//            "ssl" => array(
+//                "verify_peer"=>false,
+//                "verify_peer_name"=>false,
+//            ),
+//        );
+//        $contents = file_get_contents($download_link, false, stream_context_create($arrContextOptions));
+        $contents = (new Guzzle())->getContent($download_link);
 
         $file_name = IdToPath::make($id, 'pdf');
         $file_name = new DiskPathInfo(config('crawl.pdf_disk'), config('crawl.path.document_pdf') . '/' . $file_name);
