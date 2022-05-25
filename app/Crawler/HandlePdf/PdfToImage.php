@@ -22,7 +22,7 @@ class PdfToImage
         $contents = file_get_contents($download_link, false, stream_context_create($arrContextOptions));
 
         $file_name = IdToPath::make($id, 'pdf');
-        $file_name = new DiskPathInfo(config('crawl.document_disk'), config('crawl.path.document_pdf') . '/' . $file_name);
+        $file_name = new DiskPathInfo(config('crawl.pdf_disk'), config('crawl.path.document_pdf') . '/' . $file_name);
         $file_name->put($contents);
 
         return $file_name;
@@ -31,7 +31,7 @@ class PdfToImage
     public function saveImageFromPdf(Document $document)
     {
         $path_document = DiskPathInfo::parse($document->download_link)->path();
-        $link = Storage::disk(config('crawl.document_disk'))->path($path_document);
+        $link = Storage::disk(config('crawl.pdf_disk'))->path($path_document);
         $pdf = new Pdf($link);
 
         $file_name = IdToPath::make($document->id, 'png');
@@ -45,7 +45,7 @@ class PdfToImage
             ->saveImage($path);
 
         return [
-            'image' => $file_name ?: NULL,
+            'image' => $file_name,
             'count_page' => $pdf->getNumberOfPages() ?: 0,
         ];
     }

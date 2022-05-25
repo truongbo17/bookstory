@@ -50,6 +50,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'document' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/document'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
         'local_storage_01' => [
             'driver' => 'local',
             'root' => env('ROOT_LOCAL_STORAGE_01', storage_path('data')),
@@ -91,7 +98,7 @@ return [
 
     'links' => [
 //        public_path('storage') => storage_path('app/public'),
-        public_path('storage') => env('ROOT_LOCAL_STORAGE_01', storage_path('app/public')),
+          public_path('storage') => env('ROOT_LOCAL_STORAGE_01', storage_path('app/public')),
     ],
 
 ];

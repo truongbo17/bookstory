@@ -35,11 +35,11 @@ class DocumentManager
         $document->download_link = $path;
         $document->save();
 
-        if (getCountPagePdf($download_link) > config('crawl.max_pdf_count_page')) {
+        if (getCountPagePdf($download_link) > 1) {
             if (is_null($document->count_page)) $document->count_page = getCountPagePdf($download_link);
             $img = new TitleToImage();
             $img->createImage($document->title);
-            $document->image = $img->saveImage($document)->path();
+            $document->image = $img->saveImage($document)->__toString();
         } else {
             self::pdfToImage($document, $pdf_to_image);
         }
@@ -51,7 +51,7 @@ class DocumentManager
     {
         $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
 
-        $document->image = $pdf_to_image['image']->path();
+        $document->image = $pdf_to_image['image']->__toString();
         if (is_null($document->count_page)) $document->count_page = $pdf_to_image['count_page'];
     }
 

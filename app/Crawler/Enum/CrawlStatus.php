@@ -10,5 +10,7 @@ final class CrawlStatus extends Enum
     public const VISITING = 10;
     public const DONE = 200; // default success code
     public const FAIL = 1000; // default error code, or response code for specific error
+
+    public const IS_CRAWL = 1;
 }
 

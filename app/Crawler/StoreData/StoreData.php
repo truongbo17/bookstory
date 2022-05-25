@@ -95,9 +95,7 @@ class StoreData implements StoreDataInterface
     public function formatData(array $data): array
     {
         foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $data[$key] = $this->cleanArray($value);
-            }
+            $data[$key] = $this->cleanArray($value);
             if ($key == 'content') {
                 $data['content'] = str_replace('Introduction', '', $data['content']);
             }
@@ -105,28 +103,28 @@ class StoreData implements StoreDataInterface
         return $data;
     }
 
-    public function cleanArray($value): array
+    public function cleanArray($value)
     {
-        //Array
-        if ((is_string($value) && mb_strlen($value) > 0) || is_object($value)) {
-            $value = (array)$value;
-        } elseif ($value == "") {
-            $value = [];
-        }
-
         //Replace ký tự thừa
         $parent_replace_array = [
             "Tác giả",
             "PLOS ONE",
+            "|",
         ];
-        foreach ($value as $key => $value_array) {
-            $value[$key] = str_replace($parent_replace_array, "", $value_array);
-        }
 
-        //Clean array
-        $value = array_filter($value);
-        $value = preg_replace('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', '', $value);
-        $value = array_map('trim', $value);
+        if (is_array($value)) {
+            foreach ($value as $key => $value_array) {
+                $value[$key] = str_replace($parent_replace_array, "", $value_array);
+            }
+
+            //Clean array
+            $value = array_filter($value);
+            $value = preg_replace('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', '', $value);
+            $value = array_map('trim', $value);
+        } else {
+            $value = str_replace($parent_replace_array, "", $value);
+            $value = trim($value, " ");
+        }
 
         return $value;
     }

@@ -6,6 +6,7 @@ return [
      * Path data
      * */
     'document_disk' => env('DOCUMENT_DISK', 'data'),
+    'pdf_disk' => env('PDF_DISK', 'document'),
     'path' => [
         'avatar_user' => 'avatar',
         'document_pdf' => 'document',

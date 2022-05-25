@@ -1,9 +1,26 @@
 @extends('main')
 
+@php($content = App\Libs\DiskPathTools\DiskPathInfo::parse($document->content_file)->read())
+
 @section('title', $document->title)
 
 @push('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+@endpush
+
+@push('seo')
+    <meta name="description"
+          content="{{$content}}">
+    <meta name="keywords" content="pdf free download,free upload docment,bookstory,pdf free reading online">
+    <meta property="og:title" content="{{$document->title}}"/>
+    <meta property="og:image"
+          @if(!is_null($document->image))content="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+          @else content="{{asset('images/avatar/default.png')}}"@endif/>
+    <meta property="og:type" content="books.book"/>
+    <meta property="og:description"
+          content="{{$content}}"/>
+    <meta property="og:url" content="{{$document->slug}}"/>
+    <meta property="og:locale" content="{{__('locale')}}"/>
 @endpush
 
 @section('message')
@@ -163,7 +180,6 @@
 
                     <div class="border-t border-gray-200 mt-5 pt-5">
                         <h3 class="text-sm font-medium text-gray-900">Content : </h3>
-                        @php($content = App\Libs\DiskPathTools\DiskPathInfo::parse($document->content_file)->read())
                         <p class="text-gray-500 mt-6">{{$content}}</p>
                     </div>
 

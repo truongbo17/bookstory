@@ -121,7 +121,7 @@ class UserController extends Controller
 
         if ($request->hasFile('file_upload')) {
             $file_name = IdToPath::make($document->id, $request->file_upload->extension());
-            $file_name = new DiskPathInfo(config('crawl.document_disk'), config('crawl.path.document_pdf') . '/' . $file_name);
+            $file_name = new DiskPathInfo(config('crawl.pdf_disk'), config('crawl.path.document_pdf') . '/' . $file_name);
             $file_name->put($request->file('file_upload')->getContent());
 
             $document->download_link = $file_name;

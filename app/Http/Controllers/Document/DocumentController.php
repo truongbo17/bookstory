@@ -83,10 +83,10 @@ class DocumentController extends Controller
             $document->download = ($document->download ?? 0) + 1;
             $document->save();
             $path = $request->input('path');
-            return Storage::disk(config('crawl.document_disk'))->download($path, $slug);
+            return Storage::disk(config('crawl.pdf_disk'))->download($path, $slug);
         } else if ($request->input('action') == 'read') {
             $path = $request->input('path');
-            $content = Storage::disk(config('crawl.document_disk'))->get($path);
+            $content = Storage::disk(config('crawl.pdf_disk'))->get($path);
             return response($content, 200, [
                 'Content-Type' => 'application/pdf',
             ]);

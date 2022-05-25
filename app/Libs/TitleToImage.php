@@ -113,8 +113,9 @@ class TitleToImage
         $path = Storage::disk(config('crawl.document_disk'))->path($file_name->path());
 
         imagepng($this->image, $path);
-        return $file_name ?: NULL;
+        return $file_name;
     }
+
 
     /**
      * Save image as png format

@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
             \URL::forceScheme('https');
         }
 
-        Storage::disk(config('crawl.document_disk'))->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
+        Storage::disk(config('crawl.pdf_disk'))->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
             return URL::temporarySignedRoute(
                 'document.handle',
                 $expiration,

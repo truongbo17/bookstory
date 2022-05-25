@@ -5,6 +5,21 @@
 @push('css')
 @endpush
 
+@push('seo')
+    <meta name="description"
+          content="{{$author[0]->name}}">
+    <meta name="keywords" content="pdf free download,free upload docment,bookstory,pdf free reading online">
+    <meta property="og:title" content="{{$author[0]->name}}"/>
+    <meta property="og:image"
+          @if(!is_null($author[0]->image)) content="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($author[0]->image)->path())}}"
+          @else content="{{asset('images/avatar/default.jpg')}}"@endif/>
+    <meta property="og:type" content="books.book"/>
+    <meta property="og:description"
+          content="{{$author[0]->name}}"/>
+    <meta property="og:url" content="{{Request::url()}}"/>
+    <meta property="og:locale" content="{{__('locale')}}"/>
+@endpush
+
 @section('message')
     @include('layouts.message')
 @endsection
