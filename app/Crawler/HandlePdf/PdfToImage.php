@@ -14,9 +14,8 @@ class PdfToImage
     {
         $arrContextOptions = array(
             "ssl" => array(
-                "allow_self_signed" => true,
-                "verify_peer" => false,
-                "verify_peer_name" => false,
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
             ),
         );
         $contents = file_get_contents($download_link, false, stream_context_create($arrContextOptions));
