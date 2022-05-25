@@ -14,7 +14,7 @@ class Puppeteer implements BrowserInterface
         if ($puppeteer) {
             $this->puppeteer = $puppeteer;
         } else {
-            $this->puppeteer = new Pup(config('crawl.browsers.puppeteer'));
+            $this->puppeteer = new Pup();
         }
     }
 
