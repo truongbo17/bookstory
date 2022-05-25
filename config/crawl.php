@@ -28,6 +28,7 @@ return [
     ],
     'browsers' => [
         'puppeteer' => [
+            'idle_timeout' => 100,
             'timeout' => env('BROWSER_TIMEOUT', 120),
             'verify' => false,
             'headers' => [
@@ -61,9 +62,9 @@ return [
         509, // Bandwidth Limit Exceeded (Apache)
     ],
 //-------------------------------------------------------------------------------------
-/*
- * Temp url time out (minutes)
- * */
+    /*
+     * Temp url time out (minutes)
+     * */
     'timeout' => [
         'download' => 10,
         'read' => 1,
