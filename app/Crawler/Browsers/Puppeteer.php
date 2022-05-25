@@ -24,10 +24,15 @@ class Puppeteer implements BrowserInterface
     public function getHtml(string $url)
     {
         $browser = $this->puppeteer->launch([
-            'headless' => false
+            'headless' => true,
+            'args' => [
+                '--use-gl=egl',
+                '--no-sandbox',
+                '--disable-setuid-sandbox'
+            ],
         ]);
         $page = $browser->newPage();
-            $page->goto($url);
+        $page->goto($url);
 
         $divs = $page->querySelectorAll('html');
 
