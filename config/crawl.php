@@ -29,6 +29,7 @@ return [
     'browsers' => [
         'puppeteer' => [
             'idle_timeout' => 100,
+            'read_timeout' => 50,
             'timeout' => env('BROWSER_TIMEOUT', 120),
             'verify' => false,
             'headers' => [
