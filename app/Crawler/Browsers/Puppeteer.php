@@ -14,7 +14,10 @@ class Puppeteer implements BrowserInterface
         if ($puppeteer) {
             $this->puppeteer = $puppeteer;
         } else {
-            $this->puppeteer = new Pup();
+            $this->puppeteer = new Pup([
+                'idle_timeout' => 100,
+                'read_timeout' => 50,
+            ]);
         }
     }
 
