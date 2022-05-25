@@ -122,7 +122,7 @@ class PestHubtCommand extends Command
                             $pdf = PDF::loadView('pdf.pest', $data_pdf);
 
                             $file_name = IdToPath::make($document->id, 'pdf');
-                            $file_name = new DiskPathInfo(config('crawl.document_disk'), config('crawl.path.document_pdf') . '/' . $file_name);
+                            $file_name = new DiskPathInfo(config('crawl.pdf_disk'), config('crawl.path.document_pdf') . '/' . $file_name);
                             $file_name->put($pdf->output());
                             $document->download_link = $file_name;
                             $document->save();

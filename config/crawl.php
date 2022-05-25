@@ -73,7 +73,7 @@ return [
      * default pdf count page
      * */
     'default_pdf_count_page' => 10,
-    'max_pdf_count_page' => 20,
+    'max_pdf_count_page' => 50,
 //-------------------------------------------------------------------------------------
     /*
      * Language Website
