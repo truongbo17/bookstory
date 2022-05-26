@@ -35,7 +35,7 @@ class DocumentManager
         $document->download_link = $path;
         $document->save();
 
-        if (getCountPagePdf($download_link) > 1) {
+        if (getCountPagePdf($download_link) > config('crawl.max_pdf_count_page')) {
             if (is_null($document->count_page)) $document->count_page = getCountPagePdf($download_link);
             $img = new TitleToImage();
             $img->createImage($document->title);

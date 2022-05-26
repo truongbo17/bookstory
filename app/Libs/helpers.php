@@ -1,5 +1,6 @@
 <?php
 
+use App\Crawler\Browsers\Guzzle;
 use App\Models\Document;
 use App\Models\SeoKeyword;
 use Illuminate\Support\Str;
@@ -22,17 +23,12 @@ function createSlug(string $title): string
     return $slug;
 }
 
-function getCountPagePdf(string $path)
+function getCountPagePdf(string $content_path,string $type = 'path')
 {
-    $arrContextOptions = array(
-        "ssl" => array(
-            "verify_peer" => false,
-            "verify_peer_name" => false,
-        ),
-    );
-
-    $pdftext = file_get_contents($path, false, stream_context_create($arrContextOptions));
-    $num = preg_match_all("/\/Page\W/", $pdftext, $dummy);
+    if($type == 'path'){
+        $content_path = (new Guzzle())->getContent($content_path);
+    }
+    $num = preg_match_all("/\/Page\W/", $content_path, $dummy);
 
     return $num ?? config('crawl.default_pdf_count_page');
 }

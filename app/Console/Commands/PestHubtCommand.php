@@ -127,7 +127,7 @@ class PestHubtCommand extends Command
                             $document->download_link = $file_name;
                             $document->save();
 
-                            if (getCountPagePdf($file_name->view()) > config('crawl.max_pdf_count_page')) {
+                            if (getCountPagePdf($file_name->read(),'content') > config('crawl.max_pdf_count_page')) {
                                 if (is_null($document->count_page)) $document->count_page = getCountPagePdf($file_name->view());
                                 $img = new TitleToImage();
                                 $img->createImage($data['title']);

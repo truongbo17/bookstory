@@ -91,6 +91,7 @@ class UserController extends Controller
 
     public function storeDocument(UserAddDocumentRequest $request)
     {
+
         if (is_null($request->input('slug'))) {
             $slug = createSlug($request->input('title'));
         } else {
