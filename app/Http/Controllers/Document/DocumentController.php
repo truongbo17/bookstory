@@ -68,7 +68,9 @@ class DocumentController extends Controller
             return abort(404);
         }
 
-        $download_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(config('crawl.timeout.download')), ['action' => 'download', 'slug' => $document->slug]);
+        $download_link = DiskPathInfo::parse($document->download_link)
+            ->tempUrl(now()->addMinutes(config('crawl.timeout.download')),
+                ['action' => 'download', 'slug' => $document->slug]);
         $read_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(config('crawl.timeout.read')), ['action' => 'read', 'slug' => $document->slug]);
 
         return view('documents.detail', compact('document', 'download_link', 'read_link', 'star'));

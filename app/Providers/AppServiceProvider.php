@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Storage;
-use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +15,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        \URL::forceRootUrl(\Config::get('app.url'));
+
+        if (\Str::contains(\Config::get('app.url'), 'https://')) {
+            \URL::forceScheme('https');
+        }
     }
 
     /**
