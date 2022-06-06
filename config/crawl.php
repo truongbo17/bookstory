@@ -54,7 +54,6 @@ return [
             'allow_redirects' => [
                 'track_redirects' => true
             ],
-            'proxy' => env('BROWSER_PROXY', 'http://210.245.74.57:6056'),
         ],
     ],
     'should_retry_status_codes' => [
