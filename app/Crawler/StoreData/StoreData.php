@@ -77,7 +77,8 @@ class StoreData implements StoreDataInterface
         DocumentManager::updateKeywords($document, $keywords);
         DocumentManager::updateUser($document, $users);
 
-        DownloadFilePdf::dispatch($document, $download_link);
+        DocumentManager::savePdf($document, $download_link);
+//        DownloadFilePdf::dispatch($document, $download_link);
 
         return true;
     }
