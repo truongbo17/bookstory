@@ -21,6 +21,8 @@
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('keyword') }}'><i
                     class='nav-icon la la-tag'></i>
                 Keywords</a></li>
+        <li class='nav-item'><a class='nav-link' href='{{ backpack_url('seo-keyword') }}'><i
+                    class='nav-icon la la-broadcast-tower'></i> Seo keywords</a></li>
         <li class='nav-item'><a class='nav-link' href='{{ backpack_url('review') }}'><i
                     class='nav-icon la la-comment'></i> Reviews</a></li>
     </ul>

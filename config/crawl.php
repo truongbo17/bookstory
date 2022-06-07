@@ -1,15 +1,35 @@
 <?php
 
 return [
+    /*
+     * Disk storage
+     * Path data
+     * */
+    'document_disk' => env('DOCUMENT_DISK', 'data'),
+    'pdf_disk' => env('PDF_DISK', 'document'),
+    'path' => [
+        'avatar_user' => 'avatar',
+        'document_pdf' => 'document',
+        'document_image' => 'document_image',
+        'import_json_urls' => 'import_json_urls',
+        'content_file' => 'content',
+        'seo_keyword_file' => 'seo_keyword',
+    ],
+    'public_link_storage' => env('PUBLIC_LINK_STORAGE', 'storage/data/'),
+//-------------------------------------------------------------------------------------
+    /*
+     * Crawler
+     * */
     'driver_browser' => env('DRIVER_BROWSER', 'guzzle'),
     'should_get_data' => [
         'title',
         'download_link',
         'content',
     ],
-    'document_disk' => env('DOCUMENT_DISK', 'data'),
     'browsers' => [
         'puppeteer' => [
+            'idle_timeout' => 100,
+            'read_timeout' => 50,
             'timeout' => env('BROWSER_TIMEOUT', 120),
             'verify' => false,
             'headers' => [
@@ -34,7 +54,6 @@ return [
             'allow_redirects' => [
                 'track_redirects' => true
             ],
-            'proxy' => env('BROWSER_PROXY', 'http://210.245.74.57:6056'),
         ],
     ],
     'should_retry_status_codes' => [
@@ -42,14 +61,66 @@ return [
         429, // Too Many Requests
         509, // Bandwidth Limit Exceeded (Apache)
     ],
-    'pdf_to_image' => [
-        'disk_document' => 'document', //disk save document
-        'file_name' => 'document.pdf', //file name save pdf tạm thời (tất cả các document thay nhau lưu ở đây)
-        'disk_image' => 'document_image', //Disk image document
-        'ext_image' => 'png', //Lưu ảnh dưới dạng
+//-------------------------------------------------------------------------------------
+    /*
+     * Temp url time out (minutes)
+     * */
+    'timeout' => [
+        'download' => 10,
+        'read' => 1,
     ],
-    'public_link_document_image' => 'document_image',
-    'path' => [
-        'avatar_user' => 'avatar',
+//-------------------------------------------------------------------------------------
+    /*
+     * default pdf count page
+     * */
+    'default_pdf_count_page' => 10,
+    'max_pdf_count_page' => 50,
+//-------------------------------------------------------------------------------------
+    /*
+     * Language Website
+     * us,can,en,vi,fr
+     * */
+    'lang' => [
+        'vi' => [
+            'name' => 'VIE',
+            'img' => env('APP_URL') . '/images/flag/vietnam.png',
+            'href' => [
+                'route' => 'user.change-language',
+                'param' => ['vi'],
+            ]
+        ],
+        'en' => [
+            'name' => 'ENG',
+            'img' => env('APP_URL') . '/images/flag/english.webp',
+            'href' => [
+                'route' => 'user.change-language',
+                'param' => ['en'],
+            ]
+        ],
+        'id' => [
+            'name' => 'INDIA',
+            'img' => env('APP_URL') . '/images/flag/indo.png',
+            'href' => [
+                'route' => 'user.change-language',
+                'param' => ['id'],
+            ]
+        ],
+        'fr' => [
+            'name' => 'FRA',
+            'img' => env('APP_URL') . '/images/flag/france.png',
+            'href' => [
+                'route' => 'user.change-language',
+                'param' => ['fr'],
+            ]
+        ],
+        'cn' => [
+            'name' => 'CHINA',
+            'img' => env('APP_URL') . '/images/flag/cn.png',
+            'href' => [
+                'route' => 'user.change-language',
+                'param' => ['cn'],
+            ]
+        ],
     ]
+//-------------------------------------------------------------------------------------
 ];

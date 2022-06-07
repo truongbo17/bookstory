@@ -1,9 +1,26 @@
 @extends('main')
 
+@php($content = App\Libs\DiskPathTools\DiskPathInfo::parse($document->content_file)->read())
+
 @section('title', $document->title)
 
 @push('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+@endpush
+
+@push('seo')
+    <meta name="description"
+          content="{{$content}}">
+    <meta name="keywords" content="pdf free download,free upload docment,bookstory,pdf free reading online">
+    <meta property="og:title" content="{{$document->title}}"/>
+    <meta property="og:image"
+          @if(!is_null($document->image))content="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+          @else content="{{asset('images/avatar/default.png')}}"@endif/>
+    <meta property="og:type" content="books.book"/>
+    <meta property="og:description"
+          content="{{$content}}"/>
+    <meta property="og:url" content="{{$document->slug}}"/>
+    <meta property="og:locale" content="{{__('locale')}}"/>
 @endpush
 
 @section('message')
@@ -22,13 +39,18 @@
                 <!-- Product image -->
                 <div class="lg:row-end-1 lg:col-span-3">
                     <div class="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
-                        <img src="{{asset($document->image ?? 'images/avatar/default.png')}}"
-                             alt="{{$document->title}}"
-                             class="object-center object-cover">
+                        <img
+                            @if(!is_null($document->image))
+                                src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+                            @else
+                                src="{{asset('images/avatar/default.png')}}"
+                            @endif
+                            alt="{{$document->title}}"
+                            class="object-center object-cover">
                     </div>
 
                     <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
-                        <a href="{{route('document.detail_download',$document->id)}}"
+                        <a href="{{$download_link}}" onclick="downloadHandle()"
                            class="button w-full bg-indigo-600 border border-black border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500">
                             Download
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -109,7 +131,7 @@
                                           d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                                 </svg>
 
-                                <p class="text-sm ml-5 text-gray-500 mt-2">{{$document->download}}
+                                <p class="text-sm ml-5 text-gray-500 mt-2" id="downloadCount">{{$document->download}}
                                 </p>
                                 <svg class="relative mt-2.5 ml-1 w-4 h-4" fill="none" stroke="currentColor"
                                      viewBox="0 0 24 24"
@@ -120,7 +142,7 @@
                             </div>
 
                             <div class="pt-4">
-                                <span class="text-sm">Authors : </span>
+                                <span class="text-sm">{{__('Authors')}} : </span>
                                 @foreach($document->users as $author)
                                     <a href="{{route('author.show_detail',$author->id)}}"
                                        class="text-indigo-600">{{$author->name}}</a> ,
@@ -158,7 +180,6 @@
 
                     <div class="border-t border-gray-200 mt-5 pt-5">
                         <h3 class="text-sm font-medium text-gray-900">Content : </h3>
-                        @php($content = App\Libs\DiskPathTools\DiskPathInfo::parse($document->content_file)->read())
                         <p class="text-gray-500 mt-6">{{$content}}</p>
                     </div>
 
@@ -175,11 +196,11 @@
 
                     <div class="border-t border-gray-200 mt-5 pt-5">
                         <h3 class="text-sm font-medium text-gray-900">Privacy</h3>
-                        <p class="mt-4 text-sm text-gray-500">For personal and professional use. You cannot resell
-                            or redistribute these documents in their original or modified state. <a
+                        <p class="mt-4 text-sm text-gray-500">{{__('For personal and professional use. You cannot resell or redistribute these documents in their original or modified state.')}}
+                            <a
                                 href="{{route('privacy.index')}}"
-                                class="font-medium text-indigo-600 hover:text-indigo-500">Read
-                                full privacy</a></p>
+                                class="font-medium text-indigo-600 hover:text-indigo-500">{{__('Read full privacy')}}</a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -189,7 +210,7 @@
                 <div
                     class="mx-auto mt-8 py-8 px-4 sm:py-8 sm:px-6 max-w-7xl">
                     <div>
-                        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Reader Reviews</h2>
+                        <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">{{__('Reader Reviews')}}</h2>
 
                         <div class="mt-3 flex items-center">
                             <div id="viewStar" class="flex">
@@ -362,7 +383,7 @@
                                                         <div class="flex space-x-3">
                                                             <div class="flex-shrink-0">
                                                                 <img class="h-10 w-10 rounded-full"
-                                                                     src="{{asset($review->image ?? 'images/avatar/default.jpg')}}"
+                                                                     src="{{asset('images/avatar/default.jpg')}}"
                                                                      alt="Avatar review">
                                                             </div>
                                                             <div>
@@ -407,12 +428,16 @@
                                     <div class="bg-gray-50 px-4 py-6 sm:px-6">
                                         <div class="pb-4 text-sm">
                                             <h2 id="notes-title"
-                                                class="font-medium text-gray-900">Write a review</h2>
+                                                class="font-medium text-gray-900">{{__('Write a review')}}</h2>
                                         </div>
                                         <div class="flex space-x-3">
                                             <div class="flex-shrink-0">
                                                 <img class="h-10 w-10 rounded-full"
-                                                     src="{{asset($review->image ?? 'images/avatar/default.jpg')}}"
+                                                     @if(isset(auth()->user()->image))
+                                                         src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse(auth()->user()->image)->path())}}"
+                                                     @else
+                                                         src="{{asset('images/avatar/default.jpg')}}"
+                                                     @endif
                                                      alt="avatar reviewer">
                                             </div>
                                             <div class="min-w-0 flex-1">
@@ -525,5 +550,9 @@
             titles: ["Very Bad", "Poorly", "Medium", "Good", "Excellent!"],
             stars: 5,
         });
+
+        function downloadHandle() {
+            document.getElementById('downloadCount').innerText = Number(document.getElementById('downloadCount').innerText) + 1;
+        }
     </script>
 @endpush

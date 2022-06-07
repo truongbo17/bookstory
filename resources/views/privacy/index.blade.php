@@ -1,8 +1,21 @@
 @extends('main')
 
-@section('title', 'Privacy')
+@section('title', __('Privacy'))
 
 @push('css')
+@endpush
+
+@push('seo')
+    <meta name="description"
+          content="{{__('Bookstory - The free ebook library has more than 50000000 titles to read online, read stories online, download stories, download books for free. The free bookstore comes in a variety of formats to read on a variety of devices.')}}">
+    <meta name="keywords" content="pdf free download,free upload docment,bookstory,pdf free reading online">
+    <meta property="og:title" content="Bookstory - {{__('Privacy')}}"/>
+    <meta property="og:image" content="{{asset('images/preview/image-preview.png')}}"/>
+    <meta property="og:type" content="books.book"/>
+    <meta property="og:description"
+          content="{{__('Bookstory - The free ebook library has more than 50000000 titles to read online, read stories online, download stories, download books for free. The free bookstore comes in a variety of formats to read on a variety of devices.')}}"/>
+    <meta property="og:url" content="{{env('APP_URL')}}"/>
+    <meta property="og:locale" content="{{__('locale')}}"/>
 @endpush
 
 @section('message')
@@ -35,44 +48,23 @@
                      alt="Workcation">
                 <blockquote class="mt-10 tracking-wide py-10 px-6 bg-indigo-50">
                     <p class=" text-2xl leading-9 font-medium mb-10">
-                        Privacy Policy for BookStory
+                        {{__('Privacy Policy for')}} BookStory
                     </p>
 
-                    <p class="text-sm text-gray-700">If you require any more information or have any questions about our
-                        privacy policy, please feel
-                        free to contact us by: BookStory.site@gmail.com.</p>
+                    <p class="text-sm text-gray-700">{{__('If you require any more information or have any questions about our privacy policy, please feel free to contact us by: admin@bstory.asia.')}}</p>
 
-                    <p class="text-sm text-gray-700"> At BookStory, the privacy of our visitors is of extreme importance
-                        to us. This privacy policy
-                        document outlines the types of personal information is received and collected by BookStory and
-                        how it
-                        is used. </p>
+                    <p class="text-sm text-gray-700"> {{__('At BookStory, the privacy of our visitors is of extreme importance to us. This privacy policy document outlines the types of personal information is received and collected by BookStory and how it is used')}} </p>
 
                     <p class="mt-4 mb-4">Log Files</p>
-                    <p class="text-sm text-gray-700"> Like many other Web sites, BookStory makes use of log files. The
-                        information inside the log files
-                        includes internet protocol ( IP ) addresses, type of browser, Internet Service Provider ( ISP ),
-                        date/time stamp, referring/exit pages, and number of clicks to analyze trends, administer the
-                        site, track user’s movement around the site, and gather demographic information. IP addresses,
-                        and other such information are not linked to any information that is personally
-                        identifiable.</p>
+                    <p class="text-sm text-gray-700"> {{__('Like many other Web sites, BookStory makes use of log files. The information inside the log files includes internet protocol ( IP ) addresses, type of browser, Internet Service Provider ( ISP ), date/time stamp, referring/exit pages, and number of clicks to analyze trends, administer the site, track user’s movement around the site, and gather demographic information. IP addresses, and other such information are not linked to any information that is personally identifiable.')}}</p>
 
-                    <p class="mt-4 mb-4"> Children’s Privacy​</p>
-                    <p class="text-sm text-gray-700"> Our Service does not address anyone under the age of 18
-                        (“Children”).​</p>
+                    <p class="mt-4 mb-4"> Children’s Privacy</p>
+                    <p class="text-sm text-gray-700"> {{__('Our Service does not address anyone under the age of 18 (“Children”).')}}</p>
 
-                    <p class="text-sm text-gray-700"> We do not knowingly collect personally identifiable information
-                        from anyone under the age of 18.
-                        If you are a parent or guardian and you are aware that your Children has provided us with
-                        Personal Data, please contact us. If we become aware that we have collected Personal Data from
-                        children without verification of parental consent, we take steps to remove that information from
-                        our servers.</p>
+                    <p class="text-sm text-gray-700"> {{__('We do not knowingly collect personally identifiable information from anyone under the age of 18. If you are a parent or guardian and you are aware that your Children has provided us with Personal Data, please contact us. If we become aware that we have collected Personal Data from children without verification of parental consent, we take steps to remove that information from our servers.')}}</p>
 
                     <p class="mt-4 mb-4"> Cookies and Web Beacons</p>
-                    <p class="text-sm text-gray-700"> BookStory does use cookies to store information about visitors
-                        preferences, record user-specific
-                        information on which pages the user access or visit, customize Web page content based on
-                        visitors browser type or other information that the visitor sends via their browser.</p>
+                    <p class="text-sm text-gray-700"> {{__('BookStory does use cookies to store information about visitors preferences, record user-specific information on which pages the user access or visit, customize Web page content based on visitors browser type or other information that the visitor sends via their browser.')}}</p>
 
                     <p class="mt-4 mb-4"> DoubleClick DART Cookie</p>
                     <p class="text-sm text-gray-700"> .:: Google, as a third party vendor, uses cookies to serve ads on
@@ -89,28 +81,12 @@
                         partners include ....</p>
 
                     <p class="mt-4 mb-4"> Google Adsense</p>
-                    <p class="text-sm text-gray-700"> These third-party ad servers or ad networks use technology to the
-                        advertisements and links that
-                        appear on BookStory send directly to your browsers. They automatically receive your IP address
-                        when
-                        this occurs. Other technologies ( such as cookies, JavaScript, or Web Beacons ) may also be used
-                        by the third-party ad networks to measure the effectiveness of their advertisements and / or to
-                        personalize the advertising content that you see.</p>
+                    <p class="text-sm text-gray-700"> {{__('These third-party ad servers or ad networks use technology to the advertisements and links that appear on BookStory send directly to your browsers. They automatically receive your IP address when this occurs. Other technologies ( such as cookies, JavaScript, or Web Beacons ) may also be used by the third-party ad networks to measure the effectiveness of their advertisements and / or to personalize the advertising content that you see')}}</p>
 
-                    <p class="text-sm text-gray-700"> BookStory has no access to or control over these cookies that are
-                        used by third-party
-                        advertisers.</p>
+                    <p class="text-sm text-gray-700"> {{__('BookStory has no access to or control over these cookies that are used by third-party advertisers.')}}</p>
 
-                    <p class="text-sm text-gray-700"> You should consult the respective privacy policies of these
-                        third-party ad servers for more
-                        detailed information on their practices as well as for instructions about how to opt-out of
-                        certain practices. BookStory's privacy policy does not apply to, and we cannot control the
-                        activities
-                        of, such other advertisers or web sites.</p>
-                    <p class="text-sm text-gray-700"> If you wish to disable cookies, you may do so through your
-                        individual browser options. More
-                        detailed information about cookie management with specific web browsers can be found at the
-                        browsers' respective websites.</p>
+                    <p class="text-sm text-gray-700"> {{__("You should consult the respective privacy policies of these third-party ad servers for more detailed information on their practices as well as for instructions about how to opt-out of certain practices. BookStory's privacy policy does not apply to, and we cannot control the activities of, such other advertisers or web sites.")}}</p>
+                    <p class="text-sm text-gray-700"> {{__("If you wish to disable cookies, you may do so through your individual browser options. More detailed information about cookie management with specific web browsers can be found at the browsers' respective websites.")}}</p>
 
                 </blockquote>
             </div>

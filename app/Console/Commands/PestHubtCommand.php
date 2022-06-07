@@ -5,14 +5,24 @@ namespace App\Console\Commands;
 use App\Crawler\Browsers\BrowserManager;
 use App\Crawler\Enum\CrawlStatus;
 use App\Crawler\Enum\DataStatus;
+use App\Crawler\Enum\Status;
+use App\Crawler\HandlePdf\PdfToImage;
 use App\Crawler\StoreData\StoreData;
+use App\Jobs\DownloadFilePdf;
+use App\Libs\DiskPathTools\DiskPathInfo;
+use App\Libs\IdToPath;
 use App\Libs\PhpUri;
+use App\Libs\TitleToImage;
 use App\Models\CrawlUrl;
+use App\Models\Document;
+use App\Services\DocumentManager;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use PDO;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use Vuh\CliEcho\CliEcho;
@@ -35,24 +45,7 @@ class PestHubtCommand extends Command
      */
     protected $description = 'Crawl data from pesthubt.com and convert data to PDF ';
 
-    protected array $site = [
-        'root_url' => 'https://pesthubt.com',
-        'start_url' => 'https://pesthubt.com',
-        'should_crawl_url' => '/^https:\/\/pesthubt\.com/',
-        'should_get_data' => '/^https:\/\/pesthubt\.com\/\w*\/\w*\/(.*).html/',
-        'should_get_info' => 'section.content.container-fluid.custom-content script',
-        'skip_url' => [
-            '/^https:\/\/pesthubt\.com\/danh-sach-yeu-thich.html/',
-            '/^https:\/\/pesthubt\.com\/admin/',
-            '/^https:\/\/pesthubt\.com\/thu-vien-sach/',
-            '/^https:\/\/pesthubt\.com\/login/',
-            '/^https:\/\/pesthubt\.com\/plugins/',
-            '/^https:\/\/pesthubt\.com\/css/',
-            '/^https:\/\/pesthubt\.com\/dist/',
-            '/^https:\/\/pesthubt\.com\/js/',
-            '/^https:\/\/pesthubt\.com\/download\/view/',
-        ],
-    ];
+    protected array $site = ['root_url' => 'https://pesthubt.com', 'start_url' => 'https://pesthubt.com', 'should_crawl_url' => '/^https:\/\/pesthubt\.com/', 'should_get_data' => '/^https:\/\/pesthubt\.com\/\w*\/\w*\/(.*).html/', 'should_get_info' => 'section.content.container-fluid.custom-content script', 'skip_url' => ['/^https:\/\/pesthubt\.com\/danh-sach-yeu-thich.html/', '/^https:\/\/pesthubt\.com\/admin/', '/^https:\/\/pesthubt\.com\/thu-vien-sach/', '/^https:\/\/pesthubt\.com\/login/', '/^https:\/\/pesthubt\.com\/plugins/', '/^https:\/\/pesthubt\.com\/css/', '/^https:\/\/pesthubt\.com\/dist/', '/^https:\/\/pesthubt\.com\/js/', '/^https:\/\/pesthubt\.com\/download\/view/',],];
 
     /**
      * Execute the console command.
@@ -64,9 +57,7 @@ class PestHubtCommand extends Command
         $this->init(); //Init crawl
 
         //Check pending
-        $check_pending_url = CrawlUrl::where('url', 'LIKE', 'https://pesthubt.com%')
-            ->where('status', CrawlStatus::INIT)
-            ->exists();
+        $check_pending_url = CrawlUrl::where('url', 'LIKE', 'https://pesthubt.com%')->where('status', CrawlStatus::INIT)->exists();
         while ($check_pending_url) {
             $crawl_url = $this->firstPendingUrl();
             if (empty($crawl_url)) continue;
@@ -100,65 +91,65 @@ class PestHubtCommand extends Command
                         $array_data = json_decode($string, true);
                         $data = $array_data['quiz'];
 
-                        $author[] = $data['user']['fullname'];
+                        $author = $data['user']['fullname'];
+
                         $category[] = $data['category']['category'];
+                        $category[] = 'hubt';
+                        $category[] = 'kinh công';
+                        $category[] = 'đại học kinh doanh và công nghệ hà nội';
+                        $category[] = 'kinh doanh và công nghệ';
+
                         $content = $data['note'];
 
+                        $data['title'] = $data['title'] . ' - hubt';
                         $data['author'] = $author;
                         $data['category'] = $category;
-                        $data['content'] = $content;
+                        $data['content'] = $content . ' - hubt';
                         if (is_null($content)) {
                             $data['content'] = $data['title'];
                         }
 
-                        $unset_key_object = [
-                            'id',
-                            'note',
-                            'category_id',
-                            'user_id',
-                            'total_question',
-                            'created_at',
-                            'viewed',
-                            'quiz_slug',
-                            'status',
-                            'download',
-                            'updated_at',
-                            'total_time',
-                            'total_grade',
-                            'liked_count',
-                            'is_liked',
-                            'is_favorited',
-                            'answer_shuffle',
-                            'qs_shuffle',
-                            'mode',
-                            'user',
-                            'category',
-                            'check_quiz',
-                        ];
-                        foreach ($unset_key_object as $key) {
-                            unset($data[$key]);
-                        }
+                        $data = Arr::only($data, ['title', 'category', 'content', 'author', 'quiz_content']);
 
-                        $data = [
-                            'title' => $data['title'],
-                            'quizs' => $data['quiz_content'],
-                        ];
+                        $document = Document::create(["title" => $data['title'], "slug" => createSlug($data['title']), "download_link" => "", "content_file" => "", "binding" => "PDF", "count_page" => null, "content_hash" => md5($data['content']), "image" => "", "is_crawl" => 1, "status" => Status::PENDING,]);
+
+                        DocumentManager::updateContentFile($document, $data['content']);
+                        DocumentManager::updateKeywords($document, $data['category']);
+                        DocumentManager::updateUser($document, array($data['author']));
 
                         try {
-                            $pdf = PDF::loadView('pdf.pest', $data);
-                            Storage::put('public/pdf/invoice.pdf', $pdf->output());
+                            $data_pdf = ['title' => $data['title'], 'quizs' => $data['quiz_content'],];
+                            $pdf = PDF::loadView('pdf.pest', $data_pdf);
+
+                            $file_name = IdToPath::make($document->id, 'pdf');
+                            $file_name = new DiskPathInfo(config('crawl.pdf_disk'), config('crawl.path.document_pdf') . '/' . $file_name);
+                            $file_name->put($pdf->output());
+                            $document->download_link = $file_name;
+                            $document->save();
+
+                            if (getCountPagePdf($file_name->read(),'content') > config('crawl.max_pdf_count_page')) {
+                                if (is_null($document->count_page)) $document->count_page = getCountPagePdf($file_name->view());
+                                $img = new TitleToImage();
+                                $img->createImage($data['title']);
+                                $document->image = $img->saveImage($document)->__toString();
+                            } else {
+                                $pdf_to_image = new PdfToImage();
+                                $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
+
+                                $document->image = $pdf_to_image['image']->__toString();
+                                if (is_null($document->count_page)) $document->count_page = $pdf_to_image['count_page'];
+                            }
+
+                            if ($document->save()) {
+                                CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::HAS_DATA]);
+                            } else {
+                                CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::GET_DATA_ERROR]);
+                            }
                         } catch (Exception $exception) {
-                            dd($exception);
+                            \Log::error($exception);
+                            CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::GET_DATA_ERROR]);
                         }
 
-//                        $check_data = StoreData::create();
-//                        $check = $check_data->saveData($data);
-//
-//                        if ($check) {
-//                            CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::HAS_DATA]);
-//                        } else {
-//                            CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::NO_DATA]);
-//                        }
                     } catch (Exception $e) {
                         Log::error($e);
                         CrawlUrl::find($crawl_url['id'])->update(['data_status' => DataStatus::GET_DATA_ERROR]);
@@ -174,12 +165,7 @@ class PestHubtCommand extends Command
                     }
                     //push all url to database => pending url crawl
                     if (!$this->exists($url)) {
-                        CrawlUrl::create([
-                            'url' => $url,
-                            'url_hash' => $this->hashUrl($url),
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                        ]);
+                        CrawlUrl::create(['url' => $url, 'url_hash' => $this->hashUrl($url), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(),]);
                     }
                 }
 
@@ -220,12 +206,7 @@ class PestHubtCommand extends Command
     public function init()
     {
         if (!$this->exists($this->site['root_url'])) {
-            $push = CrawlUrl::insertGetId([
-                'url' => $this->site['root_url'],
-                'url_hash' => $this->hashUrl($this->site['root_url']),
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ]);
+            $push = CrawlUrl::insertGetId(['url' => $this->site['root_url'], 'url_hash' => $this->hashUrl($this->site['root_url']), 'created_at' => Carbon::now(), 'updated_at' => Carbon::now(),]);
 
             if ($push) {
                 $this->info("Site : pesthubt Added " . $this->site['root_url']);
@@ -248,11 +229,7 @@ class PestHubtCommand extends Command
     public function firstPendingUrl()
     {
         return DB::transaction(function () {
-            $first = CrawlUrl::where('url', 'LIKE', 'https://pesthubt.com%')
-                ->where('status', CrawlStatus::INIT)
-                ->orderBy('visited')
-                ->lock($this->getLockForPopping())
-                ->first();
+            $first = CrawlUrl::where('url', 'LIKE', 'https://pesthubt.com%')->where('status', CrawlStatus::INIT)->orderBy('visited')->lock($this->getLockForPopping())->first();
 
             if ($first) {
                 $first->status = CrawlStatus::VISITING;
@@ -270,8 +247,7 @@ class PestHubtCommand extends Command
         $databaseEngine = DB::getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME);
         $databaseVersion = DB::getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
 
-        if ($databaseEngine == 'mysql' && !strpos($databaseVersion, 'MariaDB') && !strpos($databaseVersion, 'TiDB') && version_compare($databaseVersion, '8.0.1', '>=') ||
-            $databaseEngine == 'pgsql' && version_compare($databaseVersion, '9.5', '>=')) {
+        if ($databaseEngine == 'mysql' && !strpos($databaseVersion, 'MariaDB') && !strpos($databaseVersion, 'TiDB') && version_compare($databaseVersion, '8.0.1', '>=') || $databaseEngine == 'pgsql' && version_compare($databaseVersion, '9.5', '>=')) {
             return 'FOR UPDATE SKIP LOCKED';
         }
 

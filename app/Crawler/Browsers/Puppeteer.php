@@ -7,20 +7,30 @@ use Nesk\Rialto\Data\JsFunction;
 
 class Puppeteer implements BrowserInterface
 {
-    protected Pup $puppeteer;
+    public Pup $puppeteer;
 
     public function __construct(?Pup $puppeteer = null)
     {
         if ($puppeteer) {
             $this->puppeteer = $puppeteer;
         } else {
-            $this->puppeteer = new Pup(config('crawl.browsers.puppeteer'));
+            $this->puppeteer = new Pup([
+                'idle_timeout' => 100,
+                'read_timeout' => 50,
+            ]);
         }
     }
 
     public function getHtml(string $url)
     {
-        $browser = $this->puppeteer->launch();
+        $browser = $this->puppeteer->launch([
+            'headless' => true,
+            'args' => [
+                '--use-gl=egl',
+                '--no-sandbox',
+                '--disable-setuid-sandbox'
+            ],
+        ]);
         $page = $browser->newPage();
         $page->goto($url);
 

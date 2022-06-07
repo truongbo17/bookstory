@@ -3,8 +3,11 @@
 namespace App\Libs\DiskPathTools;
 
 use App\Libs\FilenameSanitizer;
+use DateTimeInterface;
+use Exception;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
+use JetBrains\PhpStorm\NoReturn;
 use Storage;
 
 class DiskPathInfo
@@ -103,15 +106,15 @@ class DiskPathInfo
     }
 
     /**
-     * @param \DateTimeInterface|null $expiration
+     * @param DateTimeInterface|null $expiration
      * @param array $options
      *
      * @return string
      */
-    public function tempUrl(\DateTimeInterface $expiration = null, array $options = [])
+    public function tempUrl(DateTimeInterface $expiration = null, array $options = [])
     {
         if (!$expiration) {
-            $expiration = now()->addMinutes(10);
+            $expiration = now()->addMinutes(2);
         }
         return Storage::disk($this->bestDisk())
             ->temporaryUrl($this->path(), $expiration, $options);

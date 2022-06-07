@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use Config;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Storage;
+use Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +17,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
     }
 
     /**
@@ -23,5 +26,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \URL::forceRootUrl(Config::get('app.url'));
+
+        if (Str::contains(Config::get('app.url'), 'https://')) {
+            \URL::forceScheme('https');
+        }
+
+        Storage::disk(config('crawl.pdf_disk'))->buildTemporaryUrlsUsing(function ($path, $expiration, $options) {
+            return URL::temporarySignedRoute(
+                'document.handle',
+                $expiration,
+                array_merge($options, ['path' => $path])
+            );
+        });
     }
 }

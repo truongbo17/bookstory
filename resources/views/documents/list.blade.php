@@ -1,8 +1,21 @@
 @extends('main')
 
-@section('title', 'List Document')
+@section('title', __('List Document'))
 
 @push('css')
+@endpush
+
+@push('seo')
+    <meta name="description"
+          content="{{__('Bookstory - The free ebook library has more than 50000000 titles to read online, read stories online, download stories, download books for free. The free bookstore comes in a variety of formats to read on a variety of devices.')}}">
+    <meta name="keywords" content="pdf free download,free upload docment,bookstory,pdf free reading online">
+    <meta property="og:title" content="Bookstory {{__('List Document')}}"/>
+    <meta property="og:image" content="{{asset('images/preview/image-preview.png')}}"/>
+    <meta property="og:type" content="books.book"/>
+    <meta property="og:description"
+          content="{{__('Bookstory - The free ebook library has more than 50000000 titles to read online, read stories online, download stories, download books for free. The free bookstore comes in a variety of formats to read on a variety of devices.')}}"/>
+    <meta property="og:url" content="{{env('APP_URL')}}"/>
+    <meta property="og:locale" content="{{__('locale')}}"/>
 @endpush
 
 @section('message')
@@ -16,8 +29,7 @@
 @section('main')
     <div class="bg-gray-50">
         <div class="max-w-2xl mx-auto pt-16 pb-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-            <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Found {{$count_documents}} documents in
-                total</h2>
+            <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">{{__('total_document_in_list',[ 'count_documents' => $count_documents])}}</h2>
 
             <!-- Filters -->
             <div class="mt-8">
@@ -187,7 +199,11 @@
                     <div class="group relative">
                         <div
                             class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                            <img src="{{asset($document->image ?? 'images/avatar/default.png')}}"
+                            <img @if(!is_null($document->image))
+                                     src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+                                 @else
+                                     src="{{asset('images/avatar/default.png')}}"
+                                 @endif
                                  alt="{{$document->title}}"
                                  class="w-full h-full object-center object-cover lg:w-full lg:h-full">
                         </div>
@@ -236,12 +252,12 @@
                     <select id="per_page" name="per_page"
                             class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:border-gray-700 rounded-md font-medium text-sm px-4 py-2 text-center items-center">
                         <option disabled>Books per page :</option>
-                        <option value="12" @if(!app('request')->input('perpage')) selected @endif>12 Documents</option>
-                        <option value="16" @if(app('request')->input('perpage')== 16) selected @endif>16 Documents
+                        <option value="12" @if(!app('request')->input('perpage')) selected @endif>12 {{__('Documents')}}</option>
+                        <option value="16" @if(app('request')->input('perpage')== 16) selected @endif>16 {{__('Documents')}}
                         </option>
-                        <option value="32" @if(app('request')->input('perpage')== 32) selected @endif>32 Documents
+                        <option value="32" @if(app('request')->input('perpage')== 32) selected @endif>32 {{__('Documents')}}
                         </option>
-                        <option value="48" @if(app('request')->input('perpage')== 48) selected @endif>48 Documents
+                        <option value="48" @if(app('request')->input('perpage')== 48) selected @endif>48 {{__('Documents')}}
                         </option>
                     </select>
                 </form>
@@ -340,12 +356,12 @@
                 .join(',');
 
             if (author.length > 0 && count_page.length > 0) {
-                newUrl.searchParams.set('users[name]', author);
+                newUrl.searchParams.set('author', author);
                 newUrl.searchParams.set('count_page', count_page);
 
                 url = rootUrl + newUrl.search;
             } else if (author.length > 0 && count_page.length < 1) {
-                url = updateQueryStringParameter(url, 'users[name]', author);
+                url = updateQueryStringParameter(url, 'author', author);
             } else if (author.length < 1 && count_page.length > 0) {
                 url = updateQueryStringParameter(url, 'count_page', count_page);
             }
@@ -376,7 +392,7 @@
         //End replace
 
         //Get author and count_page
-        const authorValue = newUrl.searchParams.get("users[name]");
+        const authorValue = newUrl.searchParams.get("author");
         const count_pageValue = newUrl.searchParams.get("count_page");
 
         document.getElementById('author').value = authorValue;

@@ -1,8 +1,22 @@
 @extends('main')
 
-@section('title', 'List Document')
+@section('title', __('List Author'))
 
 @push('css')
+@endpush
+
+
+@push('seo')
+    <meta name="description"
+          content="{{__('Bookstory - The free ebook library has more than 50000000 titles to read online, read stories online, download stories, download books for free. The free bookstore comes in a variety of formats to read on a variety of devices.')}}">
+    <meta name="keywords" content="pdf free download,free upload docment,bookstory,pdf free reading online">
+    <meta property="og:title" content="Bookstory {{__('List Author')}}"/>
+    <meta property="og:image" content="{{asset('images/preview/image-preview.png')}}"/>
+    <meta property="og:type" content="books.book"/>
+    <meta property="og:description"
+          content="{{__('Bookstory - The free ebook library has more than 50000000 titles to read online, read stories online, download stories, download books for free. The free bookstore comes in a variety of formats to read on a variety of devices.')}}"/>
+    <meta property="og:url" content="{{env('APP_URL')}}"/>
+    <meta property="og:locale" content="{{__('locale')}}"/>
 @endpush
 
 @section('message')
@@ -16,8 +30,7 @@
 @section('main')
     <div class="bg-gray-50">
         <div class="max-w-2xl mx-auto pt-16 pb-4 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-            <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">Found {{$count_authors}} authors in
-                total</h2>
+            <h2 class="text-2xl font-extrabold tracking-tight text-gray-900">{{__('total_author_in_list',[ 'count_authors' => $count_authors])}}</h2>
 
             <!-- Filters -->
             <div class="mt-8">
@@ -175,7 +188,11 @@
                         <a href="{{route('author.show_detail', $author->id)}}">
                             <div class="flex-1 flex flex-col p-8">
                                 <img class="w-32 h-32 flex-shrink-0 mx-auto rounded-full"
-                                     src="@if($author->image){{asset('storage/data/'.$author->image)}}@else{{asset('images/avatar/default.jpg')}} @endif "
+                                     @if(!is_null($author->image))
+                                         src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($author->image)->path())}}"
+                                     @else
+                                         src="{{asset('images/avatar/default.jpg')}}"
+                                     @endif
                                      alt="{{$author->name}}">
                                 <h3 class="mt-6 text-gray-900 text-sm font-medium">{{Str::of($author->name)->limit(100)}}</h3>
                                 <dl class="mt-1 flex-grow flex flex-col justify-between">
@@ -184,7 +201,7 @@
                                     <dt class="sr-only">Role</dt>
                                     <dd class="mt-3">
                                         <span
-                                            class="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">{{$author->is_admin ? 'Admin' : 'Author'}}</span>
+                                            class="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">{{$author->is_admin ? 'Content' : 'Author'}}</span>
                                     </dd>
                                 </dl>
                             </div>
@@ -230,13 +247,13 @@
                 <form>
                     <select id="per_page" name="per_page"
                             class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:border-gray-700 rounded-md font-medium text-sm px-4 py-2 text-center items-center">
-                        <option disabled>Books per page :</option>
-                        <option value="12" @if(!app('request')->input('perpage')) selected @endif>12 Authors</option>
-                        <option value="16" @if(app('request')->input('perpage')== 16) selected @endif>16 Authors
+                        <option disabled>Authors per page :</option>
+                        <option value="12" @if(!app('request')->input('perpage')) selected @endif>12 {{__('Authors')}}</option>
+                        <option value="16" @if(app('request')->input('perpage')== 16) selected @endif>16 {{__('Authors')}}
                         </option>
-                        <option value="32" @if(app('request')->input('perpage')== 32) selected @endif>32 Authors
+                        <option value="32" @if(app('request')->input('perpage')== 32) selected @endif>32 {{__('Authors')}}
                         </option>
-                        <option value="48" @if(app('request')->input('perpage')== 48) selected @endif>48 Authors
+                        <option value="48" @if(app('request')->input('perpage')== 48) selected @endif>48 {{__('Authors')}}
                         </option>
                     </select>
                 </form>

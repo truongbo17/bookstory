@@ -2,23 +2,33 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Crawler\Enum\CrawlStatus;
 use App\Crawler\Enum\Status;
+use App\Crawler\Enum\UrlStatus;
 use App\Http\Requests\DocumentRequest;
+use App\Models\Document;
+use App\Models\Url;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
+use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+use Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
  * Class DocumentCrudController
  * @package App\Http\Controllers\Admin
- * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
+ * @property-read CrudPanel $crud
  */
 class DocumentCrudController extends CrudController
 {
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use ListOperation;
+    use CreateOperation;
+    use UpdateOperation;
+    use DeleteOperation;
+    use ShowOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -27,7 +37,7 @@ class DocumentCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Document::class);
+        CRUD::setModel(Document::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/document');
         CRUD::setEntityNameStrings('document', 'documents');
     }
@@ -68,7 +78,15 @@ class DocumentCrudController extends CrudController
             ]
         ]);
 
+        $this->crud->addButtonFromView('top', 'approve_documents', 'approve_documents', 'beginning');
 
+        $this->crud->addFilter([
+            'type' => 'dropdown',
+            'name' => 'status',
+            'label' => 'Document Status'
+        ], array_flip(Status::asArray()), function ($value) {
+            $this->crud->addClause('where', 'status', $value);
+        });
     }
 
     /**
@@ -93,6 +111,7 @@ class DocumentCrudController extends CrudController
         CRUD::field('slug');
         CRUD::field('status');
         CRUD::field('title');
+        CRUD::field('image');
         CRUD::field('updated_at');
         CRUD::field('view');
 
@@ -112,5 +131,19 @@ class DocumentCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function approveDocuments()
+    {
+        if (Document::where('is_crawl', CrawlStatus::IS_CRAWL)
+            ->where('content_file', '<>', '')
+            ->whereNotNull('content_file')
+            ->where('download_link', '<>', '')
+            ->whereNotNull('download_link')
+            ->where('image', '<>', '')
+            ->whereNotNull('image')
+            ->where('status', Status::PENDING)
+            ->update(['status' => Status::ACTIVE])) return true;
+        return false;
     }
 }

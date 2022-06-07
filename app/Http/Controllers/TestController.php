@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Libs\TitleToImage;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Nesk\Puphpeteer\Puppeteer;
@@ -15,10 +16,10 @@ class TestController extends Controller
     public function crawl()
     {
         $client = new Client(config('crawl.browsers.guzzle'));
-        $response = $client->get('https://www.scirp.org/journal/paperinformation.aspx?paperid=466');
+        $response = $client->get('https://www.scirp.org/journal/paperinformation.aspx?paperid=50723');
         $html = $response->getBody()->getContents();
         $dom_crawler = new DomCrawler($html);
-        $linkCrawler = $dom_crawler->filter('div.articles_main div')->eq(3)->filter('p')->eq(1)->text();
+        $linkCrawler = $dom_crawler->filter('div#JournalInfor_div_showkeywords a')->text();
 
         dd($linkCrawler);
     }
@@ -29,7 +30,9 @@ class TestController extends Controller
 
         $browser = $puppeteer->launch();
         $page = $browser->newPage();
-        $page->goto('https://pesthubt.com/quiz/22385/kinh-te-hoc-dai-cuong-epu.html');
+        $page->goto('https://www.scirp.org/pdf/ojmn_2022022816255359.pdf');
+        $path = '/var/www/bookstory.test/public/ex.png';
+        $page->screenshot(['path' => $path]);
 
         $html = '';
 
@@ -41,16 +44,16 @@ class TestController extends Controller
         }
 
         $browser->close();
-//dd($html);
+        dd($html);
 
 //        $title = 'body > div:nth-child(3) > div > div.col-xs-12.col-sm-8.col-md-8.col-lg-8 > div.content_page.pd-20 > div.row > div.col-xs-12.col-sm-4.col-md-4.col-lg-4 > img';
 
         $dom_crawler = new DomCrawler($html);
         $linkCrawler = $dom_crawler->filter('section.content.container-fluid.custom-content script')->text();
 
-        $string = preg_replace('/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\];\':\"\\|,.<>\/?\s]*/','',$linkCrawler);
+        $string = preg_replace('/^[a-zA-Z0-9!@#$%^&*()_+\-=\[\];\':\"\\|,.<>\/?\s]*/', '', $linkCrawler);
 
-        $string = preg_replace('/(\s)console\.log[a-zA-Z0-9!@#$%^&*()_+\-=\[\];\':\"\\|,.<>\/?\s]*/','',$string);
+        $string = preg_replace('/(\s)console\.log[a-zA-Z0-9!@#$%^&*()_+\-=\[\];\':\"\\|,.<>\/?\s]*/', '', $string);
 
         $object_data = json_decode($string);
 
@@ -83,7 +86,7 @@ class TestController extends Controller
             'check_quiz',
         ];
 
-        foreach ($unset_key_object as $key){
+        foreach ($unset_key_object as $key) {
             unset($object_data->quiz->$key);
         }
 
@@ -92,30 +95,50 @@ class TestController extends Controller
 
     public function pdftoimage()
     {
-        $link = Storage::disk('document')->path('test.pdf');
-        $pdf = new Pdf($link);
-        $pdf->saveImage();
+//        $link = Storage::disk('document')->path('test.pdf');
+//        $pdf = new Pdf($link);
+//        $pdf->saveImage();
+
+//        try {
+//            $pdfname = '/home/truongbo/Downloads/11.pdf';
+//            $pdftext = file_get_contents($pdfname);
+//            if($pdftext === FALSE) die;
+//        }
+//        catch (Exception $e) {
+//            echo $e->getMessage();
+//        }
+//
+//        $num = preg_match_all("/\/Page\W/", $pdftext, $dummy);
+//
+//        return $num ?? 0;
+        $text = 'Now, create your project file where you want to create the image of your text dynamically, and just include class and create an object like this:';
+        $img = new TitleToImage();
+        $img->createImage($text);
+        $img->showImage();
+
     }
 
     public function downloadpdf()
     {
-        $arrContextOptions=array(
-            "ssl"=>array(
-                "verify_peer"=>false,
-                "verify_peer_name"=>false,
+        $arrContextOptions = array(
+            "ssl" => array(
+                "verify_peer" => false,
+                "verify_peer_name" => false,
             ),
         );
 
         $contents = file_get_contents("https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0000686&type=printable", false, stream_context_create($arrContextOptions));
-
-        Storage::disk('document')->put('document.pdf', $contents);
+        $num = preg_match_all("/\/Page\W/", $contents, $dummy);
+        return $num ?? 0;
+//        Storage::disk('document')->put('document.pdf', $contents);
     }
 
-    public function viewpdf(){
-        $arrContextOptions=array(
-            "ssl"=>array(
-                "verify_peer"=>false,
-                "verify_peer_name"=>false,
+    public function viewpdf()
+    {
+        $arrContextOptions = array(
+            "ssl" => array(
+                "verify_peer" => false,
+                "verify_peer_name" => false,
             ),
         );
 

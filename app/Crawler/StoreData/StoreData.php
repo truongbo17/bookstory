@@ -3,13 +3,10 @@
 namespace App\Crawler\StoreData;
 
 use App\Crawler\Enum\Status;
-use App\Crawler\HandlePdf\PdfToImage;
+use App\Jobs\DownloadFilePdf;
 use App\Models\Document;
 use App\Services\DocumentManager;
-use Exception;
-use Illuminate\Support\Str;
 use Log;
-use Vuh\CliEcho\CliEcho;
 
 class StoreData implements StoreDataInterface
 {
@@ -42,7 +39,7 @@ class StoreData implements StoreDataInterface
 
         $title = $data['title'] ?? "title";
         //Check slug
-        $slug = $this->createSlug($title);
+        $slug = createSlug($title);
 
         $download_link = $data['download_link'] ?? "";
         $content = $data['content'] ?? $title;
@@ -50,7 +47,7 @@ class StoreData implements StoreDataInterface
         $count_page = $data['count_page'] ?? null;
         $binding = $data['binding'] ?? "PDF";
         $code = $data['code'] ?? null;
-        $image = $data['image'] ?? null;
+        $image = $data['image'] ?? "";
 
         $keywords = $data['keywords'] ?? [];
         $categories = $data['categories'] ?? [];
@@ -65,7 +62,7 @@ class StoreData implements StoreDataInterface
         $document = Document::create([
             "title" => $title,
             "slug" => $slug,
-            "download_link" => $download_link,
+            "download_link" => "",
             "content_file" => "",
             "content_hash" => md5($content),
             "count_page" => $count_page,
@@ -78,36 +75,12 @@ class StoreData implements StoreDataInterface
 
         DocumentManager::updateContentFile($document, $content);
         DocumentManager::updateKeywords($document, $keywords);
-        DocumentManager::updateCategories($document, $categories);
         DocumentManager::updateUser($document, $users);
 
-        //Update image and count page
-        if (is_null($image)) {
-            $pdf_to_image = new PdfToImage();
-            try {
-                $pdf_to_image->savePdf($download_link);
-            } catch (Exception $e) {
-                \Illuminate\Support\Facades\Log::error($e);
-                return false;
-            }
-            $pdf_to_image = $pdf_to_image->saveImageFromPdf($document);
-            $document->image = $pdf_to_image['image'];
-            if (is_null($count_page)) $document->count_page = $pdf_to_image['count_page'];
-            $document->save();
-        }
+        DocumentManager::savePdf($document, $download_link);
+//        DownloadFilePdf::dispatch($document, $download_link);
 
         return true;
-    }
-
-    public function createSlug(string $title): string
-    {
-        $slug = Str::slug($title);
-        $check_slug = Document::where('slug', $slug)->exists();
-        if ($check_slug) {
-            $slug = $slug . '-' . time() . mt_rand();
-        }
-
-        return $slug;
     }
 
     /*
@@ -123,37 +96,36 @@ class StoreData implements StoreDataInterface
     public function formatData(array $data): array
     {
         foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $data[$key] = $this->cleanArray($value);
-            }
+            $data[$key] = $this->cleanArray($value);
             if ($key == 'content') {
-                $data['content'] = preg_replace('/^Introduction/', '', $data['content']);
+                $data['content'] = str_replace('Introduction', '', $data['content']);
             }
         }
         return $data;
     }
 
-    public function cleanArray($value): array
+    public function cleanArray($value)
     {
-        //Array
-        if ((is_string($value) && mb_strlen($value) > 0) || is_object($value)) {
-            $value = (array)$value;
-        } elseif ($value == "") {
-            $value = [];
-        }
-
         //Replace ký tự thừa
         $parent_replace_array = [
-            "Tác giả"
+            "Tác giả",
+            "PLOS ONE",
+            "|",
         ];
-        foreach ($value as $key => $value_array) {
-            $value[$key] = str_replace($parent_replace_array, "", $value_array);
-        }
 
-        //Clean array
-        $value = array_filter($value);
-        $value = preg_replace('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', '', $value);
-        $value = array_map('trim', $value);
+        if (is_array($value)) {
+            foreach ($value as $key => $value_array) {
+                $value[$key] = str_replace($parent_replace_array, "", $value_array);
+            }
+
+            //Clean array
+            $value = array_filter($value);
+            $value = preg_replace('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', '', $value);
+            $value = array_map('trim', $value);
+        } else {
+            $value = str_replace($parent_replace_array, "", $value);
+            $value = trim($value, " ");
+        }
 
         return $value;
     }

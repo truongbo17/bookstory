@@ -25,6 +25,8 @@ Route::group([
     Route::post('url/{id}/update_status_url', 'UrlCrudController@updateStatus');
     Route::get('url/{id}/export_url', 'UrlCrudController@exportUrl');
     Route::post('url/import_url', 'UrlCrudController@importUrl');
+    Route::post('document/approve_documents', 'DocumentCrudController@approveDocuments');
     Route::crud('contact', 'ContactCrudController');
     Route::crud('review', 'ReviewCrudController');
+    Route::crud('seo-keyword', 'SeoKeywordCrudController');
 }); // this should be the absolute last line of this file

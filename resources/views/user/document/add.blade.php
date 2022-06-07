@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', 'Add Document')
+@section('title', __('Add new document'))
 
 @push('css')
 @endpush
@@ -15,25 +15,20 @@
 
 @section('main')
     <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8 h-screen flex overflow-hidden">
+        @include('user.layout.sidebar_mobile')
         @include('user.layout.sidebar')
 
         <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <div class="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
-                <button type="button"
-                        class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                    <span class="sr-only">Open sidebar</span>
-                    <!-- Heroicon name: outline/menu -->
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
+                <div class="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
+                    @include('user.layout.open_sidebar_mobile')
+                </div>
             </div>
             <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
                 <div class="py-6">
                     <div class="max-w-7xl mx-auto pl-4 sm:pl-6 md:pl-8">
-                        <h1 class="text-2xl font-semibold text-gray-900">Dashboard - Add Document</h1>
+                        <h1 class="text-2xl font-semibold text-gray-900">{{__('Dashboard')}}
+                            - {{ __('Add new document')}}</h1>
                     </div>
                     <div class="max-w-7xl mx-auto pl-4 sm:pl-6 md:pl-8">
                         <!-- Replace with your content -->
@@ -101,15 +96,15 @@
                                           enctype="multipart/form-data">
                                         @csrf
                                         <div class="shadow sm:rounded-md sm:overflow-hidden">
-                                            <div class="grid grid-cols-6 px-4 py-5 bg-white space-y-6 sm:p-6">
-                                                <p class="text-gray-600 text-sm font-semibold">Note : Field <span
-                                                        class="text-red-700 text-sm">(*)</span> is required</p>
+                                            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                                                <p class="text-gray-600 text-sm font-semibold">{{__('Note : Field')}} <span
+                                                        class="text-red-700 text-sm">(*)</span> {{__('is required')}}</p>
                                                 <p class="text-gray-600 text-sm font-semibold"> <span
-                                                        class="text-red-700 text-sm"> Currently can only upload in PDF format </span>
+                                                        class="text-red-700 text-sm"> {{__('Currently can only upload in PDF format')}} </span>
                                                 </p>
                                                 <div>
                                                     <label for="about" class="block text-sm font-medium text-gray-700">
-                                                        Title <span class="text-red-700 text-sm">*</span>
+                                                        {{__('Title')}} <span class="text-red-700 text-sm">*</span>
                                                     </label>
                                                     <div class="mt-1">
                                                         <input type="text" value="{{ old('title') }}" name="title"
@@ -123,7 +118,7 @@
                                                     <div class="col-span-3 sm:col-span-2">
                                                         <label for="company-website"
                                                                class="block text-sm font-medium text-gray-700">
-                                                            Slug
+                                                            {{__('Slug')}}
                                                         </label>
                                                         <div class="mt-1 flex rounded-md shadow-sm">
                                                               <span
@@ -136,20 +131,32 @@
                                                                    placeholder="huong-dan-cham-soc-nguoi-mac-covid-19">
                                                         </div>
                                                         <p class="mt-2 text-sm text-gray-500">
-                                                            If the slug is blank, it will be automatically generated by
-                                                            title.
+                                                            {{__('If the slug is blank, it will be automatically generated by title.')}}
                                                         </p>
                                                     </div>
                                                 </div>
 
                                                 <div>
                                                     <label for="about" class="block text-sm font-medium text-gray-700">
-                                                        Description <span class="text-red-700 text-sm">*</span>
+                                                        {{__('Description')}} <span class="text-red-700 text-sm">*</span>
                                                     </label>
                                                     <div class="mt-1">
                                                         <textarea id="content" name="content" rows="4"
                                                                   class="@error('content') border-pink-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                                                                   placeholder="content of document">{{ old('content') }}</textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label for="about" class="block text-sm font-medium text-gray-700">
+                                                        Keyword <span
+                                                            class="text-red-700 text-sm">({{__('separated by commas')}})</span>
+                                                    </label>
+                                                    <div class="mt-1">
+                                                        <input type="text" value="{{ old('keyword') }}" name="keyword"
+                                                               id="keyword"
+                                                               autocomplete="keyword" placeholder="keyword of document"
+                                                               class="@error('keyword') border-pink-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                                     </div>
                                                 </div>
 
@@ -169,7 +176,7 @@
                                                     <div class="ml-5">
                                                         <label for="about"
                                                                class="block text-sm font-medium text-gray-700">
-                                                            Page
+                                                            Page<span class="text-red-700 text-sm">*</span>
                                                         </label>
                                                         <div class="mt-1">
                                                             <input type="number" name="page" id="page"
@@ -183,8 +190,8 @@
                                                 <div>
                                                     <div class="">
                                                         <label class="block text-sm font-medium text-gray-700">
-                                                            Image <span class="mt-2 text-sm text-gray-500">
-                                                                (If the image is blank, it will be automatically generate.)
+                                                            Image <span class="mt-2 text-sm text-red-700">
+                                                                *
                                                             </span>
                                                         </label>
                                                         <div class="mt-1 flex items-center">
@@ -194,9 +201,11 @@
                                                              src="{{asset('images/avatar/default.png')}}"
                                                              id="image"/>
                                                         </span>
-                                                            <input class="text-sm ml-1" accept="image/*" name="image"
-                                                                   type="file"
-                                                                   id="files"/>
+                                                            <input
+                                                                class="text-sm ml-1 @error('image') border-pink-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror"
+                                                                accept="image/*" name="image"
+                                                                type="file"
+                                                                id="files"/>
                                                         </div>
                                                     </div>
                                                     <script type="text/javascript">
@@ -211,9 +220,9 @@
                                                     <label class="block text-sm font-medium text-gray-700">
                                                         Document file <span class="text-red-700 text-sm">*</span>
                                                     </label>
-                                                    <label for="file-upload">
+                                                    <label for="file_upload">
                                                         <div
-                                                            class="@error('file-upload') border-pink-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                                            class="@error('file_upload') border-pink-500 text-pink-600 focus:border-pink-500 focus:ring-pink-500 @enderror mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
                                                             <div class="space-y-1 text-center">
                                                                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none"
                                                                      stroke="currentColor"
@@ -224,18 +233,20 @@
                                                                           d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                                                 </svg>
                                                                 <div class="flex text-sm text-gray-600">
-                                                                    <label for="file-upload"
+                                                                    <label for="file_upload"
                                                                            class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                                                        <span>Upload a document</span>
-                                                                        <input id="file-upload" name="file-upload"
+                                                                        <span>{{__('Upload a document')}}</span>
+                                                                        <input id="file_upload" name="file_upload"
                                                                                type="file" accept="application/pdf"
                                                                                class="sr-only">
                                                                     </label>
-                                                                    <p class="pl-1">or drag and drop</p>
+                                                                    <p class="pl-1">{{__('or drag and drop')}}</p>
                                                                 </div>
                                                                 <p class="text-xs text-gray-500">
-                                                                    PDF up to 10MB
+                                                                    {{__('PDF up to 10MB')}}
                                                                 </p>
+                                                                <p class="text-sm text-bold text-indigo-700"
+                                                                   id="result"></p>
                                                             </div>
                                                         </div>
                                                     </label>
@@ -246,11 +257,11 @@
                                                 <button type="button"
                                                         onclick="location.href='{{route('user.document.list')}}'"
                                                         class="mx-4 col-span-1 justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                                    Back
+                                                    {{__('Back')}}
                                                 </button>
                                                 <button type="submit"
                                                         class="mx-4 justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                                    Save
+                                                    {{__('Save')}}
                                                 </button>
                                             </div>
                                         </div>
@@ -274,4 +285,10 @@
 @endsection
 
 @push('javascript')
+    <script>
+        $('#file_upload').change(function () {
+            var filename = $(this)[0].files[0].name;
+            $('#result').text("Your file upload : " + filename);
+        });
+    </script>
 @endpush

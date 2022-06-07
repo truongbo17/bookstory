@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Document;
 
 use App\Crawler\Enum\Status;
 use App\Http\Controllers\Controller;
+use App\Libs\DiskPathTools\DiskPathInfo;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -11,13 +12,6 @@ use PHPUnit\Exception;
 
 class DocumentController extends Controller
 {
-    public array $arrContextOptions = [
-        "ssl" => [
-            "verify_peer" => false,
-            "verify_peer_name" => false,
-        ],
-    ];
-
     public function showDetail($document_slug)
     {
         $document = Document::where('slug', $document_slug)
@@ -26,6 +20,8 @@ class DocumentController extends Controller
             ->with('users')
             ->with('reviews')
             ->first();
+
+        if (!$document) abort(404);
 
         $array_star = Document::where('slug', $document_slug)
             ->where('status', Status::ACTIVE)
@@ -72,26 +68,32 @@ class DocumentController extends Controller
             return abort(404);
         }
 
-        //Save file PDF để hiển thị
-        $file = 'read_document.pdf';
-        $contents = file_get_contents($document->download_link, false, stream_context_create($this->arrContextOptions));
-        Storage::disk('document')->put($file, $contents);
-        $link = asset('document/' . $file);
+        $download_link = DiskPathInfo::parse($document->download_link)
+            ->tempUrl(now()->addMinutes(config('crawl.timeout.download')),
+                ['action' => 'download', 'slug' => $document->slug]);
+        $read_link = DiskPathInfo::parse($document->download_link)->tempUrl(now()->addMinutes(config('crawl.timeout.read')), ['action' => 'read', 'slug' => $document->slug]);
 
-        return view('documents.detail', compact('document', 'link', 'star'));
+        return view('documents.detail', compact('document', 'download_link', 'read_link', 'star'));
     }
 
-    public function download($document_id)
+    public function handle(Request $request)
     {
-        $document = Document::findOrFail($document_id);
-        $document->download = $document->download + 1;
-        $document->save();
+        $slug = $request->input('slug') . '.pdf';
 
-        $filename = $document->slug . '.' . $document->binding;
-        $tempImage = tempnam(sys_get_temp_dir(), $filename);
-        copy($document->download_link, $tempImage, stream_context_create($this->arrContextOptions));
-
-        return response()->download($tempImage, $filename);
+        if ($request->input('action') == 'download') {
+            $document = Document::where('slug', $request->input('slug'))->first();
+            $document->download = ($document->download ?? 0) + 1;
+            $document->save();
+            $path = $request->input('path');
+            return Storage::disk(config('crawl.pdf_disk'))->download($path, $slug);
+        } else if ($request->input('action') == 'read') {
+            $path = $request->input('path');
+            $content = Storage::disk(config('crawl.pdf_disk'))->get($path);
+            return response($content, 200, [
+                'Content-Type' => 'application/pdf',
+            ]);
+        }
+        return false;
     }
 
     public function list()
@@ -99,7 +101,9 @@ class DocumentController extends Controller
         $count_documents = Document::count();
         $perpage = request()->get('perpage', 12);
 
-        $documents = Document::ignoreRequest(['perpage'])->where('status', Status::ACTIVE)
+        $documents = Document::ignoreRequest(['perpage'])
+            ->AcceptRequest(['sort', 'author', 'count_page', 'perpage', 'page'])
+            ->where('status', Status::ACTIVE)
             ->filter()
             ->paginate($perpage, ['*'], 'page');
 

@@ -5,6 +5,21 @@
 @push('css')
 @endpush
 
+@push('seo')
+    <meta name="description"
+          content="{{$author[0]->name}}">
+    <meta name="keywords" content="pdf free download,free upload docment,bookstory,pdf free reading online">
+    <meta property="og:title" content="{{$author[0]->name}}"/>
+    <meta property="og:image"
+          @if(!is_null($author[0]->image)) content="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($author[0]->image)->path())}}"
+          @else content="{{asset('images/avatar/default.jpg')}}"@endif/>
+    <meta property="og:type" content="books.book"/>
+    <meta property="og:description"
+          content="{{$author[0]->name}}"/>
+    <meta property="og:url" content="{{Request::url()}}"/>
+    <meta property="og:locale" content="{{__('locale')}}"/>
+@endpush
+
 @section('message')
     @include('layouts.message')
 @endsection
@@ -25,11 +40,15 @@
                         <div class="relative">
                             @if($author[0]->status == \App\Crawler\Enum\UserStatus::ACTIVE)
                                 <img class="h-16 w-16 rounded-full"
-                                     src="{{asset($author[0]->image ?? 'images/avatar/default.jpg')}}"
+                                     @if(!is_null($author[0]->image))
+                                         src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($author[0]->image)->path())}}"
+                                     @else
+                                         src="{{asset('images/avatar/default.jpg')}}"
+                                     @endif
                                      alt="">
                             @else
                                 <img class="h-16 w-16 rounded-full"
-                                     src="{{asset($author[0]->image ?? 'images/avatar/banned.png')}}"
+                                     src="{{asset('images/avatar/banned.png')}}"
                                      alt="">
                             @endif
                             <span class="absolute inset-0 shadow-inner rounded-full" aria-hidden="true"></span>
@@ -78,10 +97,10 @@
                             <div class="px-4 py-5 sm:px-6">
                                 <h2 id="applicant-information-title"
                                     class="text-lg leading-6 font-medium text-gray-900">
-                                    Information
+                                    {{__('Information')}}
                                 </h2>
                                 <p class="mt-1 max-w-2xl text-sm text-gray-500">
-                                    Personal details and documents.
+                                    {{__('Personal details and documents.')}}
                                 </p>
                             </div>
                             <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
@@ -89,10 +108,10 @@
                                     @if($author[0]->status == \App\Crawler\Enum\UserStatus::ACTIVE)
                                         <div class="sm:col-span-1">
                                             <dt class="text-sm font-medium text-gray-500">
-                                                Role
+                                                {{__('Role')}}
                                             </dt>
                                             <dd class="mt-1 text-sm text-gray-900">
-                                                {{$author[0]->is_admin ? 'Admin' : 'Author'}}
+                                                {{$author[0]->is_admin ? 'Content' : 'Author'}}
                                             </dd>
                                         </div>
                                         <div class="sm:col-span-1">
@@ -105,7 +124,7 @@
                                         </div>
                                         <div class="sm:col-span-1">
                                             <dt class="text-sm font-medium text-gray-500">
-                                                Total Document
+                                                {{__('Total Document')}}
                                             </dt>
                                             <dd class="mt-1 text-sm text-gray-900">
                                                 {{$author[0]->documents_count}}
@@ -114,7 +133,7 @@
                                     @endif
                                     <div class="sm:col-span-1">
                                         <dt class="text-sm font-medium text-gray-500">
-                                            Status
+                                            {{__('Status')}}
                                         </dt>
                                         <dd class="mt-1 text-sm text-gray-900">
                                             {{array_search($author[0]->status,\App\Crawler\Enum\UserStatus::asArray())}}
@@ -125,20 +144,14 @@
                                             User privacy
                                         </dt>
                                         <dd class="mt-1 text-sm text-gray-900">
-                                            User privacy, use of technology and cybersecurity are linked to each other.
-                                            Many previous studies consider online user base religion agnostic; this
-                                            chapter will try to shed light on the user behaviour factors associated with
-                                            religious beliefs. Current research did not fully explain the specifics of
-                                            user behaviour influenced by religion. This chapter will use Islam as the
-                                            religion in question.
+                                            {{__('User privacy, use of technology and cybersecurity are linked to each other. Many previous studies consider online user base religion agnostic; this chapter will try to shed light on the user behaviour factors associated with religious beliefs. Current research did not fully explain the specifics of user behaviour influenced by religion. This chapter will use Islam as the religion in question.')}}
                                         </dd>
                                     </div>
                                 </dl>
                             </div>
                             <div>
                                 <a href="#"
-                                   class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">Read
-                                    full application</a>
+                                   class="block bg-gray-50 text-sm font-medium text-gray-500 text-center px-4 py-4 hover:text-gray-700 sm:rounded-b-lg">{{__('Report Author')}}</a>
                             </div>
                         </div>
                     </section>
@@ -146,7 +159,7 @@
 
                 <section aria-labelledby="timeline-title" class="lg:col-start-3 lg:col-span-1">
                     <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
-                        <h2 id="timeline-title" class="text-lg font-medium text-gray-900">Documents
+                        <h2 id="timeline-title" class="text-lg font-medium text-gray-900">{{__('Documents')}}
                             ({{$author[0]->documents_count}})</h2>
 
                         <!-- Activity Feed -->
@@ -157,7 +170,11 @@
                                         class="relative rounded-lg border border-gray-300 mx-2 my-2 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-pink-500">
                                         <div class="flex-shrink-0">
                                             <img class="h-30 w-20 border border-gray-50"
-                                                 src="{{asset($document->image ?? 'images/avatar/default.png')}}"
+                                                 @if(!is_null($document->image))
+                                                     src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+                                                 @else
+                                                     src="{{asset('images/avatar/default.png')}}"
+                                                 @endif
                                                  alt="{{$document->title}}">
                                         </div>
                                         <div class="flex-1 min-w-0">

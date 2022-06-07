@@ -30,6 +30,13 @@ return [
 
     'disks' => [
 
+        'private' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private'),
+            'url' => env('APP_URL') . '/private-storage',
+            'visibility' => 'private',
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
@@ -43,23 +50,16 @@ return [
             'visibility' => 'public',
         ],
 
+        'document' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/document'),
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public',
+        ],
+
         'local_storage_01' => [
             'driver' => 'local',
             'root' => env('ROOT_LOCAL_STORAGE_01', storage_path('data')),
-            'visibility' => 'public',
-        ],
-
-        'document' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/document'),
-            'url' => env('APP_URL') . '/storage',
-            'visibility' => 'public',
-        ],
-
-        'document_image' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/document_image'),
-            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
         ],
 
@@ -97,9 +97,8 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
-        public_path('document_image') => storage_path('app/public/document_image'),
-        public_path('document') => storage_path('app/public/document'),
+//        public_path('storage') => storage_path('app/public'),
+          public_path('storage') => env('ROOT_LOCAL_STORAGE_01', storage_path('app/public')),
     ],
 
 ];

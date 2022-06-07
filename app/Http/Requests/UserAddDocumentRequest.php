@@ -29,8 +29,8 @@ class UserAddDocumentRequest extends FormRequest
             'slug' => ['nullable', 'string', 'min:5'],
             'page' => ['required', 'int'],
             'code' => ['nullable', 'int'],
-            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'file-upload' => 'required|max:10000|mimes:pdf,PDF',
+            'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'file_upload' => 'required|max:10000|mimes:pdf,PDF',
         ];
     }
 }

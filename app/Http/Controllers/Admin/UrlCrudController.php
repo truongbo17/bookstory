@@ -16,7 +16,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\Carbon;
 use File;
 use Response;
-use Symfony\Component\Console\Input\Input;
+use Storage;
 
 /**
  * Class UrlCrudController
@@ -188,26 +188,23 @@ class UrlCrudController extends CrudController
         unset($url['updated_at']);
         $data = json_encode($url);
 
-        File::put(public_path('/upload/json/' . $json_name), $data);
+        $file_name = 'export-' . uniqid() . '-' . $id . '.json';
+        $file = Storage::disk(config('crawl.document_disk'))->put(config('crawl.path.import_json_urls') . '/' . $file_name, $data);
 
-        $file = public_path() . "/upload/json/" . $json_name;
-        $headers = ['Content-Type: application/json'];
-        return Response::download($file, 'plugin.json', $headers);
+        if ($file) {
+            $file = public_path() . '/' . config('crawl.public_link_storage') . config('crawl.path.import_json_urls') . '/' . $file_name;
+            $headers = ['Content-Type: application/json'];
+            return Response::download($file, $file_name, $headers);
+        }
     }
 
     public function importUrl(UrlRequest $request)
     {
-        $file = Input::file('json_url');
-        if($file === null) {
-            throw new \Exception('File was not sent !');
-        }
-        if($file->isReadable()) {
-            $file->open('r');
-            $contents = $file->fread($file->getSize());
-            $json = json_decode($contents, true);
-        } else {
-            throw new \Exception('File is not readable');
-        }
-        dd($json);
+        $json_url = $request->file('json_url')->getContent();
+        if (substr($json_url, -1) != '}') $json_url = $json_url . '}';
+        $url = json_decode($json_url, true);
+        Url::create($url);
+
+        return redirect()->back();
     }
 }
