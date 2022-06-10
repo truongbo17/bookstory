@@ -140,8 +140,6 @@ class DocumentCrudController extends CrudController
             ->whereNotNull('content_file')
             ->where('download_link', '<>', '')
             ->whereNotNull('download_link')
-            ->where('image', '<>', '')
-            ->whereNotNull('image')
             ->where('status', Status::PENDING)
             ->update(['status' => Status::ACTIVE])) return true;
         return false;

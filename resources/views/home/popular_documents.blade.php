@@ -7,7 +7,7 @@
                 <div class="group relative">
                     <div
                         class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                        <img @if(!is_null($document->image))
+                        <img @if(!is_null($document->image) && mb_strlen($document->image) > 5)
                                  src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
                              @else
                                  src="{{asset('images/avatar/default.png')}}"
@@ -89,21 +89,23 @@
                 class="mx-auto grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-4 md:gap-x-6 lg:max-w-5xl lg:gap-x-8 lg:gap-y-12 xl:grid-cols-4">
                 @foreach($authors as $author)
                     <li>
-                        <div class="space-y-4">
-                            <img class="mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24"
-                                 @if(!is_null($author->image))
-                                     src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($author->image)->path())}}"
-                                 @else
-                                     src="{{asset('images/avatar/default.jpg')}}"
-                                 @endif
-                                 alt="{{$author->name}}">
-                            <div class="space-y-2">
-                                <div class="text-xs font-medium lg:text-sm">
-                                    <h3>{{$author->name}}</h3>
-                                    <p class="text-indigo-600">{{$author->documents_count}} {{__('Documents')}}</p>
+                        <a href="{{route('author.show_detail', $author->id)}}">
+                            <div class="space-y-4">
+                                <img class="mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24"
+                                     @if(!is_null($author->image))
+                                         src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($author->image)->path())}}"
+                                     @else
+                                         src="{{asset('images/avatar/default.jpg')}}"
+                                     @endif
+                                     alt="{{$author->name}}">
+                                <div class="space-y-2">
+                                    <div class="text-xs font-medium lg:text-sm">
+                                        <h3>{{$author->name}}</h3>
+                                        <p class="text-indigo-600">{{$author->documents_count}} {{__('Documents')}}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </li>
                 @endforeach
             </ul>

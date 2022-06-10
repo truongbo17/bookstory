@@ -14,7 +14,7 @@
     <meta name="keywords" content="pdf free download,free upload docment,bookstory,pdf free reading online">
     <meta property="og:title" content="{{$document->title}}"/>
     <meta property="og:image"
-          @if(!is_null($document->image))content="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
+          @if(!is_null($document->image) && mb_strlen($document->image) > 5)content="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
           @else content="{{asset('images/avatar/default.png')}}"@endif/>
     <meta property="og:type" content="books.book"/>
     <meta property="og:description"
@@ -40,7 +40,7 @@
                 <div class="lg:row-end-1 lg:col-span-3">
                     <div class="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
                         <img
-                            @if(!is_null($document->image))
+                            @if(!is_null($document->image) && mb_strlen($document->image) > 5)
                                 src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
                             @else
                                 src="{{asset('images/avatar/default.png')}}"
@@ -443,10 +443,10 @@
                                             <div class="min-w-0 flex-1">
                                                 @if (session('success'))
                                                     <div id="alert-3"
-                                                         class="flex p-4 mb-4 bg-green-100 rounded-lg dark:bg-green-200"
+                                                         class="flex p-4 mb-4 bg-green-100 rounded-lg"
                                                          role="alert">
                                                         <svg
-                                                            class="flex-shrink-0 w-5 h-5 text-green-700 dark:text-green-800"
+                                                            class="flex-shrink-0 w-5 h-5 text-green-700"
                                                             fill="currentColor" viewBox="0 0 20 20"
                                                             xmlns="http://www.w3.org/2000/svg">
                                                             <path fill-rule="evenodd"
@@ -454,11 +454,11 @@
                                                                   clip-rule="evenodd"></path>
                                                         </svg>
                                                         <div
-                                                            class="ml-3 text-sm font-medium text-green-700 dark:text-green-800">
+                                                            class="ml-3 text-sm font-medium text-green-700">
                                                             {{session('success')}}
                                                         </div>
                                                         <button type="button"
-                                                                class="ml-auto -mx-1.5 -my-1.5 bg-green-100 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex h-8 w-8 dark:bg-green-200 dark:text-green-600 dark:hover:bg-green-300"
+                                                                class="ml-auto -mx-1.5 -my-1.5 bg-green-100 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex h-8 w-8"
                                                                 data-dismiss-target="#alert-3" aria-label="Close">
                                                             <span class="sr-only">Close</span>
                                                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
@@ -477,13 +477,13 @@
                                                     <div class="grid grid-cols-2 gap-4">
                                                         <div class="mb-6">
                                                             <label for="name"
-                                                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
+                                                                   class="block mb-2 text-sm font-medium text-gray-900">Your
                                                                 Name</label>
                                                             <input type="text"
                                                                    @if(auth()->user()) value="{{auth()->user()->name}}"
                                                                    @endif id="name"
                                                                    name="name"
-                                                                   class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                                                   class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
                                                                    placeholder="Your name">
                                                             @if($errors->has('name'))
                                                                 <p class="text-red-500 text-sm">{{ $errors->first('name') }}</p>
@@ -491,12 +491,12 @@
                                                         </div>
                                                         <div class="mb-6">
                                                             <label for="email"
-                                                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
+                                                                   class="block mb-2 text-sm font-medium text-gray-900">Your
                                                                 Email</label>
                                                             <input type="email" name="email" id="email"
                                                                    @if(auth()->user()) value="{{auth()->user()->email}}"
                                                                    @endif
-                                                                   class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
+                                                                   class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
                                                                    placeholder="example@company.com">
                                                             @if($errors->has('email'))
                                                                 <p class="text-red-500 text-sm">{{ $errors->first('email') }}</p>
@@ -505,7 +505,7 @@
                                                     </div>
                                                     <div>
                                                         <label for="comment"
-                                                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Review</label>
+                                                               class="block mb-2 text-sm font-medium text-gray-900">Review</label>
                                                         <textarea id="review" name="review" rows="3"
                                                                   class="shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
                                                                   placeholder="Write a review..."></textarea>

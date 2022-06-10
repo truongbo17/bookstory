@@ -18,7 +18,7 @@ class HomeController extends Controller
             ->orderBy('view', 'DESC')
             ->orderBy('download', 'DESC')
             ->orderBy('created_at', 'DESC')
-            ->limit(8)
+            ->limit(16)
             ->get();
 
         $authors = User::where('status', 1)

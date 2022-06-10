@@ -46,7 +46,7 @@
                                                     <div
                                                         class="col-span-1 w-30 h-30 sm:mr-8 sm:mb-0 mb-4">
                                                         <img class="w-full h-auto"
-                                                             @if(!is_null($document['image']) || count($document['image']) > 0)
+                                                             @if(!is_null($document['image']))
                                                                  src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document['image'])->path())}}"
                                                              @else
                                                                  src="{{asset('images/avatar/default.png')}}"

@@ -199,7 +199,7 @@
                     <div class="group relative">
                         <div
                             class="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                            <img @if(!is_null($document->image))
+                            <img @if(!is_null($document->image) && mb_strlen($document->image) > 5)
                                      src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document->image)->path())}}"
                                  @else
                                      src="{{asset('images/avatar/default.png')}}"
@@ -252,12 +252,16 @@
                     <select id="per_page" name="per_page"
                             class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:border-gray-700 rounded-md font-medium text-sm px-4 py-2 text-center items-center">
                         <option disabled>Books per page :</option>
-                        <option value="12" @if(!app('request')->input('perpage')) selected @endif>12 {{__('Documents')}}</option>
-                        <option value="16" @if(app('request')->input('perpage')== 16) selected @endif>16 {{__('Documents')}}
+                        <option value="12" @if(!app('request')->input('perpage')) selected @endif>
+                            12 {{__('Documents')}}</option>
+                        <option value="16" @if(app('request')->input('perpage')== 16) selected @endif>
+                            16 {{__('Documents')}}
                         </option>
-                        <option value="32" @if(app('request')->input('perpage')== 32) selected @endif>32 {{__('Documents')}}
+                        <option value="32" @if(app('request')->input('perpage')== 32) selected @endif>
+                            32 {{__('Documents')}}
                         </option>
-                        <option value="48" @if(app('request')->input('perpage')== 48) selected @endif>48 {{__('Documents')}}
+                        <option value="48" @if(app('request')->input('perpage')== 48) selected @endif>
+                            48 {{__('Documents')}}
                         </option>
                     </select>
                 </form>

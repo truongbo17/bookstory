@@ -63,7 +63,7 @@
                                                     <div
                                                         class="col-span-1 w-30 h-30 sm:mr-8 sm:mb-0 mb-4">
                                                         <img class="w-full h-auto"
-                                                             @if(isset($document['image']))
+                                                             @if(isset($document['image']) && mb_strlen($document['image']) > 5)
                                                                  src="{{asset(config('crawl.public_link_storage').\App\Libs\DiskPathTools\DiskPathInfo::parse($document['image'])->path())}}"
                                                              @else
                                                                  src="{{asset('images/avatar/default.png')}}"
@@ -80,6 +80,9 @@
                                                 </div>
                                             </div>
                                         @endforeach
+                                    </div>
+                                    <div class="py-10 px-8">
+                                        {{$search_result_document->links()}}
                                     </div>
                                 </section>
                             </div>

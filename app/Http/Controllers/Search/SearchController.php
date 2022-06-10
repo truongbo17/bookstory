@@ -78,6 +78,6 @@ class SearchController extends Controller
             $data_seo_keyword[$key]['slug'] = $hits_seo_keyword[$key]->document()->content()['slug'];
         }
 
-        return view('search.search', compact('q', 'data_document', 'data_seo_keyword'));
+        return view('search.search', compact('q', 'search_result_document', 'data_document', 'data_seo_keyword'));
     }
 }
