@@ -119,13 +119,13 @@ class PestHubtCommand extends Command
                                     'title' => $data['title'],
                                     'quizs' => $data['quiz_content'],
                                 ];
-                                $pdf = PDF::loadView('pdf.pest', $data_pdf)->output();
+                                $pdf = PDF::loadView('pdf.pest', $data_pdf);
                             }else{
                                 $data_pdf = [
                                     'title' => $data['title'],
                                     'quizs' => $data['questions'],
                                 ];
-                                $pdf = PDF::loadView('pdf.pestv2', $data_pdf)->output();
+                                $pdf = PDF::loadView('pdf.pestv2', $data_pdf);
                             }
 
                             $file_name = IdToPath::make($document->id, 'pdf');
