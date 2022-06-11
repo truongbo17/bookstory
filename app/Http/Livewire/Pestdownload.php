@@ -66,7 +66,16 @@ class Pestdownload extends Component
                 return response()->streamDownload(
                     fn() => print($pdf),
                     createSlug($data['title']) . ".pdf",
-                    ['Content-Type' => 'application/pdf']
+                    [
+                        'Content-Description' => 'File Transfer',
+                        'Content-Disposition' => 'attachment; filename=' . createSlug($data['title']) . '.pdf',
+                        'Content-Transfer-Encoding' => 'binary',
+                        'Connection' => 'Keep-Alive',
+                        'Expires' => 0,
+                        'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+                        'Pragma' => 'public',
+                        'Content-Type' => 'application/pdf',
+                    ]
                 );
             } catch (\Exception $exception) {
                 Log::error($exception);
