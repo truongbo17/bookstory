@@ -8,7 +8,7 @@
     @stack('seo')
     <link rel="icon" type="image/png" href="{{ asset('images/logo/logo-header.png') }}">
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.2/dist/flowbite.min.css"/>
-    <link href="{{ asset('1/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('2/app.css') }}" rel="stylesheet">
     @stack('css')
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XCKX81Y594"></script>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PestHubt\DownloadDocument;
 use App\Http\Controllers\Api\PdfToImage;
 use App\Http\Controllers\Document\DocumentController;
 use App\Http\Controllers\Home\HomeController;
@@ -43,3 +44,5 @@ Route::middleware('locale')->group(function () {
     //Change Language
     Route::get('change-language/{language}', [HomeController::class, 'changeLanguage'])->name('user.change-language');
 });
+
+Route::get('download-pesthubt', [DownloadDocument::class, 'download'])->name('pesthubt.download');

@@ -14,6 +14,7 @@ return [
         'import_json_urls' => 'import_json_urls',
         'content_file' => 'content',
         'seo_keyword_file' => 'seo_keyword',
+        'pest_hubt_file' => 'pest',
     ],
     'public_link_storage' => env('PUBLIC_LINK_STORAGE', 'storage/data/'),
 //-------------------------------------------------------------------------------------
