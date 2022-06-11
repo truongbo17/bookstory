@@ -55,7 +55,7 @@ class Pestdownload extends Component
                         'quizs' => $data['quiz_content'],
                     ];
                     $pdf = PDF::loadView('pdf.pest', $data_pdf)->output();
-                }else{
+                } else {
                     $data_pdf = [
                         'title' => $data['title'],
                         'quizs' => $data['questions'],
@@ -65,7 +65,8 @@ class Pestdownload extends Component
 
                 return response()->streamDownload(
                     fn() => print($pdf),
-                    createSlug($data['title']) . ".pdf"
+                    createSlug($data['title']) . ".pdf",
+                    ['Content-Type' => 'application/pdf']
                 );
             } catch (\Exception $exception) {
                 Log::error($exception);

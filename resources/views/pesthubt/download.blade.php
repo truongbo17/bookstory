@@ -131,7 +131,7 @@
           content="Bookstory - Tải xuống tài liệu miễn phí từ peshubt">
     <meta name="keywords" content="pdf free download,free upload docment,bookstory,pdf free reading online">
     <meta property="og:title" content="Bookstory - Tải xuống tài liệu miễn phí từ peshubt"/>
-    <meta property="og:image" content="{{asset('images/avatar/default.png')}}"/>
+    <meta property="og:image" content="{{asset('images/preview/image-preview.png')}}"/>
     <meta property="og:type" content="books.book"/>
     <meta property="og:description"
           content="Bookstory - Tải xuống tài liệu miễn phí từ peshubt"/>

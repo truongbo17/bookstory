@@ -12,7 +12,7 @@
                             <p class="mt-6 text-sm font-medium text-black text-base">
                                 Nhập link quiz bạn cần tải ở phía dưới . Nếu quiz nhiều câu hỏi, thời gian xử lý có thể mất tới 20 giây
                             </p>
-                            <p class="mt-6 text-sm text-black text-base"> Ví Dụ :
+                            <p class="mt-6 text-sm text-black text-base"> Ví dụ :
                                 <span class="text-blue-800">https://pesthubt.com/quiz/15486/ha4-unit-1234.html</span>
                             </p>
                             <div class="mt-8">
@@ -22,6 +22,9 @@
                                            class="my-5 block w-full shadow-sm text-gray-900 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                                            placeholder="https://pesthubt.com/quiz/15486/ha4-unit-1234.html"
                                            autofocus autocomplete="link">
+                                    <p class="mb-6 text-sm font-bold text-red-700">
+                                        * Hiện tại server chỉ hỗ trợ tải xuống bằng máy tính ,điện thoại android & iphone hệ điều hành cao !!!
+                                    </p>
                                     @error('link')
                                     <div id="alert-1" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200"
                                          role="alert">
@@ -150,8 +153,8 @@
                                 Tải xuống ngay bây giờ
                             </p>
                             <div class="mt-4 flex items-center justify-center text-5xl font-extrabold text-gray-900">
-              <span>
-                $0
+              <span class="text-primary">
+                0đ
               </span>
                                 <span class="ml-3 text-xl font-medium text-gray-500">
                 VND
