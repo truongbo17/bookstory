@@ -114,8 +114,19 @@ class PestHubtCommand extends Command
                         DocumentManager::updateUser($document, array($data['author']));
 
                         try {
-                            $data_pdf = ['title' => $data['title'], 'quizs' => $data['quiz_content'],];
-                            $pdf = PDF::loadView('pdf.pest', $data_pdf);
+                            if (!is_null($data['quiz_content'])) {
+                                $data_pdf = [
+                                    'title' => $data['title'],
+                                    'quizs' => $data['quiz_content'],
+                                ];
+                                $pdf = PDF::loadView('pdf.pest', $data_pdf)->output();
+                            }else{
+                                $data_pdf = [
+                                    'title' => $data['title'],
+                                    'quizs' => $data['questions'],
+                                ];
+                                $pdf = PDF::loadView('pdf.pestv2', $data_pdf)->output();
+                            }
 
                             $file_name = IdToPath::make($document->id, 'pdf');
                             $file_name = new DiskPathInfo(config('crawl.pdf_disk'), config('crawl.path.document_pdf') . '/' . $file_name);

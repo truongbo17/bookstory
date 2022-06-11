@@ -49,20 +49,27 @@ class Pestdownload extends Component
                 $array_data = json_decode($string, true);
                 $data = $array_data['quiz'];
 
+                if (!is_null($data['quiz_content'])) {
+                    $data_pdf = [
+                        'title' => $data['title'],
+                        'quizs' => $data['quiz_content'],
+                    ];
+                    $pdf = PDF::loadView('pdf.pest', $data_pdf)->output();
+                }else{
+                    $data_pdf = [
+                        'title' => $data['title'],
+                        'quizs' => $data['questions'],
+                    ];
+                    $pdf = PDF::loadView('pdf.pestv2', $data_pdf)->output();
+                }
 
-                $data_pdf = [
-                    'title' => $data['title'],
-                    'quizs' => $data['quiz_content'],
-                ];
-
-                $pdf = PDF::loadView('pdf.pest', $data_pdf)->output();
                 return response()->streamDownload(
                     fn() => print($pdf),
                     createSlug($data['title']) . ".pdf"
                 );
             } catch (\Exception $exception) {
                 Log::error($exception);
-                session()->flash('error', 'Link quiz này hiện tại không khả dụng , vui lòng thử link khác.');
+                session()->flash('error', 'Link quiz này hiện tại không hỗ trợ , vui lòng thử link khác.');
             }
         }
     }
