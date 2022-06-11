@@ -5,6 +5,16 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Category
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Document[] $documents
+ * @property-read int|null $documents_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Category query()
+ * @mixin \Eloquent
+ */
 class Category extends Model
 {
     use CrudTrait;
