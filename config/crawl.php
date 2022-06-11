@@ -29,8 +29,8 @@ return [
     'browsers' => [
         'puppeteer' => [
             'config' => [
-                'idle_timeout' => 100,
-                'read_timeout' => 50,
+                'idle_timeout' => 1000,
+                'read_timeout' => 500,
             ],
             'launch' => [
                 'headless' => true,
@@ -66,7 +66,7 @@ return [
      * */
     'timeout' => [
         'download' => 10,
-        'read' => 1,
+        'read' => 5,
     ],
 //-------------------------------------------------------------------------------------
     /*
