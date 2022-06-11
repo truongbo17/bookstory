@@ -45,4 +45,7 @@ Route::middleware('locale')->group(function () {
     Route::get('change-language/{language}', [HomeController::class, 'changeLanguage'])->name('user.change-language');
 });
 
-Route::get('download-pesthubt', [DownloadDocument::class, 'download'])->name('pesthubt.download');
+//download from pesthubt
+Route::get('download-pesthubt', [DownloadDocument::class, 'download'])
+    ->middleware('web', 'throttle:20,1')
+    ->name('pesthubt.download');
