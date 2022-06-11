@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\PestHubt;
 
 use App\Crawler\Browsers\BrowserManager;
 use App\Crawler\Enum\CrawlStatus;
 use App\Crawler\Enum\DataStatus;
 use App\Crawler\Enum\Status;
 use App\Crawler\HandlePdf\PdfToImage;
-use App\Crawler\StoreData\StoreData;
-use App\Jobs\DownloadFilePdf;
 use App\Libs\DiskPathTools\DiskPathInfo;
 use App\Libs\IdToPath;
 use App\Libs\PhpUri;
@@ -18,16 +16,14 @@ use App\Models\Document;
 use App\Services\DocumentManager;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use PDO;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 use Vuh\CliEcho\CliEcho;
-use Exception;
-use Illuminate\Support\Facades\Log;
 
 class PestHubtCommand extends Command
 {
