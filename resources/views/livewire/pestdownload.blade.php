@@ -1,5 +1,5 @@
 <div class="bg-gray-50">
-    <div class="mt-8 bg-gray-50 pb-16 sm:mt-12 sm:pb-20 lg:pb-28">
+    <div class="mt-4 bg-gray-50 pb-16 sm:mt-8 sm:pb-20 lg:pb-28">
         <div class="relative">
             <div class="absolute inset-0 h-1/2 bg-gray-50"></div>
             <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -7,7 +7,7 @@
                     <div class="max-w-lg mx-auto rounded-lg shadow-lg overflow-hidden lg:max-w-none lg:flex">
                         <div class="flex-1 bg-gray-50 px-6 py-8 lg:p-12">
                             <h3 class="text-2xl font-extrabold text-indigo-600 sm:text-3xl">
-                                Tải xuống tất cả tài liệu <span class="text-red-700">miễn phí</span> từ pesthubt.com
+                                Bookstory - Tải xuống tất cả tài liệu <span class="text-red-700">miễn phí</span> từ pesthubt.com
                             </h3>
                             <p class="mt-6 text-sm font-medium text-black text-base">
                                 Nhập link quiz bạn cần tải ở phía dưới .
@@ -38,7 +38,7 @@
                                     </div>
 
                                     <p class="mb-6 text-sm font-bold text-red-700">
-                                        * Nếu quiz nhiều câu hỏi, thời gian xử lý có thể mất tới 20 giây !!!
+                                        * Nếu quiz nhiều câu hỏi, thời gian xử lý có thể mất tới 20 giây hoặc hơn !!!
                                     </p>
                                     @error('link')
                                     <div id="alert-1" class="flex p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200"
@@ -209,7 +209,7 @@
                                             </svg>
                                         </div>
                                         <p class="ml-3 text-sm text-gray-700">
-                                            Định dạng file PDF
+                                            Định dạng file PDF,DOCX,TEXT,...
                                         </p>
                                     </li>
                                 </ul>
@@ -242,9 +242,9 @@
                             </div>
                             <div class="mt-4 text-sm">
                                 <p class="font-medium text-gray-900">
-                                    Dung lượng lên đến
+                                    Develop by
                                     <span class="font-normal text-gray-500">
-                  (100MB)
+                  Nguyễn Quang Trường
                 </span>
                                 </p>
                             </div>

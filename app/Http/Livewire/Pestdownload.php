@@ -34,7 +34,7 @@ class Pestdownload extends Component
         $validate = $this->validate();
 
         $log_pest = LogPest::create([
-            'ip' => \Request::ip(),
+            'ip' => get_ip(),
             'url' => $validate['link'],
             'type' => $validate['type'],
             'status' => PestStatus::INIT,

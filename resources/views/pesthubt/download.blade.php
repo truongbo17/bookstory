@@ -127,6 +127,7 @@
 @endpush
 
 @push('seo')
+    <html translate="no">
     <meta name="description"
           content="Bookstory - Tải xuống tài liệu miễn phí từ peshubt">
     <meta name="keywords" content="pdf free download,free upload docment,bookstory,pdf free reading online">
