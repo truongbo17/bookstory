@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\TestCommand;
 
+use App\Crawler\Browsers\BrowserManager;
 use App\Crawler\Browsers\BrowserShot;
 use App\Crawler\Browsers\Guzzle;
 use App\Crawler\Browsers\Puppeteer;
@@ -30,6 +31,14 @@ class PuppeteerCommand extends Command
      */
     public function handle()
     {
-        dd((new Puppeteer())->getHtml('https://bookstory.asia'));
+//        dd((new Puppeteer())->getHtml('https://bookstory.asia'));
+
+        $time_start = microtime(true);
+        $html = BrowserManager::get('browsershot')->getHtml('https://pesthubt.com');
+        dump($html);
+        $time_end = microtime(true);
+        $execution_time = ($time_end - $time_start)/60;
+        echo 'Total : '.$execution_time.'mins';
+        die;
     }
 }

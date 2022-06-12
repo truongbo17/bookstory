@@ -3,7 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Crawler\Browsers\BrowserManager;
+use App\Crawler\Enum\PestStatus;
 use App\Libs\DiskPathTools\DiskPathInfo;
+use App\Models\LogPest;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -12,29 +14,45 @@ use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 class Pestdownload extends Component
 {
     public $link;
+    public $type;
 
     protected $rules = [
         'link' => 'required|min:6|url',
+        'type' => 'required|in:pdf',
     ];
 
     protected $messages = [
         'link.required' => 'Vui lòng nhập đầy đủ link quiz cần tải.',
         'link.min' => 'Độ dài của link quá ngắn.',
-        'link.url' => 'Vui lòng nhập chính xác link quiz cần tải',
+        'link.url' => 'Vui lòng nhập chính xác link quiz cần tải.',
+        'type.required' => 'Vui lòng nhập định dạng file cần tải.',
+        'type.in' => 'Hiện tại server chỉ hỗ trợ tải xuống định dạng PDF.',
     ];
 
     public function submit()
     {
         $validate = $this->validate();
 
+        $log_pest = LogPest::create([
+            'ip' => \Request::ip(),
+            'url' => $validate['link'],
+            'type' => $validate['type'],
+            'status' => PestStatus::INIT,
+        ]);
+
         if (!preg_match('/^https:\/\/pesthubt.com\/quiz/', $validate['link'])) {
+            $log_pest->status = PestStatus::DO_NOT_LINK_PEST;
+            $log_pest->save();
             session()->flash('error', 'Link quiz không khả dụng , vui lòng nhập lại.');
         } else {
             //GET HTML
+            $html = '';
             try {
                 $html = BrowserManager::get('puppeteer')->getHtml($validate['link']);
             } catch (\Exception $exception) {
                 Log::error($exception->getMessage());
+                $log_pest->status = PestStatus::DO_NOT_GET_HTML;
+                $log_pest->save();
                 session()->flash('error', 'Đã xảy ra lỗi , vui lòng thử lại sau ít phút.');
             }
 
@@ -63,6 +81,10 @@ class Pestdownload extends Component
                     $pdf = PDF::loadView('pdf.pestv2', $data_pdf)->output();
                 }
 
+                $log_pest->status = PestStatus::SUCCESS;
+                $log_pest->save();
+
+                session()->flash('success', "Tải xuống file " . createSlug($data['title']) . ".pdf thành công !!!.");
                 return response()->streamDownload(
                     fn() => print($pdf),
                     createSlug($data['title']) . ".pdf",
@@ -79,6 +101,8 @@ class Pestdownload extends Component
                 );
             } catch (\Exception $exception) {
                 Log::error($exception);
+                $log_pest->status = PestStatus::FAIL_GET_PDF;
+                $log_pest->save();
                 session()->flash('error', 'Link quiz này hiện tại không hỗ trợ , vui lòng thử link khác.');
             }
         }
