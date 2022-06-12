@@ -53,9 +53,9 @@
                             <a href="{{route('author.list_index')}}"
                                class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">{{__('Authors')}}</a>
 
-                            <a href="#"
+                            <a href="{{route('pesthubt.download')}}"
                                class="flex items-center rounded-full text-pink-700 text-sm font-medium hover:text-red-800">
-                                {{__('News')}}
+                                {{__('Tools')}}
                             </a>
 
                             <a href="{{route('privacy.index')}}"
@@ -191,8 +191,8 @@
                     <a href="{{route('author.list_index')}}"
                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">{{__('Authors')}}</a>
 
-                    <a href="#"
-                       class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">{{__('News')}}</a>
+                    <a href="{{route('pesthubt.download')}}"
+                       class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">{{__('Tools')}}</a>
 
                     <a href="{{route('privacy.index')}}"
                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">{{__('Privacy')}}</a>
