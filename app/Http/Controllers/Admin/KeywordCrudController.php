@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Crawler\Enum\DataStatus;
+use App\Crawler\Enum\SeoKeywordStatus;
+use App\Crawler\Enum\Status;
 use App\Http\Requests\KeywordRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
@@ -42,14 +45,22 @@ class KeywordCrudController extends CrudController
         CRUD::column('id');
         CRUD::column('content');
         CRUD::column('length');
-        CRUD::column('status');
+
+        $this->crud->addColumn([
+                'name' => 'status',
+                'type' => 'select_from_array',
+                'options' => array_flip(DataStatus::asArray()),
+            ]);
+
         CRUD::column('created_at');
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
-         */
+        $this->crud->addFilter([
+            'type' => 'dropdown',
+            'name' => 'status',
+            'label' => 'Keywords Status'
+        ], array_flip(DataStatus::asArray()), function ($value) {
+            $this->crud->addClause('where', 'status', $value);
+        });
     }
 
     /**

@@ -30,7 +30,7 @@
 <body>
 
 <header>
-    &copy; <?php echo date("Y");?> BookStory
+    &copy; <?php echo date("Y");?> BookStory - Nguyễn Quang Trường (truongnq017@gmail.com)
 </header>
 
 <div>

@@ -26,6 +26,7 @@ Route::group([
     Route::get('url/{id}/export_url', 'UrlCrudController@exportUrl');
     Route::post('url/import_url', 'UrlCrudController@importUrl');
     Route::post('document/approve_documents', 'DocumentCrudController@approveDocuments');
+    Route::post('seo-keyword/approve_seo_keywords', 'SeoKeywordCrudController@approveSeoKeywords');
     Route::crud('contact', 'ContactCrudController');
     Route::crud('review', 'ReviewCrudController');
     Route::crud('seo-keyword', 'SeoKeywordCrudController');
