@@ -14,24 +14,30 @@
 
         footer {
             position: fixed;
-            bottom: 0cm;
-            left: 0cm;
-            right: 0cm;
-            height: 2cm;
-            padding-top: 20px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding-top: 50px;
+            margin-top: 50px;
             font-weight: bold;
+            text-align: center;
         }
 
         .container {
             max-width: 800px;
         }
+
     </style>
 </head>
 <body>
 
 <header>
-    &copy; <?php echo date("Y");?>  BookStory - Nguyễn Quang Trường (truongnq017@gmail.com)
+    &copy; <?php echo date("Y");?>  BookStory
 </header>
+
+<footer><a href="https://www.facebook.com/profile.php?id=100076330325908" target="_blank">Nguyễn Quang Trường</a> (<a
+        href="mailto:truongnq017@gmail.com">truongnq017@gmail.com</a>)
+</footer>
 
 <div>
     <div class="container" style="margin-top: 30px">

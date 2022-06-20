@@ -7,7 +7,8 @@
                     <div class="max-w-lg mx-auto rounded-lg shadow-lg overflow-hidden lg:max-w-none lg:flex">
                         <div class="flex-1 bg-gray-50 px-6 py-8 lg:p-12">
                             <h3 class="text-2xl font-extrabold text-indigo-600 sm:text-3xl">
-                                Bookstory - Tải xuống tất cả tài liệu <span class="text-red-700">miễn phí</span> từ pesthubt.com
+                                Bookstory - Tải xuống tất cả tài liệu <span class="text-red-700">miễn phí</span> từ
+                                pesthubt.com
                             </h3>
                             <p class="mt-6 text-sm font-medium text-black text-base">
                                 Nhập link quiz bạn cần tải ở phía dưới .
@@ -147,7 +148,7 @@
 
                                 <div class="flex items-center">
                                     <h4 class="flex-shrink-0 pr-4 bg-gray-50 text-sm tracking-wider font-semibold uppercase text-indigo-600">
-                                        Bạn nhận được gì ?
+                                        About me ?
                                     </h4>
                                     <div class="flex-1 border-t-2 border-gray-200"></div>
                                 </div>
@@ -164,7 +165,7 @@
                                             </svg>
                                         </div>
                                         <p class="ml-3 text-sm text-gray-700">
-                                            Bảo mật thông tin
+                                            Đạt 5000 lượt sử dụng sau 1 tuần
                                         </p>
                                     </li>
 
@@ -179,7 +180,7 @@
                                             </svg>
                                         </div>
                                         <p class="ml-3 text-sm text-gray-700">
-                                            Hoàn toàn miễn phí
+                                            Hoàn toàn miễn phí,bảo mật
                                         </p>
                                     </li>
 
@@ -241,12 +242,14 @@
                                 </div>
                             </div>
                             <div class="mt-4 text-sm">
-                                <p class="font-medium text-gray-900">
-                                    Develop by
-                                    <span class="font-normal text-gray-500">
+                                <a href="https://www.facebook.com/profile.php?id=100076330325908" target="_blank">
+                                    <p class="font-medium text-gray-900">
+                                        Develop by
+                                        <span class="font-normal text-gray-500">
                   Nguyễn Quang Trường
                 </span>
-                                </p>
+                                    </p>
+                                </a>
                             </div>
                         </div>
                     </div>
